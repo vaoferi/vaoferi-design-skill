@@ -1,32 +1,325 @@
 ---
 name: vaoferi-design-skill
-description: Build responsive visual interfaces using Golden Canon-inspired grids, reusable design components, design tokens, and strict visual QA for Vaoferi projects.
-runtime: skillopt
+description: Responsive design skill using Golden Canon-inspired grids, reusable components, design tokens, approval gates, and strict visual QA.
+version: 0.1.0
 ---
 
 # Vaoferi Design Skill
 
-Use this skill when the task is about UI design, layout, responsive screens, visual systems, landing pages, dashboards, or reusable frontend components for Vaoferi projects.
+Use this skill when the task involves:
 
-## Core Rules
+- UI design;
+- landing pages;
+- website sections;
+- responsive layouts;
+- visual systems;
+- component libraries;
+- design tokens;
+- frontend design;
+- YouTube thumbnails;
+- banners;
+- cards;
+- dashboards;
+- visual QA.
 
-- Start from the real project context and existing visual language.
-- Use design tokens for color, spacing, radius, typography, and shadows.
-- Prefer intentional composition over generic templates.
-- Keep layouts responsive for mobile, tablet, desktop, and wide desktop.
-- Do not invent a new style when the project already has one.
-- Verify the result visually when browser or preview tools are available.
+## Main Rule
 
-## Workflow
+Do not design from decoration.
 
-1. Read project rules and existing UI files.
-2. Identify the intended user flow and source of content.
-3. Reuse existing components before creating new ones.
-4. Define or extend tokens only when needed.
-5. Build the smallest complete design slice.
-6. Check layout, console, network, and responsive behavior.
-7. Report what changed and what remains risky.
+Design from structure.
 
-## Output Standard
+Correct order:
 
-A task is not done until the interface is actually rendered or the limitation is stated clearly.
+```text
+goal → hierarchy → grid → alignment → components → tokens → style → visual QA
+```
+
+If this order is skipped, the design is not finished.
+
+## 1. Understand the Goal
+
+Before designing, define:
+
+- what this design must achieve;
+- who will see it;
+- what action the user should take;
+- what content is most important;
+- what visual hierarchy is needed.
+
+Do not start from colors, effects, gradients, shadows, or decorative style.
+
+First: purpose.
+
+Then: structure.
+
+Only after that: visual treatment.
+
+## 2. Build the Grid First
+
+Before placing elements, create a flexible layout grid.
+
+Use principles inspired by:
+
+- Golden Ratio;
+- Golden Canon Grid;
+- modular grids;
+- responsive layout;
+- visual rhythm.
+
+The grid must define:
+
+- main content area;
+- margins;
+- columns;
+- alignment lines;
+- spacing rhythm;
+- key focal points;
+- responsive behavior.
+
+No important element should float randomly.
+
+Every major element must have a reason for its position.
+
+## 3. Draw Alignment Lines
+
+The agent must decide where the main elements align before final styling.
+
+Check alignment for:
+
+- headings;
+- text blocks;
+- buttons;
+- images;
+- cards;
+- logos;
+- icons;
+- navigation;
+- section edges.
+
+If elements do not align, fix the structure before adding decoration.
+
+Do not use effects to hide weak composition.
+
+## 4. Use Component Library First
+
+Before creating a new element, check existing project components.
+
+Reusable components include:
+
+- primary button;
+- secondary button;
+- small button;
+- large button;
+- icon button;
+- card;
+- heading;
+- text block;
+- form field;
+- arrow;
+- icon;
+- navigation item;
+- section layout;
+- image block.
+
+If a component exists, reuse it.
+
+Do not create duplicates.
+
+A design system gets weaker every time an unnecessary duplicate is created.
+
+## 5. New Component Approval
+
+The agent must ask the user before adding:
+
+- a new button style;
+- a new card style;
+- a new icon style;
+- a new arrow style;
+- a new form style;
+- a new layout pattern;
+- a new color;
+- a new font;
+- a new shadow;
+- a new radius;
+- a new spacing scale.
+
+New components must have a clear purpose.
+
+No “just because it looks nice”.
+
+If a new component is needed, explain:
+
+- why existing components are not enough;
+- what the new component does;
+- where it will be reused;
+- how it affects the design system.
+
+## 6. Use Design Tokens
+
+Use tokens for:
+
+- colors;
+- typography;
+- spacing;
+- radius;
+- shadows;
+- borders;
+- sizes;
+- breakpoints.
+
+Do not invent random CSS values if a token already exists.
+
+If a token is missing, propose it and ask for approval.
+
+Design tokens must keep the project consistent across pages and screen sizes.
+
+## 7. Responsive Behavior
+
+The layout must stay stable across screen sizes.
+
+Check at least:
+
+```text
+mobile
+tablet
+desktop
+wide desktop
+```
+
+For serious web layouts, also check specific widths when possible:
+
+```text
+320px
+375px
+414px
+768px
+1024px
+1366px
+1440px
+1920px
+```
+
+The design fails if:
+
+- elements overlap;
+- text becomes unreadable;
+- buttons move randomly;
+- images stretch badly;
+- logos are distorted;
+- cards lose rhythm;
+- horizontal scroll appears without intention;
+- spacing collapses;
+- hierarchy becomes unclear.
+
+A responsive layout must adapt, not fall apart politely.
+
+## 8. Photos and Logos
+
+Do not distort photos.
+
+Do not stretch logos.
+
+Do not crop important faces, hands, objects, or text without purpose.
+
+Check:
+
+- aspect ratio;
+- focal point;
+- contrast;
+- readability;
+- logo visibility;
+- image quality.
+
+Photos and logos are not clay. Do not torture them into the layout.
+
+Fix the layout instead.
+
+## 9. CSS Rules
+
+CSS must support the design system.
+
+Prefer:
+
+- reusable classes;
+- tokens;
+- variables;
+- components;
+- responsive rules;
+- clear layout logic.
+
+Avoid:
+
+- random magic numbers;
+- one-off styles;
+- duplicate button styles;
+- hardcoded colors;
+- layout hacks;
+- hiding overflow as a fake fix.
+
+Do not use `overflow-x: hidden` as a blanket solution for bad layout.
+
+First find the element causing the problem.
+
+Then fix the real cause.
+
+## 10. Visual QA
+
+A design task is not Done until visually checked.
+
+Check:
+
+- grid alignment;
+- spacing;
+- typography;
+- contrast;
+- responsive behavior;
+- component consistency;
+- no accidental horizontal scroll;
+- no distorted media;
+- no unapproved tokens;
+- no duplicated components;
+- no broken visual hierarchy.
+
+If browser, preview, screenshot, or design preview tools are available, use them.
+
+If visual QA is not possible, state the limitation clearly.
+
+Do not claim visual quality without seeing the result.
+
+## Definition of Done
+
+The task is Done only when:
+
+- the goal is clear;
+- hierarchy is defined;
+- the grid is defined;
+- alignment is checked;
+- components are reused;
+- new elements are approved;
+- tokens are respected;
+- layout is responsive;
+- photos are not distorted;
+- logos are not stretched;
+- visual QA is complete;
+- risks are reported;
+- limitations are stated clearly.
+
+If any of these are missing, the task is not Done.
+
+## Short Self-Check
+
+Before the final answer, verify:
+
+```text
+Did I understand the goal?
+Did I define hierarchy?
+Did I build a grid?
+Did I align elements?
+Did I reuse components?
+Did I avoid random styles?
+Did I check responsiveness?
+Did I protect photos and logos?
+Did I visually confirm the result?
+```
+
+If not, the task is not Done.

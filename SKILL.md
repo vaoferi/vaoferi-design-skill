@@ -36,6 +36,40 @@ goal → hierarchy → grid → alignment → components → tokens → style �
 
 If this order is skipped, the design is not finished.
 
+## Working Process
+
+### 1. Approval Flow
+
+After each meaningful change, propose it to the user with one of these markers:
+
+```text
+[Пропозиція] опис зміни
+```
+
+Wait for the user's reaction:
+- 👍 / +1 / "так" / "апрув" → approved, commit and continue
+- 👎 / "ні" / "відхилити" → discard, do not implement
+- 💬 / text feedback → adjust and re-propose
+- no reaction → do not assume approval, ask explicitly
+
+### 2. Immediate Commits
+
+All approved changes are committed immediately to the active branch.
+
+After every commit:
+- update `SKILL.md` if rules changed;
+- check if `README.md` needs an update to stay accurate and engaging;
+- push to remote if the connection is available.
+
+### 3. READMAINTenance Rule
+
+`README.md` must stay:
+- accurate (reflects current SKILL.md rules);
+- engaging (not gray, not boring);
+- selling the skill (clear value for users, not just tech spec).
+
+Before finalizing any session, verify README matches SKILL.md content.
+
 ## 1. Understand the Goal
 
 Before designing, define:
@@ -100,32 +134,38 @@ If elements do not align, fix the structure before adding decoration.
 
 Do not use effects to hide weak composition.
 
-## 4. Use Component Library First
+## 4. Component Resolution Pipeline
 
-Before creating a new element, check existing project components.
+When a new UI element is needed, resolve it in this exact order.
 
-Reusable components include:
+**1. Project's component library / design system**
+- Where to look: the project's dedicated UI library, storybook, `src/design-system`, approved components folder.
+- Why: these components already passed design review and consistency checks.
+- Rule: use them unchanged unless the user explicitly requests a redesign.
 
-- primary button;
-- secondary button;
-- small button;
-- large button;
-- icon button;
-- card;
-- heading;
-- text block;
-- form field;
-- arrow;
-- icon;
-- navigation item;
-- section layout;
-- image block.
+**2. Existing project files (full redesign exception)**
+- Where to look: current `src/`, `components/`, `pages/`, `app/`, `sections/`.
+- Why: reusing existing code keeps consistency and reduces technical debt.
+- Exception: skip this step only for a **full redesign**, where all old components are intentionally replaced.
 
-If a component exists, reuse it.
+**3. This skill's built-in library**
+- Where to look: `references/components/` inside this skill.
+- Why: these patterns are already aligned with this skill's rules.
 
-Do not create duplicates.
+**4. Libraries already used in the project**
+- Where to look: UI frameworks, kits, and dependencies already in `package.json` or imports.
+- Rule:
+  - If a component is exactly suitable — use it.
+  - If it is partially suitable (for example, a button shape is correct but color/hover is wrong) — reuse it and adapt only the mismatched parts.
+  - Do not add a new library just for one element.
 
-A design system gets weaker every time an unnecessary duplicate is created.
+**5. User reference images**
+- Where to look: `references/`, `assets/references/`, or any folder the user specified as visual reference.
+- Rule: if an image there matches the requested element, use it as a base.
+
+**6. Generate from scratch**
+- Only if all above return nothing usable.
+- Even then, generated elements must follow this skill's layout and token rules.
 
 ## 5. New Component Approval
 

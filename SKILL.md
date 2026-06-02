@@ -284,7 +284,7 @@ The design fails if:
 
 A responsive layout must adapt, not fall apart politely.
 
-## 8. Photos and Logos
+## 8. Photos, Logos, and Alt Context
 
 Do not distort photos.
 

@@ -104,7 +104,29 @@ After every commit:
 - check if `README.md` needs an update to stay accurate and engaging;
 - push to remote if the connection is available.
 
-### 3. READMAINTenance Rule
+### 3. Conflict Form
+
+Use this form when sources, libraries, or rules conflict:
+
+```text
+[Конфлікт] що суперечить чому / що треба вибрати
+```
+
+Example:
+
+```text
+[Конфлікт] `btn()` у проекті використовує `--radius-sm`, а в інструкції пропонується `--radius-md` для карточок.
+Паралельний конфлікт: дизайн-токен проти layout-рекомендації.
+Чекаю вибору: який стандарт перемагає?
+```
+
+Wait for the user's reaction:
+- 👍 / +1 / "так" / "Правильно" → apply the first option
+- 👎 / "ні" → apply the second
+- 💬 / text feedback → adjust and re-propose
+- no reaction → do not assume preference; notify that work is blocked until resolved
+
+### 4. READMAINTenance Rule
 
 `README.md` must stay:
 - accurate (reflects current SKILL.md rules);
@@ -347,8 +369,12 @@ Then fix the real cause.
 
 ## 10. Visual QA
 
-A design task is not Done until visually checked.
+> **Note:** When importing sources, use NotebookLM as the first research layer.  
+> - Launch queries from `notebooklm get|sources|query` instead of manual text search.  
+> - Treat its output as a draft reference; verify before committing.  
+> - Every unresolved NotebookLM point should be marked pending until approval.
 
+A design task is not Done until visually checked.
 Check:
 
 - grid alignment;
@@ -368,6 +394,42 @@ If browser, preview, screenshot, or design preview tools are available, use them
 If visual QA is not possible, state the limitation clearly.
 
 Do not claim visual quality without seeing the result.
+
+### Visual QA Checklist
+Use this checklist to verify the result concretely.
+
+```text
+- Структура гриду?
+  - Візуальна сітка зберігає ієрархію?
+  - Елементи не плавають випадково?
+  - Відсутній випадковий горизонтальний скрол?
+
+- Компоненти?
+  - Компоненти використовуються з бібліотеки?
+  - Стилі повторюються логічно?
+  - Дублікатів немає?
+  - Не створено нових стилів без необхідності?
+
+- Токени?
+  - Кольори беруться з токенів?
+  - Відступи йдуть через токени?
+  - Радіуси/тіні нормалізовані?
+  - Нема випадкових hex/rem чисел поза токенами?
+
+- Адаптив?
+  - Як виглядає на 320px, 768px, 1024px, 1440px?
+  - Карточки не змикаються?
+  - Текст є читабельним?
+  - Кнопки залишаються доступними?
+
+- Медіа?
+  - Фото не розтягнуті?
+  - Логотипи не спотворені?
+  - Картинки зберігають пропорції?
+```
+
+If any item fails, stop. Fix the structure first.
+Only after checklist is clean the design can be considered Done.
 
 ## Definition of Done
 

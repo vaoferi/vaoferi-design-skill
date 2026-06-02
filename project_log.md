@@ -1,4 +1,5 @@
 ## 2026-06-02
-- Розширено: цикл без змін.
-- Примітка: `rubric.md` все ще відсутній.
-- Обмеження: доступ до NotebookLM (`e0d206d4-...`) не реалізовано — запит трансформується в сторінку входу Google.
+- NotebookLM зазнав помилки запуску: `python -m notebooklm ...` → `AssertionError: SRE module mismatch`, тому додато явний fallback у `SKILL.md` і продовжено роботу усією командою.
+- Додано `rubric.md` з 10 пунктів Done-перевірки.
+- Додано `examples/good-grid.md` з прикладом коректного Golden Canon-grid Cassidy.
+- Оновлено `README.md` під актуальний стан репозиторію.

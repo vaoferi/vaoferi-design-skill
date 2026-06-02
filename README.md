@@ -1,13 +1,38 @@
 # Vaoferi Design Skill
 Design with structure, not decoration. Use grids before colors, alignment before effects, and components before custom code.
 
-**Headers:** `AGENTS.md`, `README.md`, `SKILL.md`, `project_log.md`  
-**Missing:** `rubric.md`
+## Value
+This skill helps build interfaces that are:
+- structurally stable;
+- token-consistent;
+- component-driven;
+- visually verified.
 
-## Quality Notes
-- Read `SKILL.md` before using the skill.
-- Reuse existing components from the project, target libraries, then this skill.
-- Ask before adding new button, card, icon, arrow, form, layout, color, font, shadow, radius, spacing scale, or breakpoint.
-- Check responsive behavior on: mobile, tablet, desktop, and wide desktop.
-- Do not use `overflow-x: hidden` to hide layout problems.
-- Visual QA is required before claiming Done.
+It is built for AI agents that must design from order, not decoration.
+
+## Files
+- `SKILL.md` — main skill entrypoint
+- `rubric.md` — Done checklist for design work
+- `examples/good-grid.md` — example of correct Golden Canon-inspired output
+- `AGENTS.md` — rules for working in this repository
+
+## When to use
+Use this skill for:
+- landing pages;
+- website sections;
+- responsive layouts;
+- dashboards;
+- cards;
+- banners;
+- visual systems;
+- frontend layout design;
+- design token setup or audit.
+
+## Main rules
+- Start from goal and hierarchy.
+- Build the grid first.
+- Reuse components before creating new ones.
+- Use design tokens before ad-hoc values.
+- Ask before introducing new components or tokens.
+- Validate responsive behavior across breakpoints.
+- Every design task must be visually checked.

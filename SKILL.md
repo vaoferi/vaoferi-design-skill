@@ -66,6 +66,8 @@ When analyzing sources, treat NotebookLM as a parallel research layer.
 - Never rely solely on NotebookLM; human review and approval are required before any changes are committed.
 - Every unresolved point from NotebookLM must be marked as **pending** until the user approves it explicitly.
 
+**Fallback:** if NotebookLM CLI fails or returns auth/login pages, proceed with the next work item and log the failure in `project_log.md`.
+
 ## Working Process
 
 ### 1. Approval Flow

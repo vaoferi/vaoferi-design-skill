@@ -49,7 +49,7 @@ All layout structures MUST follow the Golden Canon Grid unless the user explicit
 - Desktop ratio: `grid-template-columns: 1.618fr 1fr` for Main Content / Sidebar.
 - Responsive: start mobile-first with `1fr`, then activate golden ratio at `min-width: 701px`.
 - Spacing: use Fibonacci steps (`5, 8, 13, 21px`) for `gap`, `padding`, and section separation.
-- Typography: scale with `1.618` multiplier for `font-size` and `line-height` ratios.
+- Typography: prefer modular scale; `1.618` may be used for one-step size jumps, but do not force every header/body pair through a strict `1.618` cascade.
 - Antipatterns: NEVER use fixed `height` for layout containers. Use `min-height: 100vh` for sections instead. Use `minmax(300px, 1fr)` for flexible columns.
 - Semantic areas: use `grid-template-areas` for readable structure (header, sidebar, content).
 - Alignment levels: `justify-items` / `align-items` for cell content; `justify-content` / `align-content` for whole-grid positioning.
@@ -277,6 +277,23 @@ Do not invent random CSS values if a token already exists.
 If a token is missing, propose it and ask for approval.
 
 Design tokens must keep the project consistent across pages and screen sizes.
+
+## 6.1 Missing Token/Component Fallback
+
+When an element, token, or primitive is not available:
+
+1. Try the nearest existing component and adapt only the mismatched parts.
+2. If nothing matches, propose a minimal addition first:
+   - one token;
+   - one variant;
+   - one helper.
+3. Do not add full new libraries, themes, or component families for a single case.
+4. Every addition must have:
+   - purpose;
+   - reuse scope;
+   - effect on the design system.
+
+If there is no approval path, stop and report why the task is blocked.
 
 ## 7. Responsive Behavior
 
@@ -527,7 +544,7 @@ Core numbers:
 
 Golden Canon rules:
 - Desktop layout ratio: `1.618fr 1fr`
-- Typography scale: `1.618`
+- Typography scale: prefer a modular scale; `1.618` can be used for major jumps, but avoid forcing every heading/body pair through a strict cascade
 - Grid columns may use Fibonacci coefficients: `2fr 3fr 5fr`
 - Grid gap is track spacing, not element margin
 - Semantic layout: use `grid-template-areas` only for major regions; do not force every component into a named area.

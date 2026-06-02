@@ -45,10 +45,21 @@ If sources or libraries contradict each other, stop and ask the user which appro
 
 ### 1. Approval Flow
 
-After each meaningful change, propose it to the user with one of these markers:
+Before implementing a new component, token, layout pattern, or non-trivial change, present a concrete proposal.
+
+Use exactly this form for every blocking approval:
 
 ```text
-[Пропозиція] опис зміни
+[Пропозиція] коротко що і чому
+```
+
+Example of a concrete proposal:
+
+```text
+[Пропозиція] Додати токен `--radius-md: 8px` для карточок.
+Чому: в проекті є `--radius-sm` і `--radius-lg`, але для середніх карточок немає проміжного значення, тому зараз кожен компонент вигадує власне число.
+Де використовується: карточки товарів, карточки статей, модальні вікна.
+Ефект на систему: уніфікація закруглень без нового компонента.
 ```
 
 Wait for the user's reaction:

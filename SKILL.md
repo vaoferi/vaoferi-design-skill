@@ -339,7 +339,45 @@ Photos and logos are not clay. Do not torture them into the layout.
 
 Fix the layout instead.
 
-## 9. CSS Rules
+## Default UI Component Library
+
+Agent must treat this list as standard reusable UI building blocks.
+
+Before generating any new element, verify whether one of these already exists in the project:
+
+```text
+button
+icon button
+card
+media card
+badge / tag
+input
+textarea
+checkbox
+select
+toggle / switch
+link
+nav / navbar
+footer
+section
+heading
+paragraph
+list
+table / data list
+modal / dialog
+sidebar
+pagination
+toast / alert
+```
+
+Rule:
+- reuse existing component when matched;
+- otherwise adapt the closest one only in mismatched parts;
+- generate from scratch only after all sources are checked.
+
+No design task should start with creating a new button, card, or badge just because one version exists.
+
+## CSS Rules
 
 CSS must support the design system.
 

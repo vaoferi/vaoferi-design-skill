@@ -33,6 +33,8 @@ goal
   -> visual QA
 ```
 
+If sources or libraries contradict each other, stop and use the Conflict Form from `SKILL.md` before continuing.
+
 ## Files
 
 - `SKILL.md` — main skill entrypoint

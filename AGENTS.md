@@ -14,7 +14,7 @@ Git Bash sees the same folder as:
 //NAS/homes/vaoferi/Work/vaoferi-design-skill
 ```
 
-Do not switch to `C:\Users\vaoferi` for this repository unless the user explicitly asks.
+If this NAS path is inaccessible, do not silently fall back to another workspace—stop, report the exact failure, and wait for a decision. Do not switch to `C:\Users\vaoferi` or another unrelated folder for this repository unless the user explicitly asks.
 
 ## Repository
 

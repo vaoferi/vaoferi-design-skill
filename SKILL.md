@@ -36,6 +36,11 @@ goal → hierarchy → grid → alignment → components → tokens → style �
 
 If this order is skipped, the design is not finished.
 
+
+## Conflict Rule
+
+If sources or libraries contradict each other, stop and ask the user which approach to follow. Do not silently choose one.
+
 ## Working Process
 
 ### 1. Approval Flow

@@ -56,6 +56,16 @@ All layout structures MUST follow the Golden Canon Grid unless the user explicit
 - Gap semantics: treat `row-gap` / `column-gap` as track spacing, not element margins.
 - Propagation rule: changing a token in the base primitive must update dependent components automatically (umbrella effect).
 
+
+## NotebookLM Integration
+
+When analyzing sources, treat NotebookLM as a parallel research layer.
+
+- Launch NotebookLM queries alongside material review, not after it.
+- Use NotebookLM output to enrich rules, examples, and references in the skill.
+- Never rely solely on NotebookLM; human review and approval are required before any changes are committed.
+- Every unresolved point from NotebookLM must be marked as **pending** until the user approves it explicitly.
+
 ## Working Process
 
 ### 1. Approval Flow

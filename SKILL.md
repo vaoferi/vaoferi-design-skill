@@ -41,6 +41,21 @@ If this order is skipped, the design is not finished.
 
 If sources or libraries contradict each other, stop and ask the user which approach to follow. Do not silently choose one.
 
+## Golden Canon Grid
+
+All layout structures MUST follow the Golden Canon Grid unless the user explicitly overrides it.
+
+**Required rules:**
+- Desktop ratio: `grid-template-columns: 1.618fr 1fr` for Main Content / Sidebar.
+- Responsive: start mobile-first with `1fr`, then activate golden ratio at `min-width: 701px`.
+- Spacing: use Fibonacci steps (`5, 8, 13, 21px`) for `gap`, `padding`, and section separation.
+- Typography: scale with `1.618` multiplier for `font-size` and `line-height` ratios.
+- Antipatterns: NEVER use fixed `height` for layout containers. Use `min-height: 100vh` for sections instead. Use `minmax(300px, 1fr)` for flexible columns.
+- Semantic areas: use `grid-template-areas` for readable structure (header, sidebar, content).
+- Alignment levels: `justify-items` / `align-items` for cell content; `justify-content` / `align-content` for whole-grid positioning.
+- Gap semantics: treat `row-gap` / `column-gap` as track spacing, not element margins.
+- Propagation rule: changing a token in the base primitive must update dependent components automatically (umbrella effect).
+
 ## Working Process
 
 ### 1. Approval Flow

@@ -368,3 +368,42 @@ Did I visually confirm the result?
 ```
 
 If not, the task is not Done.
+
+
+## Golden Canon & CSS Grid
+
+Treat the Golden Ratio as a structural rule, not a decoration.
+
+Core numbers:
+- phi ≈ 1.618
+- Fibonacci steps for spacing: 5, 8, 13, 21
+
+Golden Canon rules:
+- Desktop layout ratio: `1.618fr 1fr`
+- Typography scale: `1.618`
+- Grid columns may use Fibonacci coefficients: `2fr 3fr 5fr`
+- Grid gap is track spacing, not element margin
+- Semantic layout: use `grid-template-areas` only for major regions; do not force every component into a named area.
+
+Responsiveness:
+- Mobile first with `1fr` base; restore canon proportions only when content and width allow it
+- Use `minmax(min, max)` and breakpoints, not fixed `fr` on narrow screens
+- At `min-width: 701px` enable a wider canon grid; below that keep fewer columns or single column layout
+
+CSS Grid architecture:
+- Grid for macro layout
+- Flexbox for micro alignment inside cells and component internals
+- Avoid fixed heights; prefer `min-height: 100vh` for sections
+- Modal overflow: `max-height: 100%` with `overflow-y: auto` on inner container
+
+Naming / tokens:
+- `--space-canon-s: 5rem` for small gaps and internal padding
+- `--space-canon-l: 15rem` for section vertical rhythm
+- `--grid-main-cols: 1.618fr 1fr` for desktop canon layout
+
+Health check:
+- Content resilience under overflow and zoom
+- No fixed heights
+- Primitive registry concept for base components
+- Token propagation: changing one token updates dependent components
+- Breakpoint logic changes structure, not only sizes

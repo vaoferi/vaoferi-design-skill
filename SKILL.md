@@ -407,6 +407,15 @@ Did I visually confirm the result?
 
 If not, the task is not Done.
 
+## References and Updates
+
+Track only verified sources:
+
+- Golden Canon-inspired references: retain official or canonical sources only when applicable; otherwise mark `goldenCanon-inspired`.
+- CSS Grid and component libraries: add only advice that already aligns with current repository rules.
+- Web research and GitHub references: quote link, issue, commit, or demo; do not rely on generic wording.
+- NotebookLM output: log when it was used; do not treat it as a primary source for rules.
+
 
 ## Golden Canon & CSS Grid
 

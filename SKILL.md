@@ -142,7 +142,7 @@ The audio reviews added one more important rule: Golden Canon is a planning tool
 Use it like this:
 
 - Apply golden proportions to the macro layout first.
-- Use `subgrid` for strict alignment only where a child must inherit the parent lines.
+- Use `subgrid` for strict alignment only where a child must inherit the parent lines. For example, a card section with aligned headings, bodies, and actions across rows often benefits from inheriting the parent grid tracks rather than recreating spacing tokens inside each card.
 - Use `repeat(auto-fit, minmax(...))` for card zones, galleries, and flexible collections.
 - Use `clamp()` for typography and spacing when the value must grow safely with viewport size.
 - Use `fr` units for available space, not fixed percentages or pixel locks.
@@ -210,6 +210,15 @@ Example of a concrete proposal:
 Чому: в проекті є `--radius-sm` і `--radius-lg`, але для середніх карточок немає проміжного значення — зараз кожен компонент вигадує власне число.
 Де використовується: карточки товарів, карточки статей, модальні вікна.
 Ефект на систему: уніфікація радіусів без нового компонента.
+```
+
+Example of a realistic blocking case:
+
+```text
+[Пропозиція] Використати єдиний макет HERO на всіх лендінгах.
+Чому: зараз кожен лендінг має свій HERO-рішення без спільної сітки; це ламає дизайн-систему і ускладнює масштабування.
+Де використовується: всі лендінги проєкту.
+Ефект на систему: один еталонний макет, решта адаптується через варіанти, а не за новим компонентом.
 ```
 
 Wait for the user's reaction:
@@ -618,6 +627,7 @@ If visual QA is not possible, state the limitation clearly.
 Do not claim visual quality without seeing the result.
 
 ### Visual QA Checklist
+
 Use this checklist to verify the result concretely.
 
 ```text
@@ -658,7 +668,23 @@ Use this checklist to verify the result concretely.
 If any item fails, stop. Fix the structure first.
 Only after checklist is clean the design can be considered Done.
 
-## Definition of Done
+## 13. Accessibility & Resilience QA
+
+Accessibility must not be an afterthought.
+
+For serious layouts verify that:
+
+- keyboard focus remains visible and logical;
+- interactive controls are reachable and operable;
+- text remains readable when base font size increases;
+- layout does not break at browser zoom up to 150%;
+- meaningful media do not lose context when scaled.
+
+If visual or browser inspection is not possible, state the limitation explicitly.
+
+If an issue is found, fix it before marking Done.
+
+## 14. Text/Encoding Done
 
 The task is Done only when:
 
@@ -670,6 +696,7 @@ The task is Done only when:
 - new elements are approved;
 - tokens are respected;
 - layout is responsive;
+- accessibility and resilience are verified;
 - photos are not distorted;
 - logos are not stretched;
 - visual QA is complete;
@@ -679,7 +706,6 @@ The task is Done only when:
 If any of these are missing, the task is not Done.
 
 ## Short Self-Check
-
 Before the final answer, verify:
 
 ```text
@@ -691,6 +717,7 @@ Did I reuse components?
 Did I avoid random styles?
 Did I check responsiveness?
 Did I protect photos and logos?
+Did I verify keyboard and zoom resilience?
 Did I visually confirm the result?
 ```
 

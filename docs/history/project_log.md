@@ -1,11 +1,21 @@
 # Project Log
 
-## 2026-06-03
-- Task: curator cycle for `vaoferi-design-skill`
-- NotebookLM status: auth expired/invalid for notebook `e0d206d4-3820-44b1-95b3-4f9fd7bbcd22`; `notebooklm use e0d206d4-3820-44b1-95b3-4f9fd7bbcd22` failed
-- Fallback action taken: manual analysis of `SKILL.md`
-- Change made: added explicit Golden Canon Pattern and extended Anti-patterns list
-- Files changed: `SKILL.md`
-- Commit: `118ae98`
-- Push: succeeded to `origin/main`
-- Risk / follow-up: NotebookLM needs re-auth or refreshed credentials
+Цей файл фіксує важливі зміни, знахідки та архітектурні рішення скілу `vaoferi-design-skill`.
+
+## Правила фіксації
+- Додавай запис тільки при зміні принципів, прийнятті рішень або знаходженні проблеми.
+- Не фіксуй тривіальні форматування.
+- Не записуй секрети, токени чи приватні дані.
+
+## Записи
+
+## 2026-06-04
+
+- Опис: Кураторський цикл по `vaoferi-design-skill`.
+- Дія: додано розділ **Accessibility & Resilience QA** та інтегровано його в `Definition of Done` і `Short Self-Check`.
+- Мета: зробити перевірку доступності та стійкості layout обов'язковою частиною Done, а не неявним «при бажанні».
+- Деталі:
+  - новий розділ перевіряє keyboard focus, reachability, readable text при більшому font size, resilience при zoom до 150%;
+  - умова Done тепер включає accessibility и resilience verification;
+  - `Short Self-Check` отримав нове питання про keyboard/zoom перевірку.
+- Ризик: низький; зміна локальна, не ламає існуючі правила.

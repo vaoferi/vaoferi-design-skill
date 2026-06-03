@@ -103,7 +103,7 @@ NotebookLM query: "..." -> [used / pending]
 Treat output as draft reference only.
 Human review and approval required before committing NotebookLM-derived rules.
 
-If NotebookLM CLI fails: log the failure once, do not retry same call in loop, continue with other work.
+If NotebookLM CLI fails: do not retry same query in a loop. Mark the query status once, switch to other sources, and continue. Treat that access as unavailable for the current session.
 
 ## Working Process
 
@@ -296,7 +296,7 @@ If a new component is needed, explain:
 - where it will be reused;
 - how it affects the design system.
 
-## 6. Use Design Tokens
+## 7. Use Design Tokens
 
 Use tokens for:
 
@@ -315,7 +315,7 @@ If a token is missing, propose it and ask for approval.
 
 Design tokens must keep the project consistent across pages and screen sizes.
 
-## 6.1 Missing Token/Component Fallback
+## 7.1 Missing Token/Component Fallback
 
 When an element, token, or primitive is not available:
 
@@ -332,7 +332,7 @@ When an element, token, or primitive is not available:
 
 If there is no approval path, stop and report why the task is blocked.
 
-## 6.2 Component Shape
+## 7.2 Component Shape
 
 A new component should have the smallest reusable shape, not every feature imagined upfront.
 
@@ -387,7 +387,7 @@ The design fails if:
 
 A responsive layout must adapt, not fall apart politely.
 
-## 8. Photos, Logos, and Alt Context
+## 9. Photos, Logos, and Alt Context
 
 Do not distort photos.
 
@@ -474,7 +474,7 @@ First find the element causing the problem.
 
 Then fix the real cause.
 
-## 10. Visual QA
+## 9. Visual QA
 
 > **Note:** When importing sources, use NotebookLM as the first research layer.  
 > - Launch queries from `notebooklm get|sources|query` instead of manual text search.  

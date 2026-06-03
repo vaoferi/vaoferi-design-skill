@@ -50,11 +50,38 @@ All layout structures MUST follow the Golden Canon Grid unless the user explicit
 - Responsive: start mobile-first with `1fr`, then activate golden ratio at `min-width: 701px`.
 - Spacing: use Fibonacci steps (`5, 8, 13, 21px`) for `gap`, `padding`, and section separation.
 - Typography: prefer modular scale; `1.618` may be used for one-step size jumps, but do not force every header/body pair through a strict `1.618` cascade.
-- Antipatterns: NEVER use fixed `height` for layout containers. Use `min-height: 100vh` for sections instead. Use `minmax(300px, 1fr)` for flexible columns.
+- Antipatterns:
+  - NEVER use fixed `height` for layout containers.
+  - Use `min-height: 100vh` for full sections only when it makes sense.
+  - Use `minmax(300px, 1fr)` for flexible columns instead of forcing exact widths.
+  - NEVER rely on `float` for layout.
+  - Avoid absolute positioning for core layout.
+  - Don't use random margin hacks on children to compensate for a broken grid.
 - Semantic areas: use `grid-template-areas` for readable structure (header, sidebar, content).
 - Alignment levels: `justify-items` / `align-items` for cell content; `justify-content` / `align-content` for whole-grid positioning.
 - Gap semantics: treat `row-gap` / `column-gap` as track spacing, not element margins.
 - Propagation rule: changing a token in the base primitive must update dependent components automatically (umbrella effect).
+
+### Golden Canon Pattern
+
+Use this as a starting reference for desktop composition.
+
+- Primary content occupies the larger golden track.
+- Sidebar or secondary content occupies the smaller track.
+- Page content stays inside one centered global container.
+- Use token-based padding and Fibonacci spacing to preserve rhythm.
+- Keep key visual focal points inside golden columns, not edge-aligned.
+
+### Golden Canon Anti-patterns
+
+If you recognize any of these, redesign before adding decoration.
+
+- Layout that looks balanced only when window is fully maximized.
+- Content pinned to the bottom by an enormous fixed height.
+- Two columns collapsing into one another on tablet because of hardcoded pixel widths.
+- Elements aligned to the right edge but not to any visible grid column.
+- Box model drift caused by children adding their own margins instead of trusting grid gap.
+- Responsive breakpoint chosen by guessing screen percentage instead of content needs.
 
 
 ## NotebookLM Integration

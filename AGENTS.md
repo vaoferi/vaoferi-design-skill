@@ -179,6 +179,13 @@ If browser, preview, screenshot, or visual inspection tools are available, use t
 
 If visual QA is not possible, state the limitation clearly.
 
+## Done is evidence, not hope
+
+Замість «здається, працює» або «тестів не запускав, але має бути добре»:
+- задачі не виконувати, поки немає фактичної перевірки;
+- локальний невдалий запуск CLI не вважати підтвердженням невдачі — перевіряти повідомлення помилки;
+- **у звіті завжди вказувати, що саме було перевірено і який зміст підтверджено.**
+
 ## SkillOpt Rule
 
 This repository is intended to work with Microsoft SkillOpt.

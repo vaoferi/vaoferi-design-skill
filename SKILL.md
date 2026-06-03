@@ -263,10 +263,10 @@ Before finalizing any session, verify README matches SKILL.md content.
 Use this before publishing changes to `README.md`:
 
 ```text
-1. Confirmation of each key rule from SKILL.md
-2. Adding a brief value proposition for the user
-3. Checking that the code example reflects the current technical stack
-4. Removing outdated fragments
+1. Confirm each key rule from SKILL.md
+2. Add a short value statement for the user
+3. Check that the code example matches the current stack
+4. Remove outdated fragments
 ```
 
 If `README.md` describes one set of rules, and `SKILL.md` has others:

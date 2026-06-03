@@ -339,7 +339,15 @@ If elements do not align, fix the structure before adding decoration.
 
 Do not use effects to hide weak composition.
 
-## 4. Component Resolution Pipeline
+## 4. Component Library
+
+Treat the project component library as the first source of truth.
+
+If a component exists, reuse it unchanged unless the user explicitly requests a redesign.
+
+If a component does not exist, continue through the resolution pipeline below.
+
+## 5. Component Resolution Pipeline
 
 When a new UI element is needed, resolve it in this exact order.
 
@@ -372,7 +380,7 @@ When a new UI element is needed, resolve it in this exact order.
 - Only if all above return nothing usable.
 - Even then, generated elements must follow this skill's layout and token rules.
 
-## 5. New Component Approval
+## 6. New Component Approval
 
 The agent must ask the user before adding:
 
@@ -399,7 +407,7 @@ If a new component is needed, explain:
 - where it will be reused;
 - how it affects the design system.
 
-## 6. Responsive Behavior
+## 7. Responsive Behavior
 
 The layout must stay stable across screen sizes.
 
@@ -440,7 +448,7 @@ The design fails if:
 
 A responsive layout must adapt, not fall apart politely.
 
-## 7. Photos, Logos, and Alt Context
+## 8. Photos, Logos, and Alt Context
 
 Do not distort photos.
 
@@ -461,7 +469,7 @@ Photos and logos are not clay. Do not torture them into the layout.
 
 Fix the layout instead.
 
-## 8. Default UI Component Library
+## 9. Default UI Component Library
 
 Agent must treat this list as standard reusable UI building blocks.
 
@@ -508,7 +516,7 @@ Rule:
 
 No design task should start with creating a new button, card, or badge just because one version exists.
 
-## 9. CSS Rules
+## 10. CSS Rules
 
 CSS must support the design system.
 
@@ -536,7 +544,7 @@ First find the element causing the problem.
 
 Then fix the real cause.
 
-## 10. Use Design Tokens
+## 11. Use Design Tokens
 
 Use tokens for:
 
@@ -555,7 +563,7 @@ If a token is missing, propose it and ask for approval.
 
 Design tokens must keep the project consistent across pages and screen sizes.
 
-### 10.1 Missing Token/Component Fallback
+### 11.1 Missing Token/Component Fallback
 
 When an element, token, or primitive is not available:
 
@@ -572,7 +580,7 @@ When an element, token, or primitive is not available:
 
 If there is no approval path, stop and report why the task is blocked.
 
-### 10.2 Component Shape
+### 11.2 Component Shape
 
 A new component should have the smallest reusable shape, not every feature imagined upfront.
 
@@ -586,12 +594,7 @@ Checklist before adding one:
 
 If a component is created for one case only, it is probably not a component. Use a helper, a variant, or a token instead.
 
-## 11. Visual QA
-
-> **Note:** When importing sources, use NotebookLM as the first research layer.  
-> - Launch queries from `notebooklm get|sources|query` instead of manual text search.  
-> - Treat its output as a draft reference; verify before committing.  
-> - Every unresolved NotebookLM point should be marked pending until approval.
+## 12. Visual QA
 
 A design task is not Done until visually checked.
 Check:
@@ -693,36 +696,6 @@ Did I visually confirm the result?
 
 If not, the task is not Done.
 
-## References and Updates
-
-Track only verified sources:
-
-- Golden Canon-inspired references: retain official or canonical sources only when applicable; otherwise mark `goldenCanon-inspired`.
-- CSS Grid and component libraries: add only advice that already aligns with current repository rules.
-- Web research and GitHub references: quote link, issue, commit, or demo; do not rely on generic wording.
-- NotebookLM output: log when it was used; do not treat it as a primary source for rules.
-
-
-## Minimal Token Contract (No-Token Project Fallback)
-
-If the project has no token system yet, use this minimal shared contract before creating one-off values.
-
-```text
---space-xs: 4px
---space-sm: 8px
---space-md: 13px
---space-lg: 21px
---space-xl: 34px
---radius-sm: 6px
---radius-md: 8px
---radius-lg: 12px
-```
-
-Rules:
-- Map every project spacing decision to one of these eight values.
-- Map every radius decision to `--radius-sm | --radius-md | --radius-lg`.
-- Use this contract as a temporary primitive registry until a full token system is approved.
-
 ## Golden Canon & CSS Grid
 
 Treat the Golden Ratio as a structural rule, not a decoration.
@@ -760,3 +733,32 @@ Health check:
 - Primitive registry concept for base components
 - Token propagation: changing one token updates dependent components
 - Breakpoint logic changes structure, not only sizes
+
+## Minimal Token Contract (No-Token Project Fallback)
+
+If the project has no token system yet, use this minimal shared contract before creating one-off values.
+
+```text
+--space-xs: 4px
+--space-sm: 8px
+--space-md: 13px
+--space-lg: 21px
+--space-xl: 34px
+--radius-sm: 6px
+--radius-md: 8px
+--radius-lg: 12px
+```
+
+Rules:
+- Map every project spacing decision to one of these eight values.
+- Map every radius decision to `--radius-sm | --radius-md | --radius-lg`.
+- Use this contract as a temporary primitive registry until a full token system is approved.
+
+## References and Updates
+
+Track only verified sources:
+
+- Golden Canon-inspired references: retain official or canonical sources only when applicable; otherwise mark `goldenCanon-inspired`.
+- CSS Grid and component libraries: add only advice that already aligns with current repository rules.
+- Web research and GitHub references: quote link, issue, commit, or demo; do not rely on generic wording.
+- NotebookLM output: log when it was used; do not treat it as a primary source for rules.

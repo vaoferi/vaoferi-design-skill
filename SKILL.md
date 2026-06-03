@@ -45,6 +45,8 @@ If sources or libraries contradict each other, stop and ask the user which appro
 
 All layout structures MUST follow the Golden Canon Grid unless the user explicitly overrides it.
 
+**Golden Canon Grid** — це структура, а не декорація. Вона задає порядок у розміченні: де головне, де другорядне, де рамка, де ритм. Без цієї структури кожен елемент буде “плавати” і вирівнюватись на sight, а не за правилом.
+
 **Required rules:**
 - Desktop ratio: `grid-template-columns: 1.618fr 1fr` for Main Content / Sidebar.
 - Responsive: start mobile-first with `1fr`, then activate golden ratio at `min-width: 701px`.
@@ -72,7 +74,7 @@ Use this as a starting reference for desktop composition.
 - Use token-based padding and Fibonacci spacing to preserve rhythm.
 - Keep key visual focal points inside golden columns, not edge-aligned.
 
-### Golden Canon Anti-patterns
+## Golden Canon Anti-patterns
 
 If you recognize any of these, redesign before adding decoration.
 
@@ -82,6 +84,15 @@ If you recognize any of these, redesign before adding decoration.
 - Elements aligned to the right edge but not to any visible grid column.
 - Box model drift caused by children adding their own margins instead of trusting grid gap.
 - Responsive breakpoint chosen by guessing screen percentage instead of content needs.
+
+### What to do instead
+
+- Use `max-width` on a centered container, not full-width justification as balance.
+- Replace fixed `height` with `min-height` or natural content height.
+- Use `minmax()` and flexible tracks; switch layout at content-needed breakpoints.
+- Align key elements to explicit grid tracks, not viewport edges.
+- Keep spacing in the grid layer (`gap`, padding, section rhythm); avoid child margin resets.
+- Choose breakpoints from content behavior, not device percentages.
 
 
 ## NotebookLM Integration

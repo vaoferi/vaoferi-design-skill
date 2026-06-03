@@ -86,14 +86,24 @@ If you recognize any of these, redesign before adding decoration.
 
 ## NotebookLM Integration
 
-When analyzing sources, treat NotebookLM as a parallel research layer.
+Use NotebookLM as a lightweight research layer.
 
-- Launch NotebookLM queries alongside material review, not after it.
-- Use NotebookLM output to enrich rules, examples, and references in the skill.
-- Never rely solely on NotebookLM; human review and approval are required before any changes are committed.
-- Every unresolved point from NotebookLM must be marked as **pending** until the user approves it explicitly.
+**Allowed notebook queries for this skill:**
+- Golden Canon Grid meaning, structure, and anti-patterns
+- component library principles for AI layout work
+- design token propagation and adoption
+- responsive grid behavior and breakpoint logic
 
-**Fallback:** if NotebookLM CLI fails or returns auth/login pages, proceed with the next work item and log the failure in `project_log.md`.
+Use exactly this form in project log:
+
+```text
+NotebookLM query: "..." -> [used / pending]
+```
+
+Treat output as draft reference only.
+Human review and approval required before committing NotebookLM-derived rules.
+
+If NotebookLM CLI fails: log the failure once, do not retry same call in loop, continue with other work.
 
 ## Working Process
 

@@ -373,7 +373,9 @@ badge / tag
 input
 textarea
 checkbox
+radio
 select
+combobox
 toggle / switch
 link
 nav / navbar
@@ -387,6 +389,13 @@ modal / dialog
 sidebar
 pagination
 toast / alert
+tabs
+accordion
+breadcrumb
+tooltip
+dropdown
+step / progress indicator
+carousel / slider
 ```
 
 Rule:

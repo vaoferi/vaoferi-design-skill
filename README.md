@@ -38,7 +38,7 @@ goal
 If sources or libraries contradict each other, stop and use the Conflict Form from `SKILL.md` before continuing.
 If a new component, token, or layout pattern is required, use the Approval Flow from `SKILL.md`.
 
-## Core workflow
+## Use
 
 1. Understand the goal and user action.
 2. Build the grid before placing elements.
@@ -50,8 +50,20 @@ If a new component, token, or layout pattern is required, use the Approval Flow 
 8. Use design tokens only.
 9. Run visual QA and only then mark Done.
 
+## What this skill emphasizes
+
+- Golden Canon is a macro guide, not a rigid pixel rule.
+- `grid`, `subgrid`, `fr`, `minmax()`, `auto-fit`, and `clamp()` are the main primitives.
+- `grid` handles page structure; `flex` handles the interior of components.
+- `gap` is preferred over margin hacks.
+- Accessibility and responsive scaling are first-class requirements.
+- The browser should do the math whenever possible.
+
 ## Files
 
 - `SKILL.md` — main skill entrypoint
 - `AGENTS.md` — rules for working in this repository
+- `README.md` — project overview
 - `rubric.md` — Done checklist for design work
+- `examples/good-answer.md` — приклад правильної відповіді за скілом
+- `examples/bad-answer.md` — приклад типових помилок

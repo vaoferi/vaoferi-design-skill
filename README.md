@@ -41,13 +41,14 @@ If a new component, token, or layout pattern is required, use the Approval Flow 
 ## Core workflow
 
 1. Understand the goal and user action.
-2. Define hierarchy and content priority.
-3. Build the grid before placing elements.
-4. Draw alignment lines.
-5. Resolve components before creating new ones.
-6. Use design tokens only.
-7. Check responsive behavior.
-8. Run visual QA and only then mark Done.
+2. Build the grid before placing elements.
+3. Draw alignment lines.
+4. Resolve components before creating new ones.
+5. Ask approval before adding new styles.
+6. Check responsive behavior.
+7. Protect photos and logos.
+8. Use design tokens only.
+9. Run visual QA and only then mark Done.
 
 ## Files
 

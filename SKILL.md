@@ -296,57 +296,7 @@ If a new component is needed, explain:
 - where it will be reused;
 - how it affects the design system.
 
-## 7. Use Design Tokens
-
-Use tokens for:
-
-- colors;
-- typography;
-- spacing;
-- radius;
-- shadows;
-- borders;
-- sizes;
-- breakpoints.
-
-Do not invent random CSS values if a token already exists.
-
-If a token is missing, propose it and ask for approval.
-
-Design tokens must keep the project consistent across pages and screen sizes.
-
-## 7.1 Missing Token/Component Fallback
-
-When an element, token, or primitive is not available:
-
-1. Try the nearest existing component and adapt only the mismatched parts.
-2. If nothing matches, propose a minimal addition first:
-   - one token;
-   - one variant;
-   - one helper.
-3. Do not add full new libraries, themes, or component families for a single case.
-4. Every addition must have:
-   - purpose;
-   - reuse scope;
-   - effect on the design system.
-
-If there is no approval path, stop and report why the task is blocked.
-
-## 7.2 Component Shape
-
-A new component should have the smallest reusable shape, not every feature imagined upfront.
-
-Checklist before adding one:
-- one primary purpose;
-- smallest meaningful contract: inputs, variants, states;
-- default, loading, empty, and error states covered only if the component really needs them;
-- reuse existing primitives for style, not custom duplications;
-- adapt nearest existing component before generating new markup;
-- limit new variants to what is actually reused.
-
-If a component is created for one case only, it is probably not a component. Use a helper, a variant, or a token instead.
-
-## 7. Responsive Behavior
+## 6. Responsive Behavior
 
 The layout must stay stable across screen sizes.
 
@@ -387,7 +337,7 @@ The design fails if:
 
 A responsive layout must adapt, not fall apart politely.
 
-## 9. Photos, Logos, and Alt Context
+## 7. Photos, Logos, and Alt Context
 
 Do not distort photos.
 
@@ -408,7 +358,7 @@ Photos and logos are not clay. Do not torture them into the layout.
 
 Fix the layout instead.
 
-## Default UI Component Library
+## 8. Default UI Component Library
 
 Agent must treat this list as standard reusable UI building blocks.
 
@@ -446,7 +396,7 @@ Rule:
 
 No design task should start with creating a new button, card, or badge just because one version exists.
 
-## CSS Rules
+## 9. CSS Rules
 
 CSS must support the design system.
 
@@ -474,7 +424,57 @@ First find the element causing the problem.
 
 Then fix the real cause.
 
-## 9. Visual QA
+## 10. Use Design Tokens
+
+Use tokens for:
+
+- colors;
+- typography;
+- spacing;
+- radius;
+- shadows;
+- borders;
+- sizes;
+- breakpoints.
+
+Do not invent random CSS values if a token already exists.
+
+If a token is missing, propose it and ask for approval.
+
+Design tokens must keep the project consistent across pages and screen sizes.
+
+### 10.1 Missing Token/Component Fallback
+
+When an element, token, or primitive is not available:
+
+1. Try the nearest existing component and adapt only the mismatched parts.
+2. If nothing matches, propose a minimal addition first:
+   - one token;
+   - one variant;
+   - one helper.
+3. Do not add full new libraries, themes, or component families for a single case.
+4. Every addition must have:
+   - purpose;
+   - reuse scope;
+   - effect on the design system.
+
+If there is no approval path, stop and report why the task is blocked.
+
+### 10.2 Component Shape
+
+A new component should have the smallest reusable shape, not every feature imagined upfront.
+
+Checklist before adding one:
+- one primary purpose;
+- smallest meaningful contract: inputs, variants, states;
+- default, loading, empty, and error states covered only if the component really needs them;
+- reuse existing primitives for style, not custom duplications;
+- adapt nearest existing component before generating new markup;
+- limit new variants to what is actually reused.
+
+If a component is created for one case only, it is probably not a component. Use a helper, a variant, or a token instead.
+
+## 11. Visual QA
 
 > **Note:** When importing sources, use NotebookLM as the first research layer.  
 > - Launch queries from `notebooklm get|sources|query` instead of manual text search.  

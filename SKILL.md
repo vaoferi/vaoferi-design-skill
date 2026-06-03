@@ -762,3 +762,5 @@ Track only verified sources:
 - CSS Grid and component libraries: add only advice that already aligns with current repository rules.
 - Web research and GitHub references: quote link, issue, commit, or demo; do not rely on generic wording.
 - NotebookLM output: log when it was used; do not treat it as a primary source for rules.
+- Modern layout guidance: prefer CSS Grid for macro layout, Flexbox for component internals, and `repeat(auto-fit, minmax(...))` for flexible content collections.
+- Component naming guidance: name variants by role or meaning, not by visual detail or color, so reuse stays stable when one variant changes.

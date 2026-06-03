@@ -535,6 +535,11 @@ Use this checklist to verify the result concretely.
   - Картинки зберігають пропорції?
 ```
 
+- Поведінка та стани?
+  - Loading, error, empty, disabled, hover, focus?
+  - Кнопки, форми, карточки мають явні стани?
+  - Немає "шаблонного" стану, який глючить при інтеракції?
+
 If any item fails, stop. Fix the structure first.
 Only after checklist is clean the design can be considered Done.
 

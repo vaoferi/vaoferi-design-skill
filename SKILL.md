@@ -606,8 +606,8 @@ If a component is created for one case only, it is probably not a component. Use
 ## 12. Visual QA
 
 A design task is not Done until visually checked.
-Check:
 
+Check:
 - grid alignment;
 - spacing;
 - typography;
@@ -673,7 +673,6 @@ Only after checklist is clean the design can be considered Done.
 Accessibility must not be an afterthought.
 
 For serious layouts verify that:
-
 - keyboard focus remains visible and logical;
 - interactive controls are reachable and operable;
 - text remains readable when base font size increases;
@@ -687,7 +686,6 @@ If an issue is found, fix it before marking Done.
 ## 14. Text/Encoding Done
 
 The task is Done only when:
-
 - the goal is clear;
 - hierarchy is defined;
 - the grid is defined;
@@ -704,6 +702,68 @@ The task is Done only when:
 - limitations are stated clearly.
 
 If any of these are missing, the task is not Done.
+
+## 15. Golden Canon Layout Blueprint
+
+Use this blueprint as a concrete starting point for a standard editorial/service layout:
+
+```html
+<section class="section">
+  <div class="container">
+    <div class="golden-grid">
+      <header class="header" aria-label="Page header">...</header>
+      <main class="content" aria-label="Main content" id="main-content">
+        <h1>Primary heading</h1>
+        <p>Supporting text, CTAs, content blocks.</p>
+      </main>
+      <aside class="sidebar" aria-label="Secondary content">...</aside>
+      <footer class="footer" aria-label="Page footer">...</footer>
+    </div>
+  </div>
+</section>
+```
+
+```css
+.section {
+  /* Used only when needed;
+  /* Do not force every section to full viewport height. */
+  /* min-height: 100vh;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: var(--space-canon-s, 5px);
+}
+
+.golden-grid {
+  display: grid;
+  gap: var(--space-canon-s, 5px);
+  align-items: start;
+}
+
+@media (min-width: 701px) {
+  .golden-grid {
+    grid-template-columns: 1.618fr 1fr;
+  }
+  .header,
+  .footer {
+    grid-column: 1 / -1;
+  }
+}
+```
+
+Blueprint rules:
+- larger track = primary content
+- smaller track = secondary content
+- header and footer span the full grid explicitly, not with margin hacks or `width: 100%` overrides
+- `gap` and container padding are the source of rhythm, not child margins
+- if the screen is narrower than `701px`, collapse to a single column unless there is a concrete usability reason
+
+If the task fits this structure, start from this blueprint first and only diverge for a concrete content or accessibility reason.
+
+## 16. References and Updates
 
 ## Short Self-Check
 Before the final answer, verify:

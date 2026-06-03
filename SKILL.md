@@ -322,6 +322,20 @@ When an element, token, or primitive is not available:
 
 If there is no approval path, stop and report why the task is blocked.
 
+## 6.2 Component Shape
+
+A new component should have the smallest reusable shape, not every feature imagined upfront.
+
+Checklist before adding one:
+- one primary purpose;
+- smallest meaningful contract: inputs, variants, states;
+- default, loading, empty, and error states covered only if the component really needs them;
+- reuse existing primitives for style, not custom duplications;
+- adapt nearest existing component before generating new markup;
+- limit new variants to what is actually reused.
+
+If a component is created for one case only, it is probably not a component. Use a helper, a variant, or a token instead.
+
 ## 7. Responsive Behavior
 
 The layout must stay stable across screen sizes.
@@ -329,7 +343,8 @@ The layout must stay stable across screen sizes.
 Check at least:
 
 ```text
-mobile
+readable
+mobile-friendly
 tablet
 desktop
 wide desktop

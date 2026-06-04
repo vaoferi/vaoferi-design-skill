@@ -772,8 +772,6 @@ Blueprint rules:
 
 If the task fits this structure, start from this blueprint first and only diverge for a concrete content or accessibility reason.
 
-## 16. References and Updates
-
 ## Short Self-Check
 Before the final answer, verify:
 

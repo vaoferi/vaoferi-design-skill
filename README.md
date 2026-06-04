@@ -68,7 +68,7 @@ If a new component, token, or layout pattern is required, use the Approval Flow 
 - creates a portable `DESIGN.md` contract that Stitch, Open Design, Codex, Claude Code, and Cursor can all read;
 - enforces token discipline so colors, spacing, radius, and typography stay consistent;
 - applies Golden Canon-inspired structure so layouts have predictable rhythm;
-- keeps gerad Naples-style traceable class naming and CSS ownership;
+- keeps flat, traceable class naming and clear CSS ownership;
 - requires visual QA with explicit Pass / Fail / Partial evidence instead of "looks fine";
 
 ## What this skill does NOT do

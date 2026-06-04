@@ -619,6 +619,28 @@ If visual QA is not possible, state the limitation clearly.
 
 Do not claim visual quality without seeing the result.
 
+### Visual QA Threshold Rule
+
+First fix must keep:
+- layout alignment;
+- readable content;
+- accessible controls;
+- preserved media quality.
+
+Second attempt:
+- if the result drifts or breaks responsive behavior, roll back the last change instead of adding another layer of fixes.
+
+Third attempt:
+- stop.
+- report:
+  - current symptom;
+  - last change;
+  - suspected root cause;
+  - proposed next step that cannot break layout.
+
+Escalation:
+- if the symptom returns twice, escalate to the user before the next fix.
+
 ### Visual QA Checklist
 
 Use this checklist to verify the result concretely.

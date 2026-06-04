@@ -194,6 +194,23 @@ Do not treat `SKILL.md` as a random prompt file.
 
 `SKILL.md` is the human-written seed skill.
 
+SkillOpt is allowed only as a measured improvement loop:
+
+```text
+real task traces -> scored examples -> train/val/test split -> best_skill.md -> human review -> intentional merge
+```
+
+Do not run SkillOpt from vague impressions. Use it after repeated real failures, repeated friction, or a scheduled review with enough examples.
+
+Recommended triggers:
+
+```text
+5+ real uses with repeated friction
+3+ failures of the same type
+before a major SKILL.md rewrite
+monthly active-use review
+```
+
 If SkillOpt optimization is used, the optimized artifact should be saved as:
 
 ```text
@@ -202,8 +219,13 @@ best_skill.md
 
 Do not replace `SKILL.md` with `best_skill.md` automatically.
 
+Do not commit raw SkillOpt outputs unless they are small, reviewed, and intentionally useful. Never commit `.env`, API keys, raw trace dumps, large run folders, or temporary optimizer artifacts.
+
 Before accepting an optimized version, verify that it did not remove or weaken the core rules:
 
+- Design System First;
+- `DESIGN.md` contract;
+- primitive library bootstrap;
 - grid first;
 - alignment lines;
 - Golden Canon-inspired structure;
@@ -220,9 +242,11 @@ If SkillOpt produces a better version, update the repository intentionally:
 
 1. Review `best_skill.md`.
 2. Compare it with `SKILL.md`.
-3. Check that core principles remain.
-4. Keep the better parts.
-5. Commit only the reviewed result.
+3. Check the validation result and the held-out examples.
+4. Check that core principles remain.
+5. Keep the better parts.
+6. Update `README.md`, `rubric.md`, examples, and `docs/history/project_log.md` if behavior changed.
+7. Commit only the reviewed result.
 
 ## Expected files
 

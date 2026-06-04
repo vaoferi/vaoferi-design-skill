@@ -444,6 +444,78 @@ If `README.md` describes one set of rules, and `SKILL.md` has others:
 
 A README with a different technical description than SKILL.md is a potential conflict source. Resolve it before treating the task as done.
 
+### 5. SkillOpt Improvement Loop
+
+Use Microsoft SkillOpt as a periodic improvement tool, not as an automatic editor.
+
+SkillOpt reference behavior:
+- it treats the skill document as trainable text while the target model stays frozen;
+- it uses rollout -> reflect -> aggregate -> select -> update -> evaluate;
+- candidate edits must pass validation gates before becoming the best artifact;
+- the deployable output is `best_skill.md`.
+
+Routine tracking after real skill use:
+
+```text
+1. Capture the task prompt.
+2. Capture which skill rules were used.
+3. Capture result quality: Pass / Partial / Fail.
+4. Capture concrete misses: skipped DESIGN.md, weak primitives, CSS drift, poor QA, unclear approval, etc.
+5. Capture the smallest rule change that might prevent the miss.
+```
+
+Record notable observations in `docs/history/project_log.md`.
+
+Run a SkillOpt review only when there is enough signal:
+
+```text
+- after 5+ real uses with repeated friction;
+- after 3+ failures of the same type;
+- before a major rewrite of SKILL.md;
+- monthly, if the skill is actively used.
+```
+
+Do not run SkillOpt on one anecdote.
+
+When running SkillOpt:
+
+```text
+pip install skillopt
+python scripts/train.py ...
+```
+
+Use project-specific design tasks as the benchmark split. Include both good and bad examples.
+
+Required split shape:
+
+```text
+train/ - examples allowed to teach from
+val/   - validation gate; candidate must improve here
+test/  - final check; do not tune against it
+```
+
+Acceptance rule:
+
+```text
+best_skill.md is evidence, not authority.
+```
+
+Before accepting `best_skill.md`:
+- compare it against `SKILL.md`;
+- reject any change that weakens Design System First, primitive reuse, token discipline, approval flow, CSS guardrails, visual QA, accessibility, or no-Done-without-evidence;
+- keep rejected edit notes so the same weak idea is not retried blindly;
+- manually merge only the useful parts into `SKILL.md`;
+- update `README.md`, `rubric.md`, examples, and `project_log.md` if behavior changed.
+
+Optional monitoring:
+
+```text
+pip install "skillopt[webui]"
+python -m skillopt_webui.app
+```
+
+Use the WebUI only for reviewing runs. Do not commit raw run outputs, API keys, `.env`, or large generated artifacts.
+
 ## 1. Understand the Goal
 
 Before designing, define:
@@ -1064,6 +1136,7 @@ Track only verified sources:
 - NotebookLM output: log when it was used; do not treat it as a primary source for rules.
 - Modern layout guidance: prefer CSS Grid for macro layout, Flexbox for component internals, and `repeat(auto-fit, minmax(...))` for flexible content collections.
 - Component naming guidance: name variants by role or meaning, not by visual detail or color, so reuse stays stable when one variant changes.
+- SkillOpt guidance: use `microsoft/SkillOpt` only with recorded rollouts, train/val/test splits, validation gates, and reviewed `best_skill.md`.
 
 ## Changelog
 
@@ -1071,3 +1144,4 @@ Track only verified sources:
 - 2026-06-04 — tightened CSS guardrails for operational UI. Added selector tracing, `!important` emergency-only rule, and clean-code constraints for style changes.
 - 2026-06-04 — added Design System First workflow for `DESIGN.md`, Stitch/Open Design compatibility, primitive library bootstrap, and generator handoff rules.
 - 2026-06-04 — improved README.md: added explicit “What this skill does / does NOT do” statements to reduce interpretation drift.
+- 2026-06-04 — added SkillOpt Improvement Loop for trace collection, periodic review, validation-gated `best_skill.md`, and manual merge safeguards.

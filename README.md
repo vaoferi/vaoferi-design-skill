@@ -69,6 +69,7 @@ If a new component, token, or layout pattern is required, use the Approval Flow 
 - enforces token discipline so colors, spacing, radius, and typography stay consistent;
 - applies Golden Canon-inspired structure so layouts have predictable rhythm;
 - keeps flat, traceable class naming and clear CSS ownership;
+- tracks real usage and periodically uses SkillOpt-style review to improve the skill without auto-replacing `SKILL.md`;
 - requires visual QA with explicit Pass / Fail / Partial evidence instead of "looks fine";
 
 ## What this skill does NOT do
@@ -77,6 +78,7 @@ If a new component, token, or layout pattern is required, use the Approval Flow 
 - it will not approve new colors, components, or spacing without an explicit proposal;
 - it will not skip `DESIGN.md` because "we can just style the page directly";
 - it will not treat `overflow-x: hidden` or fixed heights as acceptable layout fixes;
+- it will not accept `best_skill.md` from SkillOpt without human diff review and validation evidence;
 - it will not claim a design is Done without visual evidence.
 
 ## What this skill emphasizes
@@ -84,6 +86,7 @@ If a new component, token, or layout pattern is required, use the Approval Flow 
 - `DESIGN.md` is the shared contract for Stitch/Open Design-style agents.
 - Tokens must be mirrored to code-friendly files like `tokens.css` / `tokens.json` when needed.
 - Primitive libraries prevent one-off buttons, cards, inputs, and badges on every page.
+- SkillOpt is used as a periodic improvement loop: real traces, scored examples, validation gate, reviewed `best_skill.md`.
 - Golden Canon is a macro guide, not a rigid pixel rule.
 - `grid`, `subgrid`, `fr`, `minmax()`, `auto-fit`, and `clamp()` are the main primitives.
 - `grid` handles page structure; `flex` handles the interior of components.

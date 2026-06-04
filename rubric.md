@@ -83,3 +83,12 @@ Use this rubric to evaluate whether a design task is Done.
 - [ ] `README.md` remains accurate.
 - [ ] `docs/history/project_log.md` updated if an architectural decision or notable issue was found.
 - [ ] `examples/good-answer.md` and `examples/bad-answer.md` match the current guardrails.
+
+## 11. SkillOpt Improvement Loop
+- [ ] Real task observations are logged when the skill succeeds, partially fails, or misses an important rule.
+- [ ] Repeated failures are grouped by cause before proposing skill changes.
+- [ ] SkillOpt is considered only after enough signal: 5+ real uses, 3+ similar failures, monthly active-use review, or before a major rewrite.
+- [ ] Any SkillOpt run uses train/val/test separation, not one-off anecdotes.
+- [ ] `best_skill.md` is reviewed against `SKILL.md` before any manual merge.
+- [ ] No SkillOpt change weakens Design System First, primitive reuse, token discipline, approval flow, CSS guardrails, visual QA, or accessibility.
+- [ ] Raw SkillOpt run folders, `.env`, API keys, and large optimizer artifacts are not committed.

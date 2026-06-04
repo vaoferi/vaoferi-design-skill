@@ -5,6 +5,8 @@ Prompt:
 
 Bad response:
 
+- "DESIGN.md потім зробимо, зараз швидше намалюю сторінку як вийде."
+- "Кнопку, карточку й input зроблю прямо тут, бо на цій сторінці так зручніше."
 - "Зараз додам новий `.campaign-form` і кілька `!important`, щоб швидко підправити відступи."
 - "Ще навішаю глибокі селектори, щоб не розбиратись, який стиль чому належить."
 - "Якщо щось вилізе за межі, сховаю `overflow-x: hidden`."
@@ -14,6 +16,8 @@ Bad response:
 
 Why this is bad:
 
+- it skips the design contract and primitive library;
+- it creates page-specific components before shared primitives;
 - it does not trace existing selectors or components;
 - it multiplies new CSS instead of fixing the source;
 - it uses `!important` as a habit;

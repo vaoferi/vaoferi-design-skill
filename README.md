@@ -48,7 +48,7 @@ If a new component, token, or layout pattern is required, use the Approval Flow 
 6. Check responsive behavior.
 7. Protect photos and logos.
 8. Use design tokens only.
-9. Run visual QA and only then mark Done.
+9. Verify in browser or preview before marking Done.
 
 ## What this skill emphasizes
 

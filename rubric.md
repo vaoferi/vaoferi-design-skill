@@ -44,12 +44,14 @@ Use this rubric to evaluate whether a design task is Done.
 ## 8. CSS Guardrails
 - [ ] Existing selectors, components, tokens, or inherited rules were traced before adding new CSS.
 - [ ] Reusable classes and tokens are preferred over one-off styles.
+- [ ] Class naming stays flat and traceable enough to show ownership quickly.
 - [ ] No random magic numbers.
 - [ ] No duplicate selectors or duplicate button styles.
 - [ ] No hardcoded colors or spacing when tokens already exist.
 - [ ] No `overflow-x: hidden` used as a layout fix.
 - [ ] `!important` is not used except for one explicit emergency escape hatch that is documented.
 - [ ] Specificity stays low and each rule or class has one job.
+- [ ] `@container` is used when a component must adapt to its own space instead of the viewport.
 
 ## 9. Visual QA
 - [ ] Result visually checked.

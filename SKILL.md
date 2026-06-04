@@ -8,6 +8,10 @@ version: 0.1.0
 
 Use this skill when the task involves:
 
+- creating a `DESIGN.md`;
+- extracting or formalizing a design system for AI tools;
+- making design systems compatible with Google Stitch and Open Design;
+- building or extending a primitive/component library;
 - UI design;
 - landing pages;
 - website sections;
@@ -37,7 +41,7 @@ Treat `!important` as an emergency escape hatch, not a normal fix.
 Correct order:
 
 ```text
-goal → hierarchy → grid → alignment → components → tokens → style → visual QA
+goal → DESIGN.md → primitives → hierarchy → grid → alignment → components → tokens → style → visual QA
 ```
 
 If this order is skipped, the design is not finished.
@@ -45,13 +49,15 @@ If this order is skipped, the design is not finished.
 Покроковий сценарій роботи:
 
 1. Зрозумій ціль і дію користувача.
-2. Побудуй grid перед кольорами та ефектами.
-3. Намалюй alignment lines.
-4. Спочатку знайди існуючі компоненти.
-5. Застосуй tokens перед ad-hoc значеннями.
-6. Попроси approval перед новими компонентами, кольорами або scale.
-7. Перевір responsive behavior на релевантних breakpoints.
-8. Закінчуй тільки після visual QA.
+2. Створи або знайди `DESIGN.md` як єдиний дизайн-контракт.
+3. Почни primitive library перед сторінками.
+4. Побудуй grid перед кольорами та ефектами.
+5. Намалюй alignment lines.
+6. Спочатку знайди існуючі компоненти.
+7. Застосуй tokens перед ad-hoc значеннями.
+8. Попроси approval перед новими компонентами, кольорами або scale.
+9. Перевір responsive behavior на релевантних breakpoints.
+10. Закінчуй тільки після visual QA.
 
 ### Інструменти
 
@@ -80,6 +86,153 @@ If this order is skipped, the design is not finished.
 ## Conflict Rule
 
 If sources or libraries contradict each other, stop and ask the user which approach to follow. Do not silently choose one.
+
+## Design System First
+
+For any new product, redesign, landing, dashboard, admin UI, or multi-page flow, create or update the design system before creating screens.
+
+The design system must be useful to both:
+
+- Google Stitch / `DESIGN.md` consumers;
+- Open Design / agent workflows that bind `DESIGN.md` + `SKILL.md` + live artifacts.
+
+Minimum source-of-truth files:
+
+```text
+DESIGN.md
+tokens.css
+tokens.json
+components/ or primitives/
+```
+
+If the project already has a different design-system location, use the existing location and do not duplicate it.
+
+### `DESIGN.md` Contract
+
+`DESIGN.md` is the portable design contract. It must combine:
+
+- YAML front matter for machine-readable tokens;
+- Markdown sections for human-readable intent and usage rules.
+
+Use this canonical section order unless the project already has a stricter format:
+
+```text
+Overview
+Colors
+Typography
+Layout
+Elevation & Depth
+Shapes
+Components
+Do's and Don'ts
+```
+
+Token references must use `{path.to.token}` style where supported, for example:
+
+```yaml
+components:
+  button-primary:
+    backgroundColor: "{colors.primary}"
+    textColor: "{colors.on-primary}"
+    typography: "{typography.label-md}"
+    rounded: "{rounded.md}"
+    padding: "{spacing.3}"
+```
+
+Hard rules:
+
+- Tokens are normative. Prose explains intent.
+- Do not create page designs before primary colors, typography, spacing, radius, and base components are named.
+- Do not use purely aesthetic names like `blue1` or `nice-card`; use semantic names like `primary`, `surface`, `button-primary`, `card-default`.
+- Unknown sections may be preserved, but duplicate canonical sections are a defect.
+- Component variants are separate named entries when the format expects that, for example `button-primary-hover`.
+
+When Node/npm is available, validate `DESIGN.md` with the Google CLI:
+
+```bash
+npx @google/design.md lint DESIGN.md
+```
+
+On Windows package scripts, prefer the `designmd` binary alias if `.md` command resolution breaks.
+
+### Primitive Library Bootstrap
+
+Before making the first screen, start a primitive library. It prevents every page from inventing a new button, card, input, badge, or spacing value.
+
+Minimum primitives:
+
+```text
+Button
+IconButton
+TextField
+Textarea
+Select
+Checkbox
+Radio
+Switch
+Card
+Badge
+Link
+Heading
+Text
+Stack
+Cluster
+Grid
+Container
+Section
+Divider
+Modal/Dialog
+Toast/Alert
+Tabs
+Accordion
+Tooltip
+Dropdown
+Table/DataList
+Pagination
+EmptyState
+LoadingState
+ErrorState
+```
+
+Each primitive must have:
+
+- purpose;
+- allowed variants;
+- states;
+- token dependencies;
+- accessibility notes;
+- one minimal code/example usage;
+- where it is used first.
+
+Do not build a large component family upfront. Start with the smallest primitives needed for the current flow, then extend only when reuse is real.
+
+### Generator Compatibility Prompt
+
+When asking Stitch, Open Design, Codex, Claude Code, Cursor, or another agent to generate UI, include:
+
+```text
+Use DESIGN.md as the source of truth.
+Use existing primitives before creating new elements.
+If a primitive or token is missing, propose it first.
+Do not invent new colors, spacing, radius, shadows, button styles, or card styles.
+Return code that maps back to named tokens and primitives.
+```
+
+If a generator returns HTML/CSS that uses unnamed values, convert those values back into tokens or reject the output as draft-only.
+
+### Handoff Requirements
+
+A design system is not ready for a coder until it includes:
+
+- `DESIGN.md` with canonical sections;
+- exact token values for colors, typography, spacing, radius, and elevation;
+- primitive list with reuse rules;
+- component-state rules for hover, focus, active, disabled, loading, empty, error;
+- responsive breakpoints and container rules;
+- accessibility requirements;
+- examples of allowed and forbidden patterns.
+
+If any item is missing, report it as a gap instead of pretending the system is complete.
 
 ## Golden Canon Grid
 
@@ -361,6 +514,8 @@ Treat the project component library as the first source of truth.
 
 If a component exists, reuse it unchanged unless the user explicitly requests a redesign.
 
+If the project has `DESIGN.md`, `tokens.css`, `tokens.json`, `components/`, or `primitives/`, read those before checking page-level code.
+
 If a component does not exist, continue through the resolution pipeline below.
 
 ## 5. Component Resolution Pipeline
@@ -368,7 +523,7 @@ If a component does not exist, continue through the resolution pipeline below.
 When a new UI element is needed, resolve it in this exact order.
 
 **1. Project's component library / design system**
-- Where to look: the project's dedicated UI library, storybook, `src/design-system`, approved components folder.
+- Where to look: `DESIGN.md`, `tokens.css`, `tokens.json`, `src/design-system`, `components/`, `primitives/`, storybook, approved components folder.
 - Why: these components already passed design review and consistency checks.
 - Rule: use them unchanged unless the user explicitly requests a redesign.
 
@@ -395,6 +550,7 @@ When a new UI element is needed, resolve it in this exact order.
 **6. Generate from scratch**
 - Only if all above return nothing usable.
 - Even then, generated elements must follow this skill's layout and token rules.
+- If the generated element will be reused, add it to the primitive library first, then use it on the page.
 
 ## 6. New Component Approval
 
@@ -547,6 +703,8 @@ Hard rules:
 - Do not write new CSS if an existing selector, token, variant, or component can solve the change cleanly.
 - `!important` is forbidden by default. Use it only for one explicitly justified emergency escape hatch for the whole site.
 - Do not use one-off margin hacks, fixed heights for core layout, `overflow-x: hidden` as a fix, random z-index escalation, duplicate selectors, dead CSS, or hardcoded spacing/color values when tokens already exist.
+- Prefer flat, traceable class naming for components, BEM-style or equivalent, so ownership stays obvious.
+- Use `@container` for component-local adaptation when the same component appears in different widths or wrappers; use viewport media queries for page-level layout.
 
 Code hygiene:
 
@@ -557,6 +715,8 @@ Code hygiene:
 - Fix the real cause, not the symptom.
 
 ## 11. Use Design Tokens
+
+Prefer the token names and values from `DESIGN.md` first.
 
 Use tokens for:
 
@@ -574,6 +734,15 @@ Do not invent random CSS values if a token already exists.
 If a token is missing, propose it and ask for approval.
 
 Design tokens must keep the project consistent across pages and screen sizes.
+
+Token output should be portable:
+
+- `DESIGN.md` for agents and Stitch/Open Design workflows;
+- `tokens.css` for CSS custom properties;
+- `tokens.json` for code tooling or future exports;
+- optional Tailwind config only if the project already uses Tailwind.
+
+If `npx @google/design.md lint DESIGN.md` is available, run it before claiming the design contract is valid. Treat warnings as review items, not automatic failure, unless they break the current project.
 
 ### 11.1 Missing Token/Component Fallback
 
@@ -808,6 +977,8 @@ Before the final answer, verify:
 
 ```text
 Did I understand the goal?
+Did I create or respect DESIGN.md for a design-system or multi-screen task?
+Did I start or update the primitive library before inventing page-specific elements?
 Did I define hierarchy?
 Did I build a grid?
 Did I align elements?
@@ -863,6 +1034,8 @@ Health check:
 
 If the project has no token system yet, use this minimal shared contract before creating one-off values.
 
+Record it in `DESIGN.md` first, then mirror it to CSS variables.
+
 ```text
 --space-xs: 4px
 --space-sm: 8px
@@ -878,6 +1051,7 @@ Rules:
 - Map every project spacing decision to one of these eight values.
 - Map every radius decision to `--radius-sm | --radius-md | --radius-lg`.
 - Use this contract as a temporary primitive registry until a full token system is approved.
+- Create the first primitives against this contract before styling full pages.
 
 ## References and Updates
 
@@ -895,3 +1069,4 @@ Track only verified sources:
 
 - 2026-01-28 — initial curation pass completed. Added visual QA threshold rule, visual QA form, visual QA checklist.
 - 2026-06-04 — tightened CSS guardrails for operational UI. Added selector tracing, `!important` emergency-only rule, and clean-code constraints for style changes.
+- 2026-06-04 — added Design System First workflow for `DESIGN.md`, Stitch/Open Design compatibility, primitive library bootstrap, and generator handoff rules.

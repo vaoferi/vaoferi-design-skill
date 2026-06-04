@@ -165,24 +165,25 @@ Use it like this:
 
 ## NotebookLM Integration
 
-Use NotebookLM as a lightweight research layer only when its CLI is available.
+Use NotebookLM as a lightweight research layer only when its CLI is available and authenticated.
 
-**Allowed notebook commands for this skill:**
-- `notebooklm list`
-- `notebooklm get <id>`
-- `notebooklm sources <id>`
-- `notebooklm query <id> "запит"`
+**Typical workflow for this skill:**
+```text
+notebooklm list
+notebooklm use <id>
+notebooklm ask "<запит>"
+```
 
 Use this form in project log:
 
 ```text
-NotebookLM query: "<текст запиту>" -> [used / pending]
+NotebookLM ask: "<текст запиту>" -> [used / pending]
 ```
 
 Treat output as draft reference only.
 Human review and approval required before committing NotebookLM-derived rules.
 
-If NotebookLM CLI fails: do not retry the same query in a loop. Mark the query status once, switch to other sources, and continue. Treat that access as unavailable for the current session.
+If NotebookLM access fails: do not retry in a loop. Mark the status once, switch to other sources/docs/web search, and continue. Mark current session access as unavailable until auth is restored.
 
 ## Working Process
 

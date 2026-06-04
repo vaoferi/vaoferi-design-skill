@@ -725,9 +725,8 @@ Use this blueprint as a concrete starting point for a standard editorial/service
 
 ```css
 .section {
-  /* Used only when needed;
-  /* Do not force every section to full viewport height. */
-  /* min-height: 100vh;
+  /* Use min-height only when the content needs more vertical room.
+     Do not force every section to 100vh. */
 }
 
 .container {
@@ -741,6 +740,16 @@ Use this blueprint as a concrete starting point for a standard editorial/service
   display: grid;
   gap: var(--space-canon-s, 5px);
   align-items: start;
+}
+
+@media (min-width: 701px) {
+  .golden-grid {
+    grid-template-columns: 1.618fr 1fr;
+  }
+  .header,
+  .footer {
+    grid-column: 1 / -1;
+  }
 }
 
 @media (min-width: 701px) {

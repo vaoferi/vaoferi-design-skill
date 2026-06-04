@@ -13,6 +13,8 @@ Bad response:
 - "Для цього блоку поставлю фіксовану висоту, щоб усе вмістилось."
 - "Ще один окремий клас під кожне поле, щоб не чіпати існуючий CSS."
 - "Коли компонент стане вузьким, просто додам ще один viewport `@media` замість локального `@container`."
+- "На мобільному просто зменшу все, а якщо буде тісно, нехай користувач скролить по горизонталі."
+- "Кнопки можна залишити дрібними, бо це ж тільки телефон."
 
 Why this is bad:
 
@@ -24,3 +26,5 @@ Why this is bad:
 - it hides ownership behind deep selectors;
 - it treats the symptom, not the cause;
 - it turns each element into an isolated island.
+- it ignores mobile-first defaults and usable touch targets;
+- it treats cramped mobile layout as acceptable instead of intentionally simplifying it.

@@ -94,6 +94,8 @@ If a new component, token, or layout pattern is required, use the Approval Flow 
 - CSS guardrails: trace before patching, low specificity, no `!important` by default.
 - Traceable class naming and `@container` help keep component ownership and local responsiveness clear.
 - Accessibility and responsive scaling are first-class requirements.
+- Mobile-first defaults start from the narrowest supported width, keep touch targets usable, and prefer `rem`, `box-sizing`, and intentional local scroll over cramped desktop fallbacks.
+- Visual polish comes from rhythm, whitespace, typography, and restrained motion, not extra decoration.
 - The browser should do the math whenever possible.
 
 ## Files

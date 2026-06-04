@@ -48,13 +48,20 @@ Use this rubric to evaluate whether a design task is Done.
 ## 6. Responsive Behavior
 - [ ] Breakpoints checked: mobile, tablet, desktop, wide desktop.
 - [ ] Key widths checked when possible: 320px, 375px, 414px, 768px, 1024px, 1366px, 1440px, 1920px.
+- [ ] Mobile starts from the narrowest supported width and grows up with `min-width`.
+- [ ] `box-sizing: border-box` is set or clearly justified.
+- [ ] Flex rows and controls can shrink without forcing horizontal overflow.
+- [ ] Touch targets are large enough for the primary mobile controls.
+- [ ] One primary action stays visible on small screens when possible.
+- [ ] Text stays readable and the layout does not feel cramped on mobile.
 - [ ] No overlap, unreadable text, random button movement, stretched media, broken cards.
-- [ ] No unintended horizontal scroll.
+- [ ] Any horizontal scroll is intentional and local only.
 
 ## 7. Media Integrity
 - [ ] Photos keep aspect ratio and visible focal points.
 - [ ] Logos are not stretched or cropped.
 - [ ] No distorted media; layout adapts to content.
+- [ ] Mobile media scales with `max-width: 100%` / `height: auto`, and `picture` is used when a different crop is needed.
 
 ## 8. CSS Guardrails
 - [ ] Existing selectors, components, tokens, or inherited rules were traced before adding new CSS.
@@ -73,6 +80,8 @@ Use this rubric to evaluate whether a design task is Done.
 - [ ] Browser / preview / screenshot / DevTools used when available.
 - [ ] If visual QA is impossible, the limitation is stated explicitly.
 - [ ] Visual QA result is recorded using the Visual QA Form: Pass / Fail / Partial; what was checked; found issues; fixes; risks.
+- [ ] Spacing, typography, and color rhythm feel intentional, calm, and readable.
+- [ ] The mobile version looks designed, not like a squeezed desktop fallback.
 
 ## 9.1 Proposal Readiness
 - [ ] Every new component/token/pattern was proposed first: what, why, where, system impact.

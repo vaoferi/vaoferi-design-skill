@@ -14,7 +14,8 @@ Good response:
 7. `!important` не використаю.
 8. Якщо джерело стилю неочевидне, спершу трасую його до правила, а не приклею новий клас поверх.
 9. Якщо компоненту треба адаптуватися в іншому контейнері, використаю `@container`, а не хаки на весь viewport.
-10. Перевірю результат на desktop, tablet і mobile та покажу visual QA.
+10. Почну з mobile-first бази на вузькому екрані, перевірю `box-sizing`, `rem` і зрозумілий touch target для ключових дій.
+11. Перевірю результат на desktop, tablet і mobile та покажу visual QA.
 
 Expected behavior:
 
@@ -22,5 +23,6 @@ Expected behavior:
 - DESIGN.md / primitives before page-specific CSS;
 - reuse existing CSS;
 - keep class ownership obvious;
+- start mobile-first and keep narrow screens calm;
 - no new visual language;
 - no one-off hacks.

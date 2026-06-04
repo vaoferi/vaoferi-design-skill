@@ -692,6 +692,18 @@ The design fails if:
 
 A responsive layout must adapt, not fall apart politely.
 
+### Mobile-First Rules
+
+- Start from the narrowest supported width first; 320px and 360px are real targets, not edge cases.
+- Write mobile styles as the default. Add larger-screen changes with `@media (min-width: ...)`, not the other way around.
+- Set `box-sizing: border-box` before width math so padding and borders do not break narrow layouts.
+- Keep interactive controls large enough for touch. Aim for about `44px` minimum hit size when the control matters.
+- Prefer `rem` for text and spacing that must respect user font settings.
+- Let flex items shrink. Long labels and controls must not force a row wider than the screen.
+- Keep one primary action per small screen when possible. Move secondary actions into a sheet, menu, or another step instead of crowding the first view.
+- Allow local horizontal scroll only when the content is intentionally scrollable. Never use it as a repair for a broken layout.
+- Keep mobile line length, spacing, and card density calm. If the screen looks squeezed, simplify the composition before adding more chrome.
+
 ## 8. Photos, Logos, and Alt Context
 
 Do not distort photos.
@@ -699,6 +711,12 @@ Do not distort photos.
 Do not stretch logos.
 
 Do not crop important faces, hands, objects, or text without purpose.
+
+On mobile, scale media with `max-width: 100%` and `height: auto` by default.
+
+Use `object-fit: cover` when a crop must fill a card without distortion.
+
+Use `<picture>` when mobile needs a different crop or source instead of stretching the desktop image.
 
 Check:
 
@@ -869,6 +887,16 @@ If browser, preview, screenshot, or design preview tools are available, use them
 If visual QA is not possible, state the limitation clearly.
 
 Do not claim visual quality without seeing the result.
+
+### Visual Polish
+
+Good design should feel calm and intentional, not merely functional.
+
+- rhythm, spacing, and whitespace feel balanced;
+- typography is readable and restrained;
+- color accents are limited and purposeful;
+- motion, hover, and focus states are subtle;
+- the mobile version looks designed, not like a squeezed desktop fallback.
 
 ### Visual QA Threshold Rule
 
@@ -1141,6 +1169,7 @@ Track only verified sources:
 ## Changelog
 
 - 2026-01-28 — initial curation pass completed. Added visual QA threshold rule, visual QA form, visual QA checklist.
+- 2026-06-04 — added mobile-first guardrails and visual-polish checks: mobile as the default, `box-sizing`, `rem`, 44px touch targets, one primary action per small screen, and calm composition on narrow widths.
 - 2026-06-04 — tightened CSS guardrails for operational UI. Added selector tracing, `!important` emergency-only rule, and clean-code constraints for style changes.
 - 2026-06-04 — added Design System First workflow for `DESIGN.md`, Stitch/Open Design compatibility, primitive library bootstrap, and generator handoff rules.
 - 2026-06-04 — improved README.md: added explicit “What this skill does / does NOT do” statements to reduce interpretation drift.

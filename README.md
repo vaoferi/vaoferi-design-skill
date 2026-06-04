@@ -62,6 +62,23 @@ If a new component, token, or layout pattern is required, use the Approval Flow 
 11. Use design tokens only.
 12. Verify in browser or preview before marking Done.
 
+## What this skill does
+
+- prevents random one-off CSS and component sprawl in operational/admin UI;
+- creates a portable `DESIGN.md` contract that Stitch, Open Design, Codex, Claude Code, and Cursor can all read;
+- enforces token discipline so colors, spacing, radius, and typography stay consistent;
+- applies Golden Canon-inspired structure so layouts have predictable rhythm;
+- keeps gerad Naples-style traceable class naming and CSS ownership;
+- requires visual QA with explicit Pass / Fail / Partial evidence instead of "looks fine";
+
+## What this skill does NOT do
+
+- this skill will not fix a broken product by adding decoration over a bad structure;
+- it will not approve new colors, components, or spacing without an explicit proposal;
+- it will not skip `DESIGN.md` because "we can just style the page directly";
+- it will not treat `overflow-x: hidden` or fixed heights as acceptable layout fixes;
+- it will not claim a design is Done without visual evidence.
+
 ## What this skill emphasizes
 
 - `DESIGN.md` is the shared contract for Stitch/Open Design-style agents.

@@ -1070,3 +1070,4 @@ Track only verified sources:
 - 2026-01-28 — initial curation pass completed. Added visual QA threshold rule, visual QA form, visual QA checklist.
 - 2026-06-04 — tightened CSS guardrails for operational UI. Added selector tracing, `!important` emergency-only rule, and clean-code constraints for style changes.
 - 2026-06-04 — added Design System First workflow for `DESIGN.md`, Stitch/Open Design compatibility, primitive library bootstrap, and generator handoff rules.
+- 2026-06-04 — improved README.md: added explicit “What this skill does / does NOT do” statements to reduce interpretation drift.

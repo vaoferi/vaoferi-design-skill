@@ -1,0 +1,1062 @@
+{
+  "file::.gemini_rules.md": {
+    "status": "processed",
+    "content_summary": "# Правила для Antigravity\n\nЦей файл містить специфічні правила і налаштування для агента Antigravity (Gemini), оскільки деякі системні обмеження стосуються тільки нього.\n\n## 1. Уникання терміналу (run_command)\nДля агента Antigravity СУВОРО ЗАБОРОНЕНО...",
+    "content_length": 2364,
+    "created_at": "2026-06-03T21:18:24.876686+00:00",
+    "updated_at": "2026-06-03T21:27:12.007233+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_001824_7f2e1578",
+    "content_hash": "131537bf21a840393e42781d9cf46ce1",
+    "metadata": {
+      "parse_start_time": 1780521642,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780521642,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780521642,
+      "process_end_time": 1780522032,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::.gemini_rules.md-chunk-000"
+    ]
+  },
+  "dup-a0b39f289fb0c83f435f164c5d00e14f": {
+    "status": "failed",
+    "content_summary": "[DUPLICATE:filename] Original document: file::.gemini_rules.md",
+    "content_length": 2364,
+    "chunks_count": 0,
+    "chunks_list": [],
+    "created_at": "2026-06-03T21:20:42.443315+00:00",
+    "updated_at": "2026-06-03T21:20:42.443315+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_002042_2addecdd",
+    "error_msg": "File name already exists. Original doc_id: file::.gemini_rules.md, Status: processing",
+    "metadata": {
+      "is_duplicate": true,
+      "duplicate_kind": "filename",
+      "original_doc_id": "file::.gemini_rules.md",
+      "original_track_id": "insert_20260604_001824_7f2e1578"
+    }
+  },
+  "file::.openclaw\\knowledge\\code-patterns.md": {
+    "status": "processed",
+    "content_summary": "# Code Patterns & Anti-Patterns\n\n## PHP / Yii2\n\n### ✅ Good (Controller)\n```php\npublic function actionUpdate($id)\n{\n    $model = $this->findModel($id);\n    // Logic delegated to Service/Model, NOT here\n    if ($this->service->update($model, Yii::$app-...",
+    "content_length": 1037,
+    "created_at": "2026-06-03T21:27:18.268963+00:00",
+    "updated_at": "2026-06-03T21:32:59.131996+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_002718_9e561fd8",
+    "content_hash": "26c90ec2de688c438170f31bb3ba79f9",
+    "metadata": {
+      "parse_start_time": 1780522038,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780522038,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780522038,
+      "process_end_time": 1780522379,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::.openclaw\\knowledge\\code-patterns.md-chunk-000"
+    ]
+  },
+  "file::.openclaw\\knowledge\\design-system.json": {
+    "status": "processed",
+    "content_summary": "{\n  \"colors\": {\n    \"primary\": \"var(--bs-primary)\",\n    \"secondary\": \"var(--bs-secondary)\",\n    \"background\": \"var(--bs-body-bg)\",\n    \"text\": \"var(--bs-body-color)\"\n  },\n  \"breakpoints\": {\n    \"xs\": \"320px\",\n    \"sm\": \"576px\",\n    \"md\": \"768px\",\n   ...",
+    "content_length": 727,
+    "created_at": "2026-06-03T21:33:00.543541+00:00",
+    "updated_at": "2026-06-03T21:40:15.956820+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_003300_48ab6ef3",
+    "content_hash": "2cb661c2fcf12835770c9d83b5c06346",
+    "metadata": {
+      "parse_start_time": 1780522380,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780522380,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780522380,
+      "process_end_time": 1780522815,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::.openclaw\\knowledge\\design-system.json-chunk-000"
+    ]
+  },
+  "file::.openclaw\\mcp_antigravity.json": {
+    "status": "processed",
+    "content_summary": "{\n  \"mcpServers\": {\n    \"hostinger-api-mcp\": {\n      \"command\": \"npx.cmd\",\n      \"args\": [\n        \"-y\",\n        \"hostinger-api-mcp\"\n      ],\n      \"env\": {\n        \"DEBUG\": \"true\",\n        \"API_TOKEN\": \"Bi3lPaAprPgQViS5ym9ww98tFr6qMHKPHaHo6q7Te33cf4...",
+    "content_length": 2754,
+    "created_at": "2026-06-03T21:40:19.979439+00:00",
+    "updated_at": "2026-06-03T21:47:45.720861+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_004019_c482b8e0",
+    "content_hash": "d4cd199fb9f88e6cde122c1c9b667976",
+    "metadata": {
+      "parse_start_time": 1780522820,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780522820,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780522820,
+      "process_end_time": 1780523265,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::.openclaw\\mcp_antigravity.json-chunk-000"
+    ]
+  },
+  "file::album\\_header_photo.php": {
+    "status": "processed",
+    "content_summary": "<?php\n/**\n * Created by Rex IT\n * @author Konstantin Kharalampidi <kharalampidi@rexit.info>\n * @var $model \\common\\models\\PhotoAlbum\n */?>\n\n<div class=\"albulm-hero__wrap\">\n    <div class=\"albulm-hero__slider\">\n        <div class=\"albulm-hero__slider-...",
+    "content_length": 824,
+    "created_at": "2026-06-03T21:47:49.419499+00:00",
+    "updated_at": "2026-06-03T21:55:16.491939+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_004749_70b290e2",
+    "content_hash": "33265e51ff33362eaae90c9b8e2d799e",
+    "metadata": {
+      "parse_start_time": 1780523269,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780523269,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780523269,
+      "process_end_time": 1780523716,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::album\\_header_photo.php-chunk-000"
+    ]
+  },
+  "file::album\\_header_slider.php": {
+    "status": "processed",
+    "content_summary": "<?php\n\n/**\n * Created by Rex IT\n * @author Konstantin Kharalampidi <kharalampidi@rexit.info>\n */\n\n/* @var $this \\yii\\web\\View */\n/* @var $albums array|\\common\\models\\PhotoAlbum[] */\n?>\n<div class=\"albulm-hero__wrap\">\n    <div class=\"albulm-hero__slid...",
+    "content_length": 1181,
+    "created_at": "2026-06-03T21:55:20.679017+00:00",
+    "updated_at": "2026-06-03T22:02:05.404899+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_005520_4cc9b478",
+    "content_hash": "5a80f2d2ca198e32d045df84f18a89f8",
+    "metadata": {
+      "parse_start_time": 1780523720,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780523720,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780523720,
+      "process_end_time": 1780524125,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::album\\_header_slider.php-chunk-000"
+    ]
+  },
+  "file::album\\index.php": {
+    "status": "processed",
+    "content_summary": "<?php\n\n/**\n * Created by Rex IT\n * @author Konstantin Kharalampidi <kharalampidi@rexit.info>\n */\n\n/* @var $this \\yii\\web\\View */\n/* @var $models array|\\common\\models\\PhotoAlbum[] */\n/* @var $pagination \\yii\\data\\Pagination */\n/* @var $sliderAlbums ar...",
+    "content_length": 1535,
+    "created_at": "2026-06-03T22:02:06.999068+00:00",
+    "updated_at": "2026-06-03T22:09:20.311489+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_010206_7f2e801e",
+    "content_hash": "8ab8c1a8cb6522620da270adf1dfe542",
+    "metadata": {
+      "parse_start_time": 1780524127,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780524127,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780524127,
+      "process_end_time": 1780524560,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::album\\index.php-chunk-000"
+    ]
+  },
+  "file::album\\view.php": {
+    "status": "processed",
+    "content_summary": "<?php\n\n/**\n * Created by Rex IT\n * @author Konstantin Kharalampidi <kharalampidi@rexit.info>\n */\n\n/* @var $this \\yii\\web\\View */\n/* @var $model array|\\common\\models\\PhotoAlbum|null */\n$this->title = $model->title;\n$this->params['custom_header'] = [\n ...",
+    "content_length": 1193,
+    "created_at": "2026-06-03T22:09:25.432892+00:00",
+    "updated_at": "2026-06-03T22:17:04.806687+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_010925_8c835245",
+    "content_hash": "8ea8c33826753367075ef770a050281e",
+    "metadata": {
+      "parse_start_time": 1780524565,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780524565,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780524565,
+      "process_end_time": 1780525024,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::album\\view.php-chunk-000"
+    ]
+  },
+  "file::api\\config\\_cache.php": {
+    "status": "processed",
+    "content_summary": "<?php\n/**\n * @author Eugene Terentev <eugene@terentev.net>\n */\n\n$cache = [\n    'class' => yii\\caching\\FileCache::class,\n    'cachePath' => '@api/runtime/cache'\n];\n\nif (YII_ENV_DEV) {\n    $cache = [\n        'class' => yii\\caching\\DummyCache::class\n   ...",
+    "content_length": 271,
+    "created_at": "2026-06-03T22:17:09.281287+00:00",
+    "updated_at": "2026-06-03T22:24:33.305950+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_011709_0d421a0c",
+    "content_hash": "d536ca889490a1e885c049f567c0a3a0",
+    "metadata": {
+      "parse_start_time": 1780525029,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780525029,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780525029,
+      "process_end_time": 1780525473,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::api\\config\\_cache.php-chunk-000"
+    ]
+  },
+  "file::api\\config\\_urlManager.php": {
+    "status": "processed",
+    "content_summary": "<?php\nreturn [\n    'class' => 'yii\\web\\UrlManager',\n    'enablePrettyUrl' => true,\n    'showScriptName' => false,\n    'rules' => [\n        // Api\n        ['class' => 'yii\\rest\\UrlRule', 'controller' => 'api/v1/article', 'only' => ['index', 'view', 'o...",
+    "content_length": 269,
+    "created_at": "2026-06-03T22:24:37.107264+00:00",
+    "updated_at": "2026-06-03T22:30:29.067056+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_012437_410a8e09",
+    "content_hash": "9dcf3606979a5af0013c5bb0be3948ad",
+    "metadata": {
+      "parse_start_time": 1780525477,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780525477,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780525477,
+      "process_end_time": 1780525829,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::api\\config\\_urlManager.php-chunk-000"
+    ]
+  },
+  "file::api\\config\\base.php": {
+    "status": "processed",
+    "content_summary": "<?php\nreturn [\n    'id' => 'frontend',\n    'basePath' => dirname(__DIR__),\n    'components' => [\n        'urlManager' => require(__DIR__ . '/_urlManager.php'),\n        'cache' => require(__DIR__ . '/_cache.php'),\n    ],\n];",
+    "content_length": 222,
+    "created_at": "2026-06-03T22:30:29.942597+00:00",
+    "updated_at": "2026-06-03T22:38:20.699062+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_013029_95f54a46",
+    "content_hash": "0bd66c8b1d5764e78b8d1edb3ff0c9b5",
+    "metadata": {
+      "parse_start_time": 1780525829,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780525829,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780525830,
+      "process_end_time": 1780526300,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::api\\config\\base.php-chunk-000"
+    ]
+  },
+  "file::api\\config\\bootstrap.php": {
+    "status": "processed",
+    "content_summary": "<?php\n/**\n * @author Eugene Terentev <eugene@terentev.net>\n */",
+    "content_length": 62,
+    "created_at": "2026-06-03T22:38:24.623405+00:00",
+    "updated_at": "2026-06-03T22:44:14.187954+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_013824_1574f946",
+    "content_hash": "3246853a68a2c4110b4a39e3c0b05d31",
+    "metadata": {
+      "parse_start_time": 1780526304,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780526304,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780526304,
+      "process_end_time": 1780526654,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::api\\config\\bootstrap.php-chunk-000"
+    ]
+  },
+  "file::api\\config\\console.php": {
+    "status": "processed",
+    "content_summary": "<?php\nreturn [\n\n];",
+    "content_length": 18,
+    "created_at": "2026-06-03T22:44:14.778491+00:00",
+    "updated_at": "2026-06-03T22:57:41.305015+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_014414_cb8cdc0c",
+    "content_hash": "4f7906efdff8fd98d5ed37ed4928c3ba",
+    "metadata": {
+      "parse_start_time": 1780527186,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780527187,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780527191,
+      "process_end_time": 1780527461,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::api\\config\\console.php-chunk-000"
+    ]
+  },
+  "file::api\\config\\web.php": {
+    "status": "processed",
+    "content_summary": "<?php\n$config = [\n    'homeUrl' => Yii::getAlias('@apiUrl'),\n    'controllerNamespace' => 'api\\controllers',\n    'defaultRoute' => 'site/index',\n    'bootstrap' => ['maintenance'],\n    'modules' => [\n        'v1' => \\api\\modules\\v1\\Module::class\n    ...",
+    "content_length": 1119,
+    "created_at": "2026-06-03T22:53:06.889398+00:00",
+    "updated_at": "2026-06-03T23:00:49.849291+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_015306_8b249d39",
+    "content_hash": "6c8971e67df31dd555409740776c2b06",
+    "metadata": {
+      "parse_start_time": 1780527186,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780527187,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780527187,
+      "process_end_time": 1780527649,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::api\\config\\web.php-chunk-000"
+    ]
+  },
+  "file::api\\controllers\\SiteController.php": {
+    "status": "processed",
+    "content_summary": "<?php declare(strict_types=1);\n\nnamespace api\\controllers;\n\nuse Yii;\nuse yii\\web\\Controller;\nuse yii\\web\\NotFoundHttpException;\n\nclass SiteController extends Controller\n{\n    public function actionIndex()\n    {\n        return $this->redirect(\\Yii::ge...",
+    "content_length": 811,
+    "created_at": "2026-06-03T23:00:49.987140+00:00",
+    "updated_at": "2026-06-03T23:15:54.353634+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_020049_96682b3e",
+    "content_hash": "38f2cc61d3ba032c8a04fa76290b5fcb",
+    "metadata": {
+      "parse_start_time": 1780528306,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780528306,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780528309,
+      "process_end_time": 1780528554,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::api\\controllers\\SiteController.php-chunk-000"
+    ]
+  },
+  "file::api\\modules\\v1\\controllers\\ArticleController.php": {
+    "status": "processed",
+    "content_summary": "<?php\n\nnamespace api\\modules\\v1\\controllers;\n\nuse api\\modules\\v1\\resources\\Article;\nuse yii\\data\\ActiveDataProvider;\nuse yii\\rest\\ActiveController;\nuse yii\\rest\\IndexAction;\nuse yii\\rest\\OptionsAction;\nuse yii\\rest\\Serializer;\nuse yii\\rest\\ViewAction...",
+    "content_length": 1844,
+    "created_at": "2026-06-03T23:11:46.403606+00:00",
+    "updated_at": "2026-06-03T23:17:59.757189+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_021146_b1410507",
+    "content_hash": "33e1c2b7daace6096ae6ea8735f09964",
+    "metadata": {
+      "parse_start_time": 1780528306,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780528306,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780528306,
+      "process_end_time": 1780528679,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::api\\modules\\v1\\controllers\\ArticleController.php-chunk-000"
+    ]
+  },
+  "file::api\\modules\\v1\\controllers\\UserController.php": {
+    "status": "processed",
+    "content_summary": "<?php\n\nnamespace api\\modules\\v1\\controllers;\n\nuse common\\models\\User;\nuse yii\\filters\\auth\\CompositeAuth;\nuse yii\\filters\\auth\\HttpBasicAuth;\nuse yii\\filters\\auth\\HttpBearerAuth;\nuse yii\\filters\\auth\\HttpHeaderAuth;\nuse yii\\filters\\auth\\QueryParamAut...",
+    "content_length": 1297,
+    "created_at": "2026-06-03T23:17:59.905824+00:00",
+    "updated_at": "2026-06-03T23:24:52.952121+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_021759_683f6753",
+    "content_hash": "b952c89b07d9c0b6881d85cbbed722a7",
+    "metadata": {
+      "parse_start_time": 1780528679,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780528679,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780528680,
+      "process_end_time": 1780529092,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::api\\modules\\v1\\controllers\\UserController.php-chunk-000"
+    ]
+  },
+  "file::api\\modules\\v1\\models\\ApiUserIdentity.php": {
+    "status": "processed",
+    "content_summary": "<?php\n\nnamespace api\\modules\\v1\\models;\n\nuse common\\models\\User;\nuse Yii;\nuse yii\\filters\\RateLimitInterface;\n\n/**\n * @author Eugene Terentev <eugene@terentev.net>\n */\nclass ApiUserIdentity extends User implements RateLimitInterface\n{\n\n    /**\n     *...",
+    "content_length": 2333,
+    "created_at": "2026-06-03T23:24:54.684846+00:00",
+    "updated_at": "2026-06-03T23:31:12.099211+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_022454_c5688ec0",
+    "content_hash": "460d1cb1fb768108ca5fcf7f9e56f3a1",
+    "metadata": {
+      "parse_start_time": 1780529094,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780529094,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780529094,
+      "process_end_time": 1780529472,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::api\\modules\\v1\\models\\ApiUserIdentity.php-chunk-000"
+    ]
+  },
+  "file::api\\modules\\v1\\Module.php": {
+    "status": "processed",
+    "content_summary": "<?php\n\nnamespace api\\modules\\v1;\n\nuse Yii;\nuse yii\\filters\\ContentNegotiator;\nuse yii\\filters\\RateLimiter;\nuse yii\\web\\Response;\n\nclass Module extends \\yii\\base\\Module\n{\n    /** @var string */\n    public $controllerNamespace = 'api\\modules\\v1\\control...",
+    "content_length": 1041,
+    "created_at": "2026-06-03T23:31:14.657416+00:00",
+    "updated_at": "2026-06-03T23:36:41.576130+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_023114_35be1681",
+    "content_hash": "03d30b33c72115dd3b7f511d7852280e",
+    "metadata": {
+      "parse_start_time": 1780529474,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780529474,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780529474,
+      "process_end_time": 1780529801,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::api\\modules\\v1\\Module.php-chunk-000"
+    ]
+  },
+  "file::api\\modules\\v1\\resources\\Article.php": {
+    "status": "processed",
+    "content_summary": "<?php\n\nnamespace api\\modules\\v1\\resources;\n\nuse yii\\helpers\\Url;\nuse yii\\web\\Link;\nuse yii\\web\\Linkable;\n\n/**\n * @author Eugene Terentev <eugene@terentev.net>\n */\nclass Article extends \\common\\models\\Article implements Linkable\n{\n    public function ...",
+    "content_length": 666,
+    "created_at": "2026-06-03T23:36:43.090299+00:00",
+    "updated_at": "2026-06-03T23:42:57.733167+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_023643_d484d6b3",
+    "content_hash": "751f9cfa48ef52d2f8fb5b88a13bd89c",
+    "metadata": {
+      "parse_start_time": 1780529803,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780529803,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780529803,
+      "process_end_time": 1780530177,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::api\\modules\\v1\\resources\\Article.php-chunk-000"
+    ]
+  },
+  "file::api\\modules\\v1\\resources\\User.php": {
+    "status": "processed",
+    "content_summary": "<?php\n\nnamespace api\\modules\\v1\\resources;\n\n/**\n * @author Eugene Terentev <eugene@terentev.net>\n */\nclass User extends \\common\\models\\User\n{\n    public function fields()\n    {\n        return ['id', 'username', 'created_at'];\n    }\n\n    public functi...",
+    "content_length": 312,
+    "created_at": "2026-06-03T23:43:02.274514+00:00",
+    "updated_at": "2026-06-03T23:49:40.833528+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_024302_3675cb41",
+    "content_hash": "0daef93292a1ba46606130653fe2c64f",
+    "metadata": {
+      "parse_start_time": 1780530182,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780530182,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780530182,
+      "process_end_time": 1780530580,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::api\\modules\\v1\\resources\\User.php-chunk-000"
+    ]
+  },
+  "file::api\\web\\index-test.php": {
+    "status": "processed",
+    "content_summary": "<?php\nrequire(__DIR__ . '/../../tests/bootstrap.php');\n\n// NOTE: Make sure this file is not accessible when deployed to production\nif (YII_ENV !== 'test') {\n    die('You are not allowed to access this file.');\n}\n\n// Environment\nrequire(__DIR__ . '/.....",
+    "content_length": 950,
+    "created_at": "2026-06-03T23:49:41.777261+00:00",
+    "updated_at": "2026-06-03T23:56:41.316541+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_024941_7a009eac",
+    "content_hash": "34495af65090b93f25726aacc614363e",
+    "metadata": {
+      "parse_start_time": 1780530581,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780530581,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780530581,
+      "process_end_time": 1780531001,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::api\\web\\index-test.php-chunk-000"
+    ]
+  },
+  "file::api\\web\\index.php": {
+    "status": "processed",
+    "content_summary": "<?php\n// Composer\nrequire(__DIR__ . '/../../vendor/autoload.php');\n\n// Environment\nrequire(__DIR__ . '/../../common/env.php');\n\n// Yii\nrequire(__DIR__ . '/../../vendor/yiisoft/yii2/Yii.php');\n\n// Bootstrap application\nrequire(__DIR__ . '/../../common...",
+    "content_length": 613,
+    "created_at": "2026-06-03T23:56:46.206926+00:00",
+    "updated_at": "2026-06-04T00:10:13.073077+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_025646_d4770939",
+    "content_hash": "6a63194dd05d8ea41065cda811ce5347",
+    "metadata": {
+      "parse_start_time": 1780531568,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780531568,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780531573,
+      "process_end_time": 1780531813,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::api\\web\\index.php-chunk-000"
+    ]
+  },
+  "file::article\\_header_slider.php": {
+    "status": "processed",
+    "content_summary": "<?php\n/**\n * Created by Rex IT\n * @author Konstantin Kharalampidi <kharalampidi@rexit.info>\n * @var $this \\yii\\web\\View\n * @var $articles \\common\\models\\Article[]\n */\n?>\n<div class=\"news-hero__wrap\">\n    <div class=\"news-hero__slider\">\n        <?php ...",
+    "content_length": 1165,
+    "created_at": "2026-06-04T00:06:08.547709+00:00",
+    "updated_at": "2026-06-04T00:19:43.918157+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_030608_a45b880f",
+    "content_hash": "3b6a708adda099ce5923d0aad558e73f",
+    "metadata": {
+      "parse_start_time": 1780532080,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780532080,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780532084,
+      "process_end_time": 1780532383,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::article\\_header_slider.php-chunk-000"
+    ]
+  },
+  "file::article\\category.php": {
+    "status": "processed",
+    "content_summary": "<?php\n/**\n * Created by PhpStorm.\n * User: rexit\n * Date: 15.03.19\n * Time: 15:31\n * @var $category \\common\\models\\ArticleCategory\n * @var $articles \\common\\models\\Article[]\n * @var $this \\yii\\web\\View\n * @var $pagination \\yii\\data\\Pagination\n */\n$si...",
+    "content_length": 2827,
+    "created_at": "2026-06-04T00:14:40.516992+00:00",
+    "updated_at": "2026-06-04T00:22:33.050046+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_031440_c890ff22",
+    "content_hash": "a6ab7d34fc0b943c37bb7da1848e5cba",
+    "metadata": {
+      "parse_start_time": 1780532080,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780532080,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780532080,
+      "process_end_time": 1780532553,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::article\\category.php-chunk-000"
+    ]
+  },
+  "file::article\\donate.php": {
+    "status": "processed",
+    "content_summary": "<?php\n\n/**\n * Created by Rex IT\n * @author Konstantin Kharalampidi <kharalampidi@rexit.info>\n */\n\n/* @var $this \\yii\\web\\View */\n/* @var $category array|\\common\\models\\ArticleCategory|null */\n/* @var $model \\frontend\\models\\CategoryDonateForm */\n?>\n<...",
+    "content_length": 3099,
+    "created_at": "2026-06-04T00:22:33.211747+00:00",
+    "updated_at": "2026-06-04T00:28:06.995917+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_032233_6f0fb542",
+    "content_hash": "99981f35f70440a41e724c0c99938be9",
+    "metadata": {
+      "parse_start_time": 1780532553,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780532553,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780532553,
+      "process_end_time": 1780532886,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::article\\donate.php-chunk-000"
+    ]
+  },
+  "file::article\\index.php": {
+    "status": "processed",
+    "content_summary": "<?php\n/* @var $this yii\\web\\View */\n/* @var $articles \\common\\models\\Article[] */\n/* @var $sliderArticles \\common\\models\\Article[] */\n/* @var $partnersFilters array */\n/* @var $projectsFilters array */\n/* @var $helpCentersFilters array */\n/* @var $ab...",
+    "content_length": 3700,
+    "created_at": "2026-06-04T00:28:10.392287+00:00",
+    "updated_at": "2026-06-04T00:34:54.559092+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_032810_a6878cdb",
+    "content_hash": "45f4097ba4d213eb3a1cfa466cbb5710",
+    "metadata": {
+      "parse_start_time": 1780532890,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780532890,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780532890,
+      "process_end_time": 1780533294,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::article\\index.php-chunk-000"
+    ]
+  },
+  "file::article\\nottranslate.php": {
+    "status": "processed",
+    "content_summary": "<?php\n/* @var $this yii\\web\\View */\n/* @var $articles \\common\\models\\Article[] */\n/* @var $sliderArticles \\common\\models\\Article[] */\n/* @var $partnersFilters array */\n/* @var $projectsFilters array */\n/* @var $helpCentersFilters array */\n/* @var $ab...",
+    "content_length": 3176,
+    "created_at": "2026-06-04T00:34:59.039318+00:00",
+    "updated_at": "2026-06-04T01:43:22.492328+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_033459_be026298",
+    "content_hash": "ea1f2c88bfbe0089ca2499b9ee967593",
+    "metadata": {
+      "parse_start_time": 1780537301,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780537301,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780537302,
+      "process_end_time": 1780537402,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::article\\nottranslate.php-chunk-000"
+    ]
+  },
+  "file::article\\view-user.php": {
+    "status": "failed",
+    "content_summary": "<?php\n/* @var $this yii\\web\\View */\n/* @var $currentLanguage string */\n/* @var $user common\\models\\User */\n\nuse common\\models\\UserSocialNetwork;\nuse yii\\helpers\\Html;\n\n$this->title = $user->getFullName($currentLanguage) ?: 'Пользователи';\n$this->para...",
+    "content_length": 14773,
+    "created_at": "2026-06-04T00:42:57.253165+00:00",
+    "updated_at": "2026-06-04T03:54:07.395198+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_034257_171924f5",
+    "content_hash": "6715333ced11917914e0d0e6762a2856",
+    "metadata": {
+      "parse_start_time": 1780544881,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780544881,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780544887,
+      "process_end_time": 1780545247
+    },
+    "error_msg": "C[4/5]: file::article\\view-user.php-chunk-003: extract LLM func: Worker execution timeout after 360s",
+    "chunks_count": 5,
+    "chunks_list": [
+      "file::article\\view-user.php-chunk-000",
+      "file::article\\view-user.php-chunk-001",
+      "file::article\\view-user.php-chunk-002",
+      "file::article\\view-user.php-chunk-003",
+      "file::article\\view-user.php-chunk-004"
+    ]
+  },
+  "file::article\\view.php": {
+    "status": "processed",
+    "content_summary": "<?php\n/* @var $this yii\\web\\View */\n\nuse common\\models\\UserSocialNetwork;\nuse yii\\helpers\\Html;\n\n/* @var $model common\\models\\Article */\n/* @var $project common\\models\\Project */\n/* @var $threeNews common\\models\\Article[] */\n$this->title = $model->ti...",
+    "content_length": 7506,
+    "created_at": "2026-06-04T00:54:58.035098+00:00",
+    "updated_at": "2026-06-04T03:53:26.499612+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_035458_d8d787f5",
+    "content_hash": "f2e417eaadddd3efd55fbac0d3cc9e5a",
+    "metadata": {
+      "parse_start_time": 1780544881,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780544881,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780544887,
+      "process_end_time": 1780545206,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 2,
+    "chunks_list": [
+      "file::article\\view.php-chunk-000",
+      "file::article\\view.php-chunk-001"
+    ]
+  },
+  "file::assets\\HyperAsset.php": {
+    "status": "processed",
+    "content_summary": "<?php\nnamespace app\\assets;\n\nuse yii\\web\\AssetBundle;\n\nclass HyperAsset extends AssetBundle\n{\n    public $sourcePath = '@app/Hyper_v5.5.0';\n\n    public $css = [\n        'assets/css/vendor.min.css',\n        'assets/css/app.min.css',\n        'assets/cs...",
+    "content_length": 946,
+    "created_at": "2026-06-04T01:01:11.789621+00:00",
+    "updated_at": "2026-06-04T03:10:08.831835+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_040111_d321845e",
+    "content_hash": "00b58c8382400246c2d2aae55874f43e",
+    "metadata": {
+      "parse_start_time": 1780541967,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780541967,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780541968,
+      "process_end_time": 1780542608,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::assets\\HyperAsset.php-chunk-000"
+    ]
+  },
+  "file::backend\\assets\\ActiveFormQueueAsset.php": {
+    "status": "processed",
+    "content_summary": "<?php\n\nnamespace backend\\assets;\n\nuse yii\\web\\AssetBundle;\nuse yii\\web\\View;\n\n/**\n * Provides a lightweight stub that queues ActiveForm initialisation until yii.activeForm is re-attached.\n */\nclass ActiveFormQueueAsset extends AssetBundle\n{\n    publi...",
+    "content_length": 490,
+    "created_at": "2026-06-04T01:18:58.825136+00:00",
+    "updated_at": "2026-06-04T01:47:44.385205+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_041858_6e16bbb3",
+    "content_hash": "24e9890fcf3ccfaf3c10b0d5a1540dbf",
+    "metadata": {
+      "parse_start_time": 1780537301,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780537301,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780537664,
+      "process_end_time": 1780537664,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::backend\\assets\\ActiveFormQueueAsset.php-chunk-000"
+    ]
+  },
+  "file::common\\migrations\\db\\m140709_173306_widget_menu.php": {
+    "status": "processed",
+    "content_summary": "<?php\n\nuse yii\\db\\Migration;\n\nclass m140709_173306_widget_menu extends Migration\n{\n    /**\n     * @return bool|void\n     */\n    public function up()\n    {\n        $this->createTable('{{%widget_menu}}', [\n            'id' => $this->primaryKey(),\n     ...",
+    "content_length": 616,
+    "created_at": "2026-06-04T01:41:41.376949+00:00",
+    "updated_at": "2026-06-04T03:30:18.916829+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_044141_e603f3ac",
+    "content_hash": "d671263be92dfaaa426c0f6a0ebfd949",
+    "metadata": {
+      "parse_start_time": 1780543241,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780543242,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780543243,
+      "process_end_time": 1780543818,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::common\\migrations\\db\\m140709_173306_widget_menu.php-chunk-000"
+    ]
+  },
+  "file::common\\migrations\\db\\m140709_173333_widget_text.php": {
+    "status": "processed",
+    "content_summary": "<?php\n\nuse yii\\db\\Migration;\n\nclass m140709_173333_widget_text extends Migration\n{\n    /**\n     * @return bool|void\n     */\n    public function safeUp()\n    {\n        $this->createTable('{{%widget_text}}', [\n            'id' => $this->primaryKey(),\n ...",
+    "content_length": 761,
+    "created_at": "2026-06-04T02:01:52.451564+00:00",
+    "updated_at": "2026-06-04T03:16:41.912895+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_050152_832da8a7",
+    "content_hash": "ba25faef7b86cfcc9f9720044f43d366",
+    "metadata": {
+      "parse_start_time": 1780541967,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780541967,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780542360,
+      "process_end_time": 1780543001,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::common\\migrations\\db\\m140709_173333_widget_text.php-chunk-000"
+    ]
+  },
+  "file::common\\migrations\\db\\m140712_123329_widget_carousel.php": {
+    "status": "processed",
+    "content_summary": "<?php\n\nuse yii\\db\\Migration;\n\nclass m140712_123329_widget_carousel extends Migration\n{\n    /**\n     * @return bool|void\n     */\n    public function safeUp()\n    {\n        $this->createTable('{{%widget_carousel}}', [\n            'id' => $this->primary...",
+    "content_length": 1466,
+    "created_at": "2026-06-04T02:14:24.500962+00:00",
+    "updated_at": "2026-06-04T02:35:57.870195+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_051424_8b10357d",
+    "content_hash": "c8b80dc9bb3fb0b4f02aa3d3c282c752",
+    "metadata": {
+      "parse_start_time": 1780539264,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780539264,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780539986,
+      "process_end_time": 1780540557,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::common\\migrations\\db\\m140712_123329_widget_carousel.php-chunk-000"
+    ]
+  },
+  "file::common\\migrations\\db\\m140805_084745_key_storage_item.php": {
+    "status": "processed",
+    "content_summary": "<?php\n\nuse yii\\db\\Migration;\n\nclass m140805_084745_key_storage_item extends Migration\n{\n    /**\n     * @return bool|void\n     */\n    public function safeUp()\n    {\n        $this->createTable('{{%key_storage_item}}', [\n            'key' => $this->stri...",
+    "content_length": 785,
+    "created_at": "2026-06-04T02:36:01.455695+00:00",
+    "updated_at": "2026-06-04T02:59:23.970976+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_053601_4186c600",
+    "content_hash": "36936485df3eb537d55133846192b6c4",
+    "metadata": {
+      "parse_start_time": 1780540561,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780540561,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780541283,
+      "process_end_time": 1780541963,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::common\\migrations\\db\\m140805_084745_key_storage_item.php-chunk-000"
+    ]
+  },
+  "file::common\\migrations\\db\\m141012_101932_i18n_tables.php": {
+    "status": "failed",
+    "content_summary": "<?php\n\nuse yii\\db\\Migration;\n\nclass m141012_101932_i18n_tables extends Migration\n{\n    /**\n     * @return bool|void\n     */\n    public function safeUp()\n    {\n        $this->createTable('{{%i18n_source_message}}', [\n            'id' => $this->primary...",
+    "content_length": 1060,
+    "created_at": "2026-06-04T02:59:27.137610+00:00",
+    "updated_at": "2026-06-04T03:54:07.649918+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_055927_6c62e682",
+    "content_hash": "d90041a1c22867763083cdd06eb170be",
+    "metadata": {
+      "parse_start_time": 1780544881,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780544881,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780544887,
+      "process_end_time": 1780545247
+    },
+    "error_msg": "C[1/1]: file::common\\migrations\\db\\m141012_101932_i18n_tables.php-chunk-000: extract LLM func: Worker execution timeout after 360s",
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::common\\migrations\\db\\m141012_101932_i18n_tables.php-chunk-000"
+    ]
+  },
+  "file::common\\migrations\\db\\m150318_213934_file_storage_item.php": {
+    "status": "processed",
+    "content_summary": "<?php\n\nuse yii\\db\\Migration;\n\nclass m150318_213934_file_storage_item extends Migration\n{\n    /**\n     * @return bool|void\n     */\n    public function safeUp()\n    {\n        $this->createTable('{{%file_storage_item}}', [\n            'id' => $this->pri...",
+    "content_length": 800,
+    "created_at": "2026-06-04T03:20:41.401178+00:00",
+    "updated_at": "2026-06-04T03:35:58.983617+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_062041_e86357bb",
+    "content_hash": "94f7aa6f5808c5d5c2d63ee3b0a7edbc",
+    "metadata": {
+      "parse_start_time": 1780543241,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780543242,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780543603,
+      "process_end_time": 1780544158,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::common\\migrations\\db\\m150318_213934_file_storage_item.php-chunk-000"
+    ]
+  },
+  "file::common\\migrations\\db\\m150414_195800_timeline_event.php": {
+    "status": "processing",
+    "content_summary": "<?php\n\nuse yii\\db\\Migration;\n\nclass m150414_195800_timeline_event extends Migration\n{\n    /**\n     * @return bool|void\n     */\n    public function safeUp()\n    {\n        $this->createTable('{{%timeline_event}}', [\n            'id' => $this->primaryKe...",
+    "content_length": 1351,
+    "created_at": "2026-06-04T03:35:59.259857+00:00",
+    "updated_at": "2026-06-04T03:53:59.128391+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_063559_2dc5f3c8",
+    "content_hash": "0e00180f15420e60b6aca20e376ab016",
+    "metadata": {
+      "parse_start_time": 1780544881,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780544881,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780545239,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=1200, split_only=False, overlap=100"
+    },
+    "chunks_count": 1,
+    "chunks_list": [
+      "file::common\\migrations\\db\\m150414_195800_timeline_event.php-chunk-000"
+    ]
+  },
+  "file::common\\migrations\\db\\m150725_192740_seed_data.php": {
+    "status": "failed",
+    "content_summary": "<?php\n\nuse common\\models\\User;\nuse yii\\db\\Migration;\n\nclass m150725_192740_seed_data extends Migration\n{\n    /**\n     * @return bool|void\n     * @throws \\yii\\base\\Exception\n     */\n    public function safeUp()\n    {\n        $this->insert('{{%user}}',...",
+    "content_length": 7701,
+    "created_at": "2026-06-04T03:48:00.731095+00:00",
+    "updated_at": "2026-06-04T04:00:07.903918+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260604_064800_827b0bfb",
+    "content_hash": "4a6ade352ac581683e27939e5d1aa9ab",
+    "metadata": {
+      "parse_start_time": 1780544881,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1780544881,
+      "analyzing_stage_skipped": true,
+      "process_start_time": 1780545247,
+      "process_end_time": 1780545607
+    },
+    "error_msg": "C[1/2]: file::common\\migrations\\db\\m150725_192740_seed_data.php-chunk-001: extract LLM func: Worker execution timeout after 360s",
+    "chunks_count": 2,
+    "chunks_list": [
+      "file::common\\migrations\\db\\m150725_192740_seed_data.php-chunk-000",
+      "file::common\\migrations\\db\\m150725_192740_seed_data.php-chunk-001"
+    ]
+  }
+}

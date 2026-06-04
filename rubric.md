@@ -52,6 +52,11 @@ Use this rubric to evaluate whether a design task is Done.
 - [ ] Result visually checked.
 - [ ] Browser / preview / screenshot / DevTools used when available.
 - [ ] If visual QA is impossible, the limitation is stated explicitly.
+- [ ] Visual QA result is recorded using the Visual QA Form: Pass / Fail / Partial; what was checked; found issues; fixes; risks.
+
+## 9.1 Proposal Readiness
+- [ ] Every new component/token/pattern was proposed first: what, why, where, system impact.
+- [ ] Proposals are clear enough to approve or reject without extra guessing.
 
 ## 10. Documentation Sync
 - [ ] `SKILL.md` reflects rules used.

@@ -1,0 +1,695 @@
+{
+  "file::.gemini_rules.md-chunk-000": {
+    "tokens": 781,
+    "content": "# Правила для Antigravity\n\nЦей файл містить специфічні правила і налаштування для агента Antigravity (Gemini), оскільки деякі системні обмеження стосуються тільки нього.\n\n## 1. Уникання терміналу (run_command)\nДля агента Antigravity СУВОРО ЗАБОРОНЕНО використовувати терманіл (`run_command`) для простих задач на кшталт читання, пошуку чи редагування файлів.\nПричина: Коли агент викликає `run_command`, інтерфейс зупиняє виконання для очікування згоди користувача. Однак, кнопка підтвердження може бути не дуже помітною (відображається текстове меню 'Always run' та повідомлення 'Running command... / Running...'), що виглядає як зависання або безкінечний цикл. В результаті агент просто чекає на дозвіл користувача, а користувач думає, що агент завис.\n\n**Що робити:**\n- Завжди використовувати нативні інструменти: `view_file`, `list_dir`, `replace_file_content`, `grep_search`.\n- Якщо запуск скрипта у терміналі (наприклад, npm run або git) неминучий, агент зобов'язаний перед цим попередити користувача: *\"Зараз я запущу команду в терміналі. Будь ласка, натисніть 'Approve' (або 'Always run' / Enter) у спливаючому вікні середовища, інакше я чекатиму нескінченно\"*.\n\n## 2. Обережність з MCP серверами (Запобігання галюцинаціям)\nАгенту **КАТЕГОРИЧНО ЗАБОРОНЕНО** безпідставно редагувати внутрішні системні файли плагіна (наприклад, `C:\\Users\\vaoferi\\.gemini\\antigravity\\mcp_config.json` або `.vscode/...`), намагаючись \"полагодити\" підключення MCP серверів через помилкові судження про їх відсутність у власному контексті.\n\nПричина: Інструменти підключаються як префікси `mcp_...`. Якщо під час підйому 14 серверів частина з них відпала, інші все одно **вже знаходяться у доступі**. Агент може отримати візуальну/когнітивну галюцинацію, шукаючи точні назви серверів замість перевірки доступних інструментів `mcp_*`.\n\n**Що робити:**\n- **Завжди фізично перевіряти** наявність інструментів `mcp_` на рівні викликів, перш ніж переконувати користувача, що сервери відсутні.\n- Замість \"дебагу\" конфігів, для доказу зробити тестовий виклик будь-якої доступної MCP тулзи (наприклад, `mcp_snippets-mcp_list_libraries` або `mcp_filesystem_list_directory`).\n- Вірити користувачу: якщо він каже, що сервери існують/вписані, значить вони вже завантажені або плагін розбирається з ними сам. Не влаштовувати панічних спроб переписати IDE-виклики через `cmd.exe /c` чи `npx.cmd`.",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::.gemini_rules.md",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:0b388626f43978c4dad33be48f127e7e",
+      "default:extract:ad8f6302f0fcb533a39686cdab180cce"
+    ],
+    "create_time": 1780521505,
+    "update_time": 1780521715,
+    "_id": "file::.gemini_rules.md-chunk-000"
+  },
+  "file::.openclaw\\knowledge\\code-patterns.md-chunk-000": {
+    "tokens": 282,
+    "content": "# Code Patterns & Anti-Patterns\n\n## PHP / Yii2\n\n### ✅ Good (Controller)\n```php\npublic function actionUpdate($id)\n{\n    $model = $this->findModel($id);\n    // Logic delegated to Service/Model, NOT here\n    if ($this->service->update($model, Yii::$app->request->post())) {\n        return $this->redirect(['view', 'id' => $model->id]);\n    }\n    return $this->render('update', ['model' => $model]);\n}\n```\n\n### ❌ Bad (Fat Controller)\n- Direct SQL queries in controller.\n- Complex business logic inside `action...`.\n- No validation before saving.\n\n## JavaScript\n\n### ✅ Good (Defensive)\n```javascript\nconst btn = document.querySelector<HTMLButtonElement>('#submit-btn');\nif (btn) {\n    btn.addEventListener('click', () => { /* ... */ });\n}\n```\n\n### ❌ Bad (Fragile)\n- `document.getElementById('btn').onclick = ...` (might be null).\n- Global variables.\n- Inline JS in HTML (`<button onclick=\"...\">`).\n\n## SQL Safety\n- NEVER concat strings: `\"SELECT * FROM users WHERE name = '\" + name + \"'\"` ❌\n- ALWAYS use binding: `.where(['name' => $name])` ✅",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::.openclaw\\knowledge\\code-patterns.md",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:d598bcdad5de57f79118e3fb0cd15c37",
+      "default:extract:a0c41bffc8dc36059fa3e7f1afe49634"
+    ],
+    "create_time": 1780521723,
+    "update_time": 1780522140,
+    "_id": "file::.openclaw\\knowledge\\code-patterns.md-chunk-000"
+  },
+  "file::.openclaw\\knowledge\\design-system.json-chunk-000": {
+    "tokens": 243,
+    "content": "{\n  \"colors\": {\n    \"primary\": \"var(--bs-primary)\",\n    \"secondary\": \"var(--bs-secondary)\",\n    \"background\": \"var(--bs-body-bg)\",\n    \"text\": \"var(--bs-body-color)\"\n  },\n  \"breakpoints\": {\n    \"xs\": \"320px\",\n    \"sm\": \"576px\",\n    \"md\": \"768px\",\n    \"lg\": \"992px\",\n    \"xl\": \"1200px\",\n    \"xxl\": \"1400px\"\n  },\n  \"spacing\": {\n    \"base\": \"1rem\",\n    \"sm\": \"0.5rem\",\n    \"lg\": \"1.5rem\"\n  },\n  \"typography\": {\n    \"font-family\": \"system-ui, -apple-system, sans-serif\",\n    \"base-size\": \"16px\"\n  },\n  \"rules\": [\n    \"Do NOT use hex codes for standard colors, use CSS variables or Bootstrap classes.\",\n    \"Do NOT use arbitrary margins (mt-17), use standard spacers (mt-3, mt-4).\",\n    \"Always ensure contrast ratio > 4.5:1.\"\n  ]\n}",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::.openclaw\\knowledge\\design-system.json",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:e6564b994c14dcc88ee7367a21f6feee",
+      "default:extract:6e74565d9ebb0272d871920cd7775ba2"
+    ],
+    "create_time": 1780522142,
+    "update_time": 1780522457,
+    "_id": "file::.openclaw\\knowledge\\design-system.json-chunk-000"
+  },
+  "file::.openclaw\\mcp_antigravity.json-chunk-000": {
+    "tokens": 824,
+    "content": "{\n  \"mcpServers\": {\n    \"hostinger-api-mcp\": {\n      \"command\": \"npx.cmd\",\n      \"args\": [\n        \"-y\",\n        \"hostinger-api-mcp\"\n      ],\n      \"env\": {\n        \"DEBUG\": \"true\",\n        \"API_TOKEN\": \"Bi3lPaAprPgQViS5ym9ww98tFr6qMHKPHaHo6q7Te33cf4cd\"\n      }\n    },\n    \"filesystem\": {\n      \"command\": \"npx.cmd\",\n      \"args\": [\n        \"-y\",\n        \"@modelcontextprotocol/server-filesystem\",\n        \"C:\\\\work\\\\nlm\\\\public_html\"\n      ]\n    },\n    \"claude-context-mcp\": {\n      \"command\": \"npx.cmd\",\n      \"args\": [\n        \"-y\",\n        \"@zilliz/claude-context-mcp@latest\"\n      ],\n      \"env\": {\n        \"OPENAI_API_KEY\": \"${process.env.OPENAI_API_KEY}\",\n        \"MILVUS_ADDRESS\": \"${process.env.MILVUS_ADDRESS}\",\n        \"MILVUS_TOKEN\": \"${process.env.MILVUS_TOKEN}\",\n        \"EMBEDDING_PROVIDER\": \"VoyageAI\",\n        \"EMBEDDING_MODEL\": \"voyage-3-large\"\n      }\n    },\n    \"sequential-think\": {\n      \"command\": \"npx.cmd\",\n      \"args\": [\n        \"-y\",\n        \"@modelcontextprotocol/server-sequential-thinking\"\n      ]\n    },\n    \"memory-mcp\": {\n      \"command\": \"npx.cmd\",\n      \"args\": [\n        \"-y\",\n        \"@modelcontextprotocol/server-memory\"\n      ]\n    },\n    \"ddg-search\": {\n      \"command\": \"uvx.exe\",\n      \"args\": [\n        \"duckduckgo-mcp-server\"\n      ]\n    },\n    \"osp_marketing_tools\": {\n      \"command\": \"uvx.exe\",\n      \"args\": [\n        \"--from\",\n        \"git+https://github.com/open-strategy-partners/osp_marketing_tools@main\",\n        \"osp_marketing_tools\"\n      ]\n    },\n    \"playwright\": {\n      \"command\": \"npx.cmd\",\n      \"args\": [\n        \"-y\",\n        \"@executeautomation/playwright-mcp-server\"\n      ]\n    },\n    \"snippets-mcp\": {\n      \"command\": \"node.exe\",\n      \"args\": [\n        \"C:\\\\work\\\\nlm\\\\public_html\\\\.openclaw\\\\mcp\\\\snippets\\\\server.js\"\n      ],\n      \"env\": {\n        \"NODE_NO_WARNINGS\": \"1\"\n      }\n    },\n    \"nlm-ui-snippets\": {\n      \"command\": \"node.exe\",\n      \"args\": [\n        \"C:\\\\work\\\\nlm\\\\public_html\\\\.openclaw\\\\mcp\\\\snippets\\\\server.js\"\n      ],\n      \"env\": {\n        \"NODE_NO_WARNINGS\": \"1\",\n        \"NLM_MCP_PROFILE\": \"ui-components\"\n      }\n    },\n    \"deepl\": {\n      \"command\": \"uvx.exe\",\n      \"args\": [\n        \"deepl-mcp\"\n      ],\n      \"env\": {\n        \"DEEPL_API_KEY\": \"YOUR_DEEPL_KEY\"\n      }\n    },\n    \"firecrawl\": {\n      \"command\": \"uvx.exe\",\n      \"args\": [\n        \"firecrawl-mcp\"\n      ],\n      \"env\": {\n        \"FIRECRAWL_API_KEY\": \"YOUR_FIRECRAWL_KEY\"\n      }\n    },\n    \"brave-search\": {\n      \"command\": \"uvx.exe\",\n      \"args\": [\n        \"brave-search-mcp\"\n      ],\n      \"env\": {\n        \"BRAVE_API_KEY\": \"YOUR_BRAVE_KEY\"\n      }\n    },\n    \"langchain-mcp\": {\n      \"command\": \"echo\",\n      \"args\": [\n        \"Placeholder for LangChain Agent\"\n      ]\n    }\n  }\n}",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::.openclaw\\mcp_antigravity.json",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:32f015cddfde2f2c3e8b631dab31647f",
+      "default:extract:c864b1049048522b3e78852b6140e1b1"
+    ],
+    "create_time": 1780522458,
+    "update_time": 1780522963,
+    "_id": "file::.openclaw\\mcp_antigravity.json-chunk-000"
+  },
+  "file::album\\_header_photo.php-chunk-000": {
+    "tokens": 240,
+    "content": "<?php\n/**\n * Created by Rex IT\n * @author Konstantin Kharalampidi <kharalampidi@rexit.info>\n * @var $model \\common\\models\\PhotoAlbum\n */?>\n\n<div class=\"albulm-hero__wrap\">\n    <div class=\"albulm-hero__slider\">\n        <div class=\"albulm-hero__slider-item\">\n            <div class=\"albulm-hero__slider-img\" style=\"background-image: linear-gradient(to bottom, rgba(215, 215, 215, 0.5) 0%, #ffffff 100%), url(<?= Yii::$app->glide->createSignedUrl([\n                'glide/index',\n                'path' => $model->getThumbnailPath()\n            ], true) ?>);\"></div>\n            <div class=\"albulm-hero__slider-content\">\n                <time><?= Yii::$app->formatter->asDate($model->created_at) ?></time>\n                <h2><?= $model->title ?></h2>\n                <p></p>\n            </div>\n        </div>\n    </div>\n</div>",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::album\\_header_photo.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:aa53bdd1122882e18b55bdd0fcb4ba29",
+      "default:extract:1d2324ff9c9f91aab2edb1ccddb8e02e"
+    ],
+    "create_time": 1780522967,
+    "update_time": 1780523406,
+    "_id": "file::album\\_header_photo.php-chunk-000"
+  },
+  "file::album\\_header_slider.php-chunk-000": {
+    "tokens": 319,
+    "content": "<?php\n\n/**\n * Created by Rex IT\n * @author Konstantin Kharalampidi <kharalampidi@rexit.info>\n */\n\n/* @var $this \\yii\\web\\View */\n/* @var $albums array|\\common\\models\\PhotoAlbum[] */\n?>\n<div class=\"albulm-hero__wrap\">\n    <div class=\"albulm-hero__slider albulm-hero__slider--js\">\n        <?php foreach ($albums as $album) : ?>\n            <div class=\"albulm-hero__slider-item\">\n                <div class=\"albulm-hero__slider-img\"\n                     style=\"background-image: linear-gradient(to bottom, rgba(215, 215, 215, 0.5) 0%, #ffffff 100%), url(<?= Yii::$app->glide->createSignedUrl([\n                         'glide/index',\n                         'path' => $album->getThumbnailPath()\n                     ], true) ?>);\"></div>\n                <div class=\"albulm-hero__slider-content\">\n                    <time><?= Yii::$app->formatter->asDate($album->created_at) ?></time>\n                    <h2><?= $album->title ?></h2>\n                    <p></p>\n                    <a href=\"<?= \\yii\\helpers\\Url::to(['album/view', 'id' => $album->id]) ?>\"><?= Yii::t('frontend', 'view') ?></a>\n                </div>\n            </div>\n        <?php endforeach; ?>\n    </div>\n</div>",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::album\\_header_slider.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:55b954d533697415fe70deaa8864c36f",
+      "default:extract:56d61bce04639403d36ab66e9c303403"
+    ],
+    "create_time": 1780523408,
+    "update_time": 1780523865,
+    "_id": "file::album\\_header_slider.php-chunk-000"
+  },
+  "file::album\\index.php-chunk-000": {
+    "tokens": 363,
+    "content": "<?php\n\n/**\n * Created by Rex IT\n * @author Konstantin Kharalampidi <kharalampidi@rexit.info>\n */\n\n/* @var $this \\yii\\web\\View */\n/* @var $models array|\\common\\models\\PhotoAlbum[] */\n/* @var $pagination \\yii\\data\\Pagination */\n/* @var $sliderAlbums array|\\common\\models\\PhotoAlbum[] */\n\n$this->title = Yii::t('frontend', 'Albums');\n$this->params['custom_header'] = [\n    'class' => 'news-hero',\n    'content' => $this->render('_header_slider', [\n        'albums' => $sliderAlbums\n    ])\n];\n?>\n    <section class=\"albulm-page\">\n        <div class=\"container\">\n            <ul class=\"albulm-page__list\">\n                <?php foreach ($models as $model) : ?>\n                    <li class=\"albulm-page__item\">\n                        <a href=\"<?= \\yii\\helpers\\Url::to(['album/view', 'id' => $model->id]) ?>\">\n                            <div class=\"albulm-page__img\">\n                                <img src=\"<?= Yii::$app->glide->createSignedUrl(['glide/index', 'path' => $model->getThumbnailPath()], true) ?>\">\n                            </div>\n                            <div class=\"albulm-page__info\">\n                                <time><?= Yii::$app->formatter->asDate($model->created_at) ?></time>\n                                <p><?= $model->title ?></p>\n                            </div>\n                        </a>\n                    </li>\n                <?php endforeach; ?>\n            </ul>\n        </div>\n        <?= \\common\\widgets\\PaginationSectionWidget::widget(['pagination' => $pagination]) ?>\n    </section>",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::album\\index.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:a6fa5aa0e38c3ec3bd01e08b5228a27a",
+      "default:extract:7d2c0b0a595db6c8664cd5c6c53108d7"
+    ],
+    "create_time": 1780523867,
+    "update_time": 1780524249,
+    "_id": "file::album\\index.php-chunk-000"
+  },
+  "file::album\\view.php-chunk-000": {
+    "tokens": 300,
+    "content": "<?php\n\n/**\n * Created by Rex IT\n * @author Konstantin Kharalampidi <kharalampidi@rexit.info>\n */\n\n/* @var $this \\yii\\web\\View */\n/* @var $model array|\\common\\models\\PhotoAlbum|null */\n$this->title = $model->title;\n$this->params['custom_header'] = [\n    'class' => 'news-hero',\n    'content' => $this->render('_header_photo', [\n        'model' => $model\n    ])\n];\n?>\n<section class=\"photos-page\">\n    <div class=\"container\">\n        <ul class=\"photos-page__list\">\n            <?php foreach ($model->photos as $photo) :\n                $photoUrl = Yii::$app->glide->createSignedUrl([\n                    'glide/index',\n                    'path' => $photo->photo_path\n                ], true)\n                ?>\n                <li class=\"photos-page__item\">\n                    <a data-fancybox=\"gallery-photos\" style=\"background-image: url(<?= $photoUrl ?>);\" href=\"<?= $photoUrl ?>\" data-caption=\"<div class='photos-page__desc'><h1><?= $photo->title ?></h1><p><?= $photo->description ?></p></div>\">\n                        <img src=\"<?= $photoUrl ?>\" alt=\"<?= $photo->alt ?>\">\n                    </a>\n                </li>\n            <?php endforeach; ?>\n        </ul>\n    </div>\n</section>",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::album\\view.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:1ff5855094bd5e0da3a5442e7223d6e2",
+      "default:extract:cb6914e2dd84865598c5a673fd2ad8ae"
+    ],
+    "create_time": 1780524251,
+    "update_time": 1780524686,
+    "_id": "file::album\\view.php-chunk-000"
+  },
+  "file::api\\config\\_cache.php-chunk-000": {
+    "tokens": 87,
+    "content": "<?php\n/**\n * @author Eugene Terentev <eugene@terentev.net>\n */\n\n$cache = [\n    'class' => yii\\caching\\FileCache::class,\n    'cachePath' => '@api/runtime/cache'\n];\n\nif (YII_ENV_DEV) {\n    $cache = [\n        'class' => yii\\caching\\DummyCache::class\n    ];\n}\n\nreturn $cache;",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::api\\config\\_cache.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:e668c51924880c8a96d22de8d9dd266d",
+      "default:extract:3dcec4507e73c8ff088d79d50ec04e8c"
+    ],
+    "create_time": 1780524688,
+    "update_time": 1780525113,
+    "_id": "file::api\\config\\_cache.php-chunk-000"
+  },
+  "file::api\\config\\_urlManager.php-chunk-000": {
+    "tokens": 84,
+    "content": "<?php\nreturn [\n    'class' => 'yii\\web\\UrlManager',\n    'enablePrettyUrl' => true,\n    'showScriptName' => false,\n    'rules' => [\n        // Api\n        ['class' => 'yii\\rest\\UrlRule', 'controller' => 'api/v1/article', 'only' => ['index', 'view', 'options']],\n    ]\n];",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::api\\config\\_urlManager.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:93fd84ed5e255c1bc1c23351f7150455",
+      "default:extract:6fc25349c972d7c5469a840b644683f9"
+    ],
+    "create_time": 1780525114,
+    "update_time": 1780525536,
+    "_id": "file::api\\config\\_urlManager.php-chunk-000"
+  },
+  "file::api\\config\\base.php-chunk-000": {
+    "tokens": 65,
+    "content": "<?php\nreturn [\n    'id' => 'frontend',\n    'basePath' => dirname(__DIR__),\n    'components' => [\n        'urlManager' => require(__DIR__ . '/_urlManager.php'),\n        'cache' => require(__DIR__ . '/_cache.php'),\n    ],\n];",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::api\\config\\base.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:8161cab0cc12adc2dec4062d7141df2c",
+      "default:extract:f00ebf51e03570466369a0be45438eaf"
+    ],
+    "create_time": 1780525537,
+    "update_time": 1780525961,
+    "_id": "file::api\\config\\base.php-chunk-000"
+  },
+  "file::api\\config\\bootstrap.php-chunk-000": {
+    "tokens": 22,
+    "content": "<?php\n/**\n * @author Eugene Terentev <eugene@terentev.net>\n */",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::api\\config\\bootstrap.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:f8830712eb014ae0d83cf5c0351c0256",
+      "default:extract:e69bc94801aa8a002333f7714132e4ca"
+    ],
+    "create_time": 1780525963,
+    "update_time": 1780526423,
+    "_id": "file::api\\config\\bootstrap.php-chunk-000"
+  },
+  "file::api\\config\\console.php-chunk-000": {
+    "tokens": 6,
+    "content": "<?php\nreturn [\n\n];",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::api\\config\\console.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:90fdd9ab77a97d9d3d3ce8c1b643a9f1",
+      "default:extract:b22b5e33e60895a2d75b5e7c2feaed81"
+    ],
+    "create_time": 1780526424,
+    "update_time": 1780526766,
+    "_id": "file::api\\config\\console.php-chunk-000"
+  },
+  "file::api\\config\\web.php-chunk-000": {
+    "tokens": 268,
+    "content": "<?php\n$config = [\n    'homeUrl' => Yii::getAlias('@apiUrl'),\n    'controllerNamespace' => 'api\\controllers',\n    'defaultRoute' => 'site/index',\n    'bootstrap' => ['maintenance'],\n    'modules' => [\n        'v1' => \\api\\modules\\v1\\Module::class\n    ],\n    'components' => [\n        'errorHandler' => [\n            'errorAction' => 'site/error'\n        ],\n        'maintenance' => [\n            'class' => common\\components\\maintenance\\Maintenance::class,\n            'enabled' => function ($app) {\n                if (env('APP_MAINTENANCE') === '1') {\n                    return true;\n                }\n                return $app->keyStorage->get('frontend.maintenance') === 'enabled';\n            }\n        ],\n        'request' => [\n            'enableCookieValidation' => false,\n        ],\n        'user' => [\n            'class' => yii\\web\\User::class,\n            'identityClass' => common\\models\\User::class,\n            'loginUrl' => ['/user/sign-in/login'],\n            'enableAutoLogin' => true,\n            'as afterLogin' => common\\behaviors\\LoginTimestampBehavior::class\n        ]\n    ]\n];\n\nreturn $config;",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::api\\config\\web.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:f24b57a9d2f0891ac188452eac5dec3e",
+      "default:extract:006cf484c7ea171a5c8aaf49f5b62ead"
+    ],
+    "create_time": 1780526767,
+    "update_time": 1780527282,
+    "_id": "file::api\\config\\web.php-chunk-000"
+  },
+  "file::api\\modules\\v1\\controllers\\ArticleController.php-chunk-000": {
+    "tokens": 431,
+    "content": "<?php\n\nnamespace api\\modules\\v1\\controllers;\n\nuse api\\modules\\v1\\resources\\Article;\nuse yii\\data\\ActiveDataProvider;\nuse yii\\rest\\ActiveController;\nuse yii\\rest\\IndexAction;\nuse yii\\rest\\OptionsAction;\nuse yii\\rest\\Serializer;\nuse yii\\rest\\ViewAction;\nuse yii\\web\\HttpException;\n\n/**\n * Class ArticleController\n * @author Eugene Terentev <eugene@terentev.net>\n */\nclass ArticleController extends ActiveController\n{\n    /**\n     * @var string\n     */\n    public $modelClass = 'api\\modules\\v1\\resources\\Article';\n    /**\n     * @var array\n     */\n    public $serializer = [\n        'class' => Serializer::class,\n        'collectionEnvelope' => 'items'\n    ];\n\n    /**\n     * @inheritdoc\n     */\n    public function actions()\n    {\n        return [\n            'index' => [\n                'class' => IndexAction::class,\n                'modelClass' => $this->modelClass,\n                'prepareDataProvider' => [$this, 'prepareDataProvider']\n            ],\n            'view' => [\n                'class' => ViewAction::class,\n                'modelClass' => $this->modelClass,\n                'findModel' => [$this, 'findModel']\n            ],\n            'options' => [\n                'class' => OptionsAction::class\n            ]\n        ];\n    }\n\n    /**\n     * @return ActiveDataProvider\n     */\n    public function prepareDataProvider()\n    {\n        return new ActiveDataProvider(array(\n            'query' => Article::find()->published()\n        ));\n    }\n\n    /**\n     * @param $id\n     * @return array|null|\\yii\\db\\ActiveRecord\n     * @throws HttpException\n     */\n    public function findModel($id)\n    {\n        $model = Article::find()\n            ->published()\n            ->andWhere(['id' => (int)$id])\n            ->one();\n        if (!$model) {\n            throw new HttpException(404);\n        }\n        return $model;\n    }\n}",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::api\\modules\\v1\\controllers\\ArticleController.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:c299f4becbb774ad4667fcad88fb5d4b",
+      "default:extract:dc6ac5d5059ff51f881e7e1f9b98a69e"
+    ],
+    "create_time": 1780527890,
+    "update_time": 1780528410,
+    "_id": "file::api\\modules\\v1\\controllers\\ArticleController.php-chunk-000"
+  },
+  "file::api\\controllers\\SiteController.php-chunk-000": {
+    "tokens": 185,
+    "content": "<?php declare(strict_types=1);\n\nnamespace api\\controllers;\n\nuse Yii;\nuse yii\\web\\Controller;\nuse yii\\web\\NotFoundHttpException;\n\nclass SiteController extends Controller\n{\n    public function actionIndex()\n    {\n        return $this->redirect(\\Yii::getAlias('@frontendUrl'));\n    }\n\n    public function actionError()\n    {\n        if (($exception = Yii::$app->getErrorHandler()->exception) === null) {\n            $exception = new NotFoundHttpException(Yii::t('yii', 'Page not found.'));\n        }\n\n        if ($exception instanceof \\HttpException) {\n            Yii::$app->response->setStatusCode($exception->getCode());\n        } else {\n            Yii::$app->response->setStatusCode(500);\n        }\n\n        return $this->asJson(['error' => $exception->getMessage(), 'code' => $exception->getCode()]);\n    }\n}",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::api\\controllers\\SiteController.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:49bdc15e02de31562a1997a1d02a1f96",
+      "default:extract:243e81b30e8d93734893082ec9b395ce"
+    ],
+    "create_time": 1780527896,
+    "update_time": 1780528221,
+    "_id": "file::api\\controllers\\SiteController.php-chunk-000"
+  },
+  "file::api\\modules\\v1\\controllers\\UserController.php-chunk-000": {
+    "tokens": 300,
+    "content": "<?php\n\nnamespace api\\modules\\v1\\controllers;\n\nuse common\\models\\User;\nuse yii\\filters\\auth\\CompositeAuth;\nuse yii\\filters\\auth\\HttpBasicAuth;\nuse yii\\filters\\auth\\HttpBearerAuth;\nuse yii\\filters\\auth\\HttpHeaderAuth;\nuse yii\\filters\\auth\\QueryParamAuth;\nuse yii\\rest\\Controller;\nuse yii\\rest\\OptionsAction;\n\n/**\n * @author Eugene Terentev <eugene@terentev.net>\n */\nclass UserController extends Controller\n{\n    /**\n     * @return array\n     */\n    public function behaviors()\n    {\n        $behaviors = parent::behaviors();\n\n        $behaviors['authenticator'] = [\n            'class' => CompositeAuth::class,\n            'authMethods' => [\n                HttpBasicAuth::class,\n                HttpBearerAuth::class,\n                HttpHeaderAuth::class,\n                QueryParamAuth::class\n            ]\n        ];\n\n        return $behaviors;\n    }\n\n    /**\n     * @inheritdoc\n     */\n    public function actions()\n    {\n        return [\n            'options' => [\n                'class' => OptionsAction::class\n            ]\n        ];\n    }\n\n    /**\n     * @return User|null|\\yii\\web\\IdentityInterface\n     */\n    public function actionIndex()\n    {\n        $resource = new User();\n        $resource->load(\\Yii::$app->user->getIdentity()->attributes, '');\n        return  $resource;\n    }\n}",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::api\\modules\\v1\\controllers\\UserController.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:a6ddfad1710084fbd5606da9652b4946",
+      "default:extract:21c1fdcd47e7cdac8f3cdfe16a894acf"
+    ],
+    "create_time": 1780528410,
+    "update_time": 1780528807,
+    "_id": "file::api\\modules\\v1\\controllers\\UserController.php-chunk-000"
+  },
+  "file::api\\modules\\v1\\models\\ApiUserIdentity.php-chunk-000": {
+    "tokens": 558,
+    "content": "<?php\n\nnamespace api\\modules\\v1\\models;\n\nuse common\\models\\User;\nuse Yii;\nuse yii\\filters\\RateLimitInterface;\n\n/**\n * @author Eugene Terentev <eugene@terentev.net>\n */\nclass ApiUserIdentity extends User implements RateLimitInterface\n{\n\n    /**\n     * @var int\n     */\n    public $rateWindowSize = 3600;\n\n    /**\n     * Returns the maximum number of allowed requests and the window size.\n     * @param \\yii\\web\\Request $request the current request\n     * @param \\yii\\base\\Action $action the action to be executed\n     * @return array an array of two elements. The first element is the maximum number of allowed requests,\n     * and the second element is the size of the window in seconds.\n     */\n    public function getRateLimit($request, $action)\n    {\n        return [5000, $this->rateWindowSize];\n    }\n\n    /**\n     * Loads the number of allowed requests and the corresponding timestamp from a persistent storage.\n     * @param \\yii\\web\\Request $request the current request\n     * @param \\yii\\base\\Action $action the action to be executed\n     * @return array an array of two elements. The first element is the number of allowed requests,\n     * and the second element is the corresponding UNIX timestamp.\n     */\n    public function loadAllowance($request, $action)\n    {\n        $allowance = Yii::$app->cache->get($this->getCacheKey('api_rate_allowance'));\n        $timestamp = Yii::$app->cache->get($this->getCacheKey('api_rate_timestamp'));\n        return [$allowance, $timestamp];\n    }\n\n    /**\n     * @param $key\n     * @return array\n     */\n    public function getCacheKey($key)\n    {\n        return [__CLASS__, $this->getId(), $key];\n    }\n\n    /**\n     * Saves the number of allowed requests and the corresponding timestamp to a persistent storage.\n     * @param \\yii\\web\\Request $request the current request\n     * @param \\yii\\base\\Action $action the action to be executed\n     * @param integer $allowance the number of allowed requests remaining.\n     * @param integer $timestamp the current timestamp.\n     */\n    public function saveAllowance($request, $action, $allowance, $timestamp)\n    {\n        Yii::$app->cache->set($this->getCacheKey('api_rate_allowance'), $allowance, $this->rateWindowSize);\n        Yii::$app->cache->set($this->getCacheKey('api_rate_timestamp'), $timestamp, $this->rateWindowSize);\n    }\n}",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::api\\modules\\v1\\models\\ApiUserIdentity.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:fb4366673b6d2dad61a88f4aee12d055",
+      "default:extract:d890694cec4284b400516c16f67dd090"
+    ],
+    "create_time": 1780528809,
+    "update_time": 1780529260,
+    "_id": "file::api\\modules\\v1\\models\\ApiUserIdentity.php-chunk-000"
+  },
+  "file::api\\modules\\v1\\Module.php-chunk-000": {
+    "tokens": 244,
+    "content": "<?php\n\nnamespace api\\modules\\v1;\n\nuse Yii;\nuse yii\\filters\\ContentNegotiator;\nuse yii\\filters\\RateLimiter;\nuse yii\\web\\Response;\n\nclass Module extends \\yii\\base\\Module\n{\n    /** @var string */\n    public $controllerNamespace = 'api\\modules\\v1\\controllers';\n\n    /**\n     * @inheritdoc\n     */\n    public function init()\n    {\n        parent::init();\n        Yii::$app->user->identityClass = 'api\\modules\\v1\\models\\ApiUserIdentity';\n        Yii::$app->user->enableSession = false;\n        Yii::$app->user->loginUrl = null;\n    }\n\n    /**\n     * @return array\n     */\n    public function behaviors()\n    {\n        $behaviors = parent::behaviors();\n\n        $behaviors['contentNegotiator'] = [\n            'class' => ContentNegotiator::class,\n            'formats' => [\n                'application/json' => Response::FORMAT_JSON,\n                'application/xml' => Response::FORMAT_XML,\n            ],\n        ];\n\n        $behaviors['rateLimiter'] = [\n            'class' => RateLimiter::class,\n        ];\n\n        return $behaviors;\n    }\n}",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::api\\modules\\v1\\Module.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:99060e4c52184f329f490f6b9e47a4c5",
+      "default:extract:7a34c1fbe6a4f48e5af909ceba23dfca"
+    ],
+    "create_time": 1780529263,
+    "update_time": 1780529560,
+    "_id": "file::api\\modules\\v1\\Module.php-chunk-000"
+  },
+  "file::api\\modules\\v1\\resources\\Article.php-chunk-000": {
+    "tokens": 170,
+    "content": "<?php\n\nnamespace api\\modules\\v1\\resources;\n\nuse yii\\helpers\\Url;\nuse yii\\web\\Link;\nuse yii\\web\\Linkable;\n\n/**\n * @author Eugene Terentev <eugene@terentev.net>\n */\nclass Article extends \\common\\models\\Article implements Linkable\n{\n    public function fields()\n    {\n        return ['id', 'slug', 'category_id', 'title', 'body', 'published_at'];\n    }\n\n    public function extraFields()\n    {\n        return ['category'];\n    }\n\n    /**\n     * Returns a list of links.\n     *\n     * @return array the links\n     */\n    public function getLinks()\n    {\n        return [\n            Link::REL_SELF => Url::to(['article/view', 'id' => $this->id], true)\n        ];\n    }\n}",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::api\\modules\\v1\\resources\\Article.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:53f540d8c922d8049cda7417c7fde8a0",
+      "default:extract:0c26d9e415f44a852e61130505fc763b"
+    ],
+    "create_time": 1780529562,
+    "update_time": 1780529865,
+    "_id": "file::api\\modules\\v1\\resources\\Article.php-chunk-000"
+  },
+  "file::api\\modules\\v1\\resources\\User.php-chunk-000": {
+    "tokens": 77,
+    "content": "<?php\n\nnamespace api\\modules\\v1\\resources;\n\n/**\n * @author Eugene Terentev <eugene@terentev.net>\n */\nclass User extends \\common\\models\\User\n{\n    public function fields()\n    {\n        return ['id', 'username', 'created_at'];\n    }\n\n    public function extraFields()\n    {\n        return ['userProfile'];\n    }\n}",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::api\\modules\\v1\\resources\\User.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:21084bd94f5f6f2c0e02ff74bc3d6a9f",
+      "default:extract:5df63a92de504635ebddcaf1f538b9f9"
+    ],
+    "create_time": 1780529867,
+    "update_time": 1780530300,
+    "_id": "file::api\\modules\\v1\\resources\\User.php-chunk-000"
+  },
+  "file::api\\web\\index-test.php-chunk-000": {
+    "tokens": 221,
+    "content": "<?php\nrequire(__DIR__ . '/../../tests/bootstrap.php');\n\n// NOTE: Make sure this file is not accessible when deployed to production\nif (YII_ENV !== 'test') {\n    die('You are not allowed to access this file.');\n}\n\n// Environment\nrequire(__DIR__ . '/../../common/env.php');\n\n// Yii\nrequire(__DIR__ . '/../../vendor/yiisoft/yii2/Yii.php');\n\n// Bootstrap application\nrequire(__DIR__ . '/../../common/config/bootstrap.php');\nrequire(__DIR__ . '/../config/bootstrap.php');\n\n$config = yii\\helpers\\ArrayHelper::merge(\n    require(__DIR__ . '/../../common/config/base.php'),\n    require(__DIR__ . '/../../common/config/web.php'),\n    require(__DIR__ . '/../config/base.php'),\n    require(__DIR__ . '/../config/web.php'),\n    require(__DIR__ . '/../../tests/config/base.php'),\n    require(__DIR__ . '/../../tests/config/common/acceptance.php'),\n    require(__DIR__ . '/../../tests/config/frontend/acceptance.php')\n);\n\n(new yii\\web\\Application($config))->run();",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::api\\web\\index-test.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:c25e429c24945b139f50819268fde546",
+      "default:extract:ec4bf5b766161336506585eea84194c4"
+    ],
+    "create_time": 1780530302,
+    "update_time": 1780530684,
+    "_id": "file::api\\web\\index-test.php-chunk-000"
+  },
+  "file::api\\web\\index.php-chunk-000": {
+    "tokens": 144,
+    "content": "<?php\n// Composer\nrequire(__DIR__ . '/../../vendor/autoload.php');\n\n// Environment\nrequire(__DIR__ . '/../../common/env.php');\n\n// Yii\nrequire(__DIR__ . '/../../vendor/yiisoft/yii2/Yii.php');\n\n// Bootstrap application\nrequire(__DIR__ . '/../../common/config/bootstrap.php');\nrequire(__DIR__ . '/../config/bootstrap.php');\n\n$config = \\yii\\helpers\\ArrayHelper::merge(\n    require(__DIR__ . '/../../common/config/base.php'),\n    require(__DIR__ . '/../../common/config/web.php'),\n    require(__DIR__ . '/../config/base.php'),\n    require(__DIR__ . '/../config/web.php')\n);\n\n(new yii\\web\\Application($config))->run();",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::api\\web\\index.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:03ce514b766f8bd9a62459f6d50b2fb3",
+      "default:extract:db33034fb73c7b6d800922df6d8c44ca"
+    ],
+    "create_time": 1780530686,
+    "update_time": 1780531127,
+    "_id": "file::api\\web\\index.php-chunk-000"
+  },
+  "file::article\\category.php-chunk-000": {
+    "tokens": 713,
+    "content": "<?php\n/**\n * Created by PhpStorm.\n * User: rexit\n * Date: 15.03.19\n * Time: 15:31\n * @var $category \\common\\models\\ArticleCategory\n * @var $articles \\common\\models\\Article[]\n * @var $this \\yii\\web\\View\n * @var $pagination \\yii\\data\\Pagination\n */\n$signedUrl = Yii::$app->glide->createSignedUrl([\n    'glide/index',\n    'path' => $category->thumbnail_path\n], true);\n$this->registerMetaTag([\n    'property' => 'og:title',\n    'content' => $category->title,\n]);\n$this->registerMetaTag([\n    'property' => 'og:description',\n    'content' => $category->description,\n]);\n$this->registerMetaTag([\n    'property' => 'og:type',\n    'content' => 'article',\n]);\n$this->params['custom_header'] = [\n    'class' => 'news-one-hero',\n    'content' => \"<div class=\\\"news-one-hero__wrap\\\" style=\\\"background-image: linear-gradient(rgba(223, 224, 224, .1), rgba(255, 255, 255, 1)), url(\" . $signedUrl . \"); filter: blur(3px);\\\"></div>\",\n    'og-meta' => $category->thumbnail_path\n];\n?>\n<article class=\"news-one-info about-page-info category-article\">\n<!--    <h5 class=\"category__title\">more than 2000 all over the country</h5>-->\n    <h1><?= $category->title ?></h1>\n    <p><?= $category->description ?></p>\n    <div class=\"projects-one-info__links\">\n        <a class=\"projects-one-info__links-help category__btn\" href=\"<?= \\yii\\helpers\\Url::to(['site/donate']) ?>\" ><?= Yii::t('frontend', 'I can help') ?></a>\n    </div>\n</article>\n\n<section class=\"category-news\">\n    <div class=\"articles__wrap\">\n        <div class=\"articles__col articles__col--left category__wrap\">\n            <?php foreach ($articles as $post) : ?>\n                <div class=\"articles__item\">\n                    <a href=\"<?= \\yii\\helpers\\Url::to(['article/view', 'slug' => $post->slug]) ?>\">\n                        <time>\n                            <span><?= Yii::$app->formatter->asDate($post->published_at) ?></span>\n                        </time>\n                        <h3><?= $post->title ?></h3>\n                        <p><?= $post->short_description ?></p>\n                    </a>\n                    <?php if (!empty($post->thumbnail_path)) : ?>\n                        <div class=\"articles__item-img\">\n                            <img src=\"<?= Yii::$app->glide->createSignedUrl([\n                                'glide/index',\n                                'path' => $post->thumbnail_path\n                            ], true) ?>\">\n                            <a href=\"<?= \\yii\\helpers\\Url::to(['article/view', 'slug' => $post->slug]) ?>\" class=\"articles__item-link\"><?= Yii::t('frontend', 'Read') ?></a>\n                        </div>\n                    <?php endif; ?>\n                </div>\n            <?php endforeach; ?>\n        </div>\n    </div>\n    <?= \\common\\widgets\\PaginationSectionWidget::widget(['pagination' => $pagination]) ?>\n</section>",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::article\\category.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:047d818c1cfe3b3ddf3c698bb2620244",
+      "default:extract:22543d249b021a4647a67de1f95f66e2"
+    ],
+    "create_time": 1780531641,
+    "update_time": 1780532184,
+    "_id": "file::article\\category.php-chunk-000"
+  },
+  "file::article\\_header_slider.php-chunk-000": {
+    "tokens": 304,
+    "content": "<?php\n/**\n * Created by Rex IT\n * @author Konstantin Kharalampidi <kharalampidi@rexit.info>\n * @var $this \\yii\\web\\View\n * @var $articles \\common\\models\\Article[]\n */\n?>\n<div class=\"news-hero__wrap\">\n    <div class=\"news-hero__slider\">\n        <?php foreach ($articles as $article) : ?>\n            <div class=\"news-hero__slider-item\">\n                <div class=\"news-hero__slider-img\" style=\"background-image: linear-gradient(to bottom, rgba(215, 215, 215, 0.5) 0%, #ffffff 100%), url(<?= Yii::$app->glide->createSignedUrl([\n                    'glide/index',\n                    'path' => $article->thumbnail_path\n                ], true) ?>);\"></div>\n                <div class=\"news-hero__slider-content\">\n                    <time><?= Yii::$app->formatter->asDate($article->published_at) ?></time>\n                    <h2><?= $article->title ?></h2>\n                    <p><?= $article->short_description ?></p>\n                    <a href=\"<?= \\yii\\helpers\\Url::to(['article/view', 'slug' => $article->slug]) ?>\" title=\"details\"><?= Yii::t('frontend', 'Details') ?></a>\n                </div>\n            </div>\n        <?php endforeach; ?>\n    </div>\n</div>",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::article\\_header_slider.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:504f69ffd9d90155e55032b491b64413",
+      "default:extract:3731d88f9c44c0f28043a4368174aa1f"
+    ],
+    "create_time": 1780531645,
+    "update_time": 1780531982,
+    "_id": "file::article\\_header_slider.php-chunk-000"
+  },
+  "file::article\\donate.php-chunk-000": {
+    "tokens": 649,
+    "content": "<?php\n\n/**\n * Created by Rex IT\n * @author Konstantin Kharalampidi <kharalampidi@rexit.info>\n */\n\n/* @var $this \\yii\\web\\View */\n/* @var $category array|\\common\\models\\ArticleCategory|null */\n/* @var $model \\frontend\\models\\CategoryDonateForm */\n?>\n<section class=\"donation-page\">\n    <div class=\"container\">\n        <div class=\"donation-page__wrap\">\n            <div class=\"donation-page__left\"></div>\n            <div class=\"donation-page__right\">\n                <h2><?= Yii::t('frontend', 'Thank You for willing to help') ?></h2>\n                <?php $form = \\yii\\widgets\\ActiveForm::begin(['options' => ['class' => 'donation-page__form']]); ?>\n                <div class=\"donation-page__fio\">\n                    <div class=\"donation-page__amount\">\n                        <div class=\"input-wrap\">\n                            <?= \\yii\\helpers\\Html::activeInput('number', $model, 'amount', [\n                                'placeholder' => Yii::t('frontend', 'Donation amount')\n                            ]) ?>\n                        </div>\n                    </div>\n                    <div class=\"donation-page__email\">\n                        <div class=\"input-wrap\">\n                            <?= \\yii\\helpers\\Html::activeTextInput($model, 'full_name', [\n                                'placeholder' => Yii::t('frontend', 'Your full name'),\n                                'required' => 'required'\n                            ]) ?>\n                        </div>\n                    </div>\n                    <div class=\"donation-page__full_name\">\n                        <div class=\"input-wrap\">\n                            <?= \\yii\\helpers\\Html::activeInput('email', $model, 'email', [\n                                'placeholder' => Yii::t('frontend', 'Email'),\n                                'required' => 'required'\n                            ]) ?>\n                        </div>\n                    </div>\n                </div>\n                <?= \\yii\\helpers\\Html::activeRadioList($model, 'payment_system', \\common\\models\\OrderProject::paymentSystems(), [\n                    'item' => function ($index, $label, $name, $checked, $value) {\n                        $return = '<div class=\"input-radio-wrap\">';\n                        $return .= '<input value=\"' . $value . '\" id=\"' . $value . '\" type=\"radio\" name=\"' . $name . '\" ' . ($checked ? 'checked' : '') . '>';\n                        $return .= '<label for=\"' . $value . '\">' . ucwords($label) . '</label>';\n                        $return .= '</div>';\n                        return $return;\n                    },\n                    'class' => 'donation-page__method'\n                ]) ?>\n                <div class=\"donation-page__comments\">\n                    <?= \\yii\\helpers\\Html::activeTextarea($model, 'comment', ['placeholder' => Yii::t('frontend', 'Your comment:')]) ?>\n                </div>\n                <button class=\"donation-page__btn\"><?= Yii::t('frontend', 'donate') ?></button>\n                <?php \\yii\\widgets\\ActiveForm::end(); ?>\n            </div>\n        </div>\n    </div>\n</section>",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::article\\donate.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:eee29499c8651efe3faf928a08444737",
+      "default:extract:f05750988e5916f6ae341fad718d521b"
+    ],
+    "create_time": 1780532184,
+    "update_time": 1780532616,
+    "_id": "file::article\\donate.php-chunk-000"
+  },
+  "file::article\\index.php-chunk-000": {
+    "tokens": 871,
+    "content": "<?php\n/* @var $this yii\\web\\View */\n/* @var $articles \\common\\models\\Article[] */\n/* @var $sliderArticles \\common\\models\\Article[] */\n/* @var $partnersFilters array */\n/* @var $projectsFilters array */\n/* @var $helpCentersFilters array */\n/* @var $about_us int */\n/* @var $partner int */\n/* @var $project int */\n/* @var $help_center int */\n\n/* @var $pagination \\yii\\data\\Pagination */\n\nuse yii\\widgets\\ActiveForm;\nuse yii\\helpers\\Html;\n\n$this->title = Yii::t('frontend', 'Articles');\n$this->params['custom_header'] = [\n    'class' => 'news-hero',\n    'content' => $this->render('_header_slider', [\n        'articles' => $sliderArticles\n    ])\n];\n$filterPartner = Yii::$app->getRequest()->get('partner');\n$filterTime = Yii::$app->getRequest()->get('time');\n\n$this->registerJs(<<<JS\n$('#filter-form').find('select').on('change', function(){\n    $('#filter-form').submit();\n})\nJS\n);\n$action = ['article/index'];\nif ($about_us) {\n    $action = array_merge($action, ['about_us' => 1]);\n}\n?>\n\n<section class=\"news-page\">\n    <div class=\"news-page__filter-news\">\n        <div class=\"news-page__filter-news-form-wrap\" <?= ($partner || $project || $help_center ? \"style=\\\"display: block\\\"\" : '') ?>>\n            <?php ActiveForm::begin(['id' => 'filter-form', 'action' => $action, 'method' => 'get']); ?>\n            <div class=\"news-page__filter-news-form\">\n                <div class=\"input-wrap\">\n                    <?= Html::dropDownList('partner', $partner, $partnersFilters, ['prompt' => Yii::t('frontend', 'All partners')]) ?>\n                </div>\n                <div class=\"input-wrap\">\n                    <?= Html::dropDownList('project', $project, $projectsFilters, ['prompt' => Yii::t('frontend', 'All projects')]) ?>\n                </div>\n                <div class=\"input-wrap\">\n                    <?= Html::dropDownList('help_center', $help_center, $helpCentersFilters, ['prompt' => Yii::t('frontend', 'All help centers')]) ?>\n                </div>\n            </div>\n            <?php ActiveForm::end(); ?>\n        </div>\n        <div class=\"news-page__filter-bottom\">\n            <div class=\"news-page__filter-bottom-decor\"></div>\n            <button class=\"news-page__filter-btn--js\" type=\"button\"><?= Yii::t('frontend', 'Filters') ?></button>\n        </div>\n    </div>\n\n    <div class=\"news-page__wrap\">\n        <div class=\"articles__col articles__col--left news-page__wrap--grid\">\n            <?php foreach ($articles as $article) : ?>\n\n                <div class=\"articles__item\">\n                    <a href=\"<?= \\yii\\helpers\\Url::to(['article/view', 'slug' => $article->slug]) ?>\">\n                        <time>\n                            <span><?= Yii::$app->formatter->asDate($article->published_at) ?></span>\n                        </time>\n                        <h3><?= $article->title ?></h3>\n                        <p><?= $article->short_description ?></p>\n                    </a>\n                    <?php if (!empty($article->thumbnail_path)) : ?>\n                        <div class=\"articles__item-img\">\n                            <img src=\"<?= Yii::$app->glide->createSignedUrl([\n                                'glide/index',\n                                'path' => $article->thumbnail_path\n                            ], true) ?>\">\n                            <a href=\"<?= \\yii\\helpers\\Url::to(['article/view', 'slug' => $article->slug]) ?>\" class=\"articles__item-link\"><?= Yii::t('frontend', 'Read') ?></a>\n                        </div>\n                    <?php endif; ?>\n                </div>\n\n            <?php endforeach; ?>\n        </div>\n    </div>\n    <?= \\common\\widgets\\PaginationSectionWidget::widget(['pagination' => $pagination]) ?>\n</section>",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::article\\index.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:313bae8199fb2c3400a0851ad7d8a247",
+      "default:extract:29b4dd398f3d047b9495e922dcecc012"
+    ],
+    "create_time": 1780532621,
+    "update_time": 1780533012,
+    "_id": "file::article\\index.php-chunk-000"
+  },
+  "file::article\\nottranslate.php-chunk-000": {
+    "tokens": 815,
+    "content": "<?php\n/* @var $this yii\\web\\View */\n/* @var $articles \\common\\models\\Article[] */\n/* @var $sliderArticles \\common\\models\\Article[] */\n/* @var $partnersFilters array */\n/* @var $projectsFilters array */\n/* @var $helpCentersFilters array */\n/* @var $about_us int */\n/* @var $partner int */\n/* @var $project int */\n/* @var $help_center int */\n\n/* @var $pagination \\yii\\data\\Pagination */\n\nuse yii\\widgets\\ActiveForm;\nuse yii\\helpers\\Html;\n//use omgdef\\multilingual\\MultilingualBehavior;\nuse common\\helpers\\MultilingualHelper;\n\n//$this->title = Yii::t('frontend', 'Articles');\n\n$this->title = $model->title;\n$this->params['breadcrumbs'][] = ['label' => Yii::t('frontend', 'Articles'), 'url' => ['index']];\n$this->params['breadcrumbs'][] = $this->title;\n\n$this->registerMetaTag([\n    'property' => 'og:url',\n    'content' => Yii::$app->urlManager->createUrl(['view', 'slug' => $model->slug]),\n]);\n$this->registerMetaTag([\n    'property' => 'og:title',\n    'content' => $model->title,\n]);\n$this->registerMetaTag([\n    'property' => 'og:description',\n    'content' => $model->short_description,\n]);\n\n$thumb = Yii::$app->glide->createSignedUrl([\n    'glide/index',\n    'path' => $model->thumbnail_path\n], true);\n$this->params['custom_header'] = [\n    'class' => 'news-one-hero',\n    'og-meta' =>  $model->thumbnail_path,\n    'content' => \"<div class=\\\"news-one-hero__wrap\\\" style=\\\"background-image: linear-gradient(rgba(223, 224, 224, .1), rgba(255, 255, 255, 1)), url({$thumb}); filter: blur(3px);\\\"></div>\"\n];\n?>\n<article class=\"news-one-info\">\n    <h1><?= Yii::t('common', 'This Page without translate');?></h1>\n    <p><?= Yii::t('common', 'Look this Article other language');?></p>\n</article>\n<section class=\"news-one-news\">\n    <div class=\"articles__col articles__col--left\">\n<?php foreach (getUiLocales() as $code => $lang) : ?>\n            <?php if ($code !== \\Yii::$app->language) : ?>\n                <?php $article = $model->getArticlelang($code); ?>\n                <?php $title = '$model->'.MultilingualHelper::getFieldName('title' ,$code); ?>\n            <div class=\"articles__item\">\n                <a href=\"<?= \\yii\\helpers\\Url::to(['article/view', 'slug' => $model->slug, 'language' => localeToUrlPrefix($code)]) ?>\">\n                    <time>\n                        <span><?= Yii::$app->formatter->asDate($model->published_at) ?></span>\n                    </time>\n                    <h3><?= $article['title']; ?></h3>\n                    <p><?= $article['short_description']; ?></p>\n                </a>\n                <?php if (!empty($model->thumbnail_path)) : ?>\n                    <div class=\"articles__item-img\">\n                        <img src=\"<?= Yii::$app->glide->createSignedUrl([\n                            'glide/index',\n                            'path' => $model->thumbnail_path\n                        ], true) ?>\">\n                        <a href=\"<?= \\yii\\helpers\\Url::to(['article/view', 'slug' => $model->slug]) ?>\" class=\"articles__item-link\"><?= Yii::t('frontend', 'Read') ?></a>\n                    </div>\n                <?php endif; ?>\n            </div>\n            <?php endif; ?>\n        <?php endforeach; ?>\n    </div>\n</section>",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::article\\nottranslate.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:f5075c59a93de120f281c13ba5d2f869",
+      "default:extract:a429a11e557bfe47bfb7c4de9f92b52e"
+    ],
+    "create_time": 1780533019,
+    "update_time": 1780533370,
+    "_id": "file::article\\nottranslate.php-chunk-000"
+  },
+  "file::assets\\HyperAsset.php-chunk-000": {
+    "tokens": 238,
+    "content": "<?php\nnamespace app\\assets;\n\nuse yii\\web\\AssetBundle;\n\nclass HyperAsset extends AssetBundle\n{\n    public $sourcePath = '@app/Hyper_v5.5.0';\n\n    public $css = [\n        'assets/css/vendor.min.css',\n        'assets/css/app.min.css',\n        'assets/css/icons.min.css',\n    ];\n\n    public $js = [\n        'assets/js/vendor.min.js',\n        'assets/js/app.min.js'\n    ];\n\n    public $depends = [\n        'yii\\web\\YiiAsset',\n        'yii\\bootstrap5\\BootstrapAsset',\n    ];\n\n    public function init()\n    {\n        parent::init();\n\n        // Load theme config\n        $config = require(\\Yii::getAlias('@app/config/hyper.php'));\n\n        // Apply custom colors\n        $customCss = file_get_contents(\\Yii::getAlias('@app/Hyper_v5.5.0/assets/scss/_variables-custom.scss'));\n        file_put_contents(\n            \\Yii::getAlias('@app/web/css/hyper-custom.css'),\n            $customCss\n        );\n\n        $this->css[] = 'css/hyper-custom.css';\n    }\n}",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::assets\\HyperAsset.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:388d2e621e0328dd7059755f2fddb8be",
+      "default:extract:3798a73ddac3b9570490bacdf8cfa467"
+    ],
+    "create_time": 1780535178,
+    "update_time": 1780535854,
+    "_id": "file::assets\\HyperAsset.php-chunk-000"
+  },
+  "file::article\\view.php-chunk-000": {
+    "tokens": 1200,
+    "content": "<?php\n/* @var $this yii\\web\\View */\n\nuse common\\models\\UserSocialNetwork;\nuse yii\\helpers\\Html;\n\n/* @var $model common\\models\\Article */\n/* @var $project common\\models\\Project */\n/* @var $threeNews common\\models\\Article[] */\n$this->title = $model->title;\n$this->params['breadcrumbs'][] = ['label' => Yii::t('frontend', 'Articles'), 'url' => ['index']];\n$this->params['breadcrumbs'][] = $this->title;\n\n$thumb = Yii::$app->glide->createSignedUrl([\n    'glide/index',\n    'path' => $model->thumbnail_path\n], true);\n\n$this->registerMetaTag([\n    'property' => 'og:url',\n    'content' => Yii::$app->urlManager->createUrl(['view', 'slug' => $model->slug]),\n]);\n//$this->registerMetaTag([\n//    'property' => 'og:type',\n//    'content' => 'article',\n//]);\n$this->registerMetaTag([\n    'property' => 'og:title',\n    'content' => $model->title,\n]);\n$this->registerMetaTag([\n    'property' => 'og:description',\n    'content' => $model->short_description,\n]);\n//$this->registerMetaTag([\n//    'property' => 'fb:app_id',\n//    'content' => //TODO,\n//]);\n$this->params['custom_header'] = [\n    'class' => 'news-one-hero',\n    'og-meta' =>  $model->thumbnail_path,\n    'content' => \"<div class=\\\"news-one-hero__wrap\\\" style=\\\"background-image: linear-gradient(rgba(223, 224, 224, .1), rgba(255, 255, 255, 1)), url({$thumb}); filter: blur(3px);\\\"></div>\"\n];\n?>\n<article class=\"news-one-info\">\n    <time><?= Yii::$app->formatter->asDate($model->published_at) ?></time>\n    <h1><?= $model->title ?></h1>\n    <p><?= $model->body ?></p>\n\n    <?php if (($model->image_before !== null) && ($model->image_after !== null)): ?>\n        <?php echo \\common\\widgets\\ComparisonSlider::widget([\n            'beforeImage' => Yii::$app->glide->createSignedUrl(['glide/index', 'path' => $model->image_before_path], true),\n            'afterImage' => Yii::$app->glide->createSignedUrl(['glide/index', 'path' => $model->image_after_path], true),\n            'beforeAlt' => 'Before Image',\n            'afterAlt' => 'After Image',\n        ]) ?>\n    <?php endif; ?>\n    <?php if ($model->author->userProfile->getFullName()): ?>\n            <address class=\"news__author\">\n                <a href=\"#\" class=\"news__author-link news__author-link--js\" title=\"<?php echo Yii::t('frontend', 'Author: ') . Html::encode($model->author->userProfile->getFullName()) ?>\">\n                    <?php echo Yii::t('frontend', 'Author: ') ?><span data-id=\"author-<?php echo Html::encode($model->author->id) ?>\"><?php echo Html::encode($model->author->userProfile->getFullName()) ?></span>\n                </a>\n            </address>\n    <?php endif; ?>\n    <?= \\common\\widgets\\DbText::widget(['key' => 'share_article']) ?>\n</article>\n<?php if ($model->articleAttachments) : ?>\n    <section class=\"news-one-slider-wrap\">\n        <div class=\"news-one-slider news-one-slider--js\">\n            <?php foreach ($model->articleAttachments as $attachment) : ?>\n                <div class=\"news-one-slider-item\">\n                    <a data-fancybox=\"gallery\" href=\"<?= Yii::$app->glide->createSignedUrl([\n                        'glide/index',\n                        'path' => $attachment->path\n                    ], true) ?>\"><img src=\"<?= Yii::$app->glide->createSignedUrl([\n                            'glide/index',\n                            'path' => $attachment->path,\n                            'w' => 676,\n                            'h' =>450\n                        ], true) ?>\"></a>\n                </div>\n            <?php endforeach; ?>\n        </div>\n    </section>\n<?php endif; ?>\n\n<?php if ($project): ?>\n    <section class=\"news-one-progress\">\n        <div class=\"container\">\n            <div class=\"progress__item\">\n                <div class=\"progress__top\">\n                    <div class=\"progress__img\">\n                        <div class=\"progress__img-wrap\" style=\"background-image: url(<?= Yii::$app->glide->createSignedUrl([\n                            'glide/index',\n                            'path' => $project->thumbnail_path\n                        ], true) ?>)\">\n                        </div>\n                    </div>\n                    <div class=\"progress__progressbar\" style=\"background-size: <?= $project->getCollectedPercent() ?>% 100%;\">\n                        <div class=\"progress__progressbar-info\" style=\"right: <?= 100 - $project->getCollectedPercent() ?>%;\">\n                            <span class=\"deadline-info\"><?= Yii::t('frontend', 'Deadline: {date}', [\n                                    'date' => Yii::$app->formatter->asDate($project->due_date)\n                                ]) ?></span>\n                            <span class=\"progress-info\"><?= Yii::t('frontend', 'Progress: {collected} / {required}', [\n                                    'collected' => Yii::$app->formatter->asCurrency($project->collected_amount),\n                                    'required' => Yii::$app->formatter->asCurrency($project->required_amount)\n                                ]) ?></span>\n                        </div>",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::article\\view.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:20a0ebec28588424644c98ad5fe392b2",
+      "default:extract:4464225f0b46eb544a5485812c950264"
+    ],
+    "create_time": 1780538070,
+    "update_time": 1780538584,
+    "_id": "file::article\\view.php-chunk-000"
+  },
+  "file::article\\view.php-chunk-001": {
+    "tokens": 662,
+    "content": "[\n                                    'date' => Yii::$app->formatter->asDate($project->due_date)\n                                ]) ?></span>\n                            <span class=\"progress-info\"><?= Yii::t('frontend', 'Progress: {collected} / {required}', [\n                                    'collected' => Yii::$app->formatter->asCurrency($project->collected_amount),\n                                    'required' => Yii::$app->formatter->asCurrency($project->required_amount)\n                                ]) ?></span>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"progress__bottom\">\n                    <h3><?= $project->title ?></h3>\n                    <p><?= $project->short_description ?></p>\n                </div>\n                <div class=\"progress__links\">\n                    <a href=\"<?= \\yii\\helpers\\Url::to(['project/view', 'slug' => $project->slug]) ?>\" title=\"details\"><?= Yii::t('frontend', 'details') ?></a>\n                    <a href=\"<?= \\yii\\helpers\\Url::to(['project/donate', 'id' => $project->id]) ?>\" title=\"I can help\"><?= Yii::t('frontend', 'I can help') ?></a>\n                </div>\n            </div>\n        </div>\n    </section>\n<?php endif; ?>\n<section class=\"news-one-news\">\n    <div class=\"articles__col articles__col--left\">\n        <?php foreach ($threeNews as $article) : ?>\n            <div class=\"articles__item\">\n                <a href=\"<?= \\yii\\helpers\\Url::to(['article/view', 'slug' => $article->slug]) ?>\">\n                    <time>\n                        <span><?= Yii::$app->formatter->asDate($article->published_at) ?></span>\n                    </time>\n                    <h3><?= $article->title ?></h3>\n                    <p><?= $article->short_description ?></p>\n                </a>\n                <?php if (!empty($article->thumbnail_path)) : ?>\n                    <div class=\"articles__item-img\">\n                        <img src=\"<?= Yii::$app->glide->createSignedUrl([\n                            'glide/index',\n                            'path' => $article->thumbnail_path\n                        ], true) ?>\">\n                        <a href=\"<?= \\yii\\helpers\\Url::to(['article/view', 'slug' => $article->slug]) ?>\" class=\"articles__item-link\"><?= Yii::t('frontend', 'Read') ?></a>\n                    </div>\n                <?php endif; ?>\n            </div>\n        <?php endforeach; ?>\n    </div>\n</section>\n<?php if ($model->partners) : ?>\n    <section class=\"news-one-supported\">\n        <h3><?= Yii::t('frontend', 'Supported by') ?></h3>\n        <?php foreach ($model->partners as $partner): ?>\n            <div class=\"news-one-supported-item\">\n                <a href=\"<?= $partner->url ?>\" target=\"_blank\">\n                    <img src=\"<?= Yii::$app->glide->createSignedUrl([\n                        'glide/index',\n                        'path' => $partner->thumbnail_path\n                    ], true) ?>\">\n                </a>\n            </div>\n        <?php endforeach; ?>\n    </section>\n<?php endif; ?>",
+    "chunk_order_index": 1,
+    "full_doc_id": "file::article\\view.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:e57593d9a021c5908949445ee6ee01af",
+      "default:extract:0dc412075a106f19995c0157a2269f39"
+    ],
+    "create_time": 1780538070,
+    "update_time": 1780538688,
+    "_id": "file::article\\view.php-chunk-001"
+  },
+  "file::backend\\assets\\ActiveFormQueueAsset.php-chunk-000": {
+    "tokens": 116,
+    "content": "<?php\n\nnamespace backend\\assets;\n\nuse yii\\web\\AssetBundle;\nuse yii\\web\\View;\n\n/**\n * Provides a lightweight stub that queues ActiveForm initialisation until yii.activeForm is re-attached.\n */\nclass ActiveFormQueueAsset extends AssetBundle\n{\n    public $sourcePath = '@backend/assets/resources';\n\n    public $js = [\n        'js/yii-active-form-fix.js',\n    ];\n\n    public $jsOptions = [\n        'position' => View::POS_END,\n    ];\n\n    public $depends = [\n        HyperAsset::class,\n    ];\n}",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::backend\\assets\\ActiveFormQueueAsset.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:98b8755abdb0a36e35d4dbb006cdfca9",
+      "default:extract:44e47ccf474742dd554bc72b6925412f"
+    ],
+    "create_time": 1780539159,
+    "update_time": 1780539159,
+    "_id": "file::backend\\assets\\ActiveFormQueueAsset.php-chunk-000"
+  },
+  "file::site\\donate.php-chunk-000": {
+    "tokens": 634,
+    "content": "<?php\n\n/**\n * Created by Rex IT\n * @author Konstantin Kharalampidi <kharalampidi@rexit.info>\n */\n\n/* @var $this \\yii\\web\\View */\n/* @var $model \\common\\models\\OrderService */\n?>\n<section class=\"donation-page\">\n    <div class=\"container\">\n        <div class=\"donation-page__wrap\">\n            <div class=\"donation-page__left\"></div>\n            <div class=\"donation-page__right\">\n                <h2><?= Yii::t('frontend', 'Thank You for willing to help') ?></h2>\n                <?php $form = \\yii\\widgets\\ActiveForm::begin(['options' => ['class' => 'donation-page__form']]); ?>\n                <div class=\"donation-page__fio\">\n                    <div class=\"donation-page__amount\">\n                        <div class=\"input-wrap\">\n                            <?= \\yii\\helpers\\Html::activeInput('number', $model, 'amount', [\n                                'placeholder' => Yii::t('frontend', 'Donation amount')\n                            ]) ?>\n                        </div>\n                    </div>\n                    <div class=\"donation-page__email\">\n                        <div class=\"input-wrap\">\n                            <?= \\yii\\helpers\\Html::activeTextInput($model, 'full_name', [\n                                'placeholder' => Yii::t('frontend', 'Your full name'),\n                                'required' => 'required'\n                            ]) ?>\n                        </div>\n                    </div>\n                    <div class=\"donation-page__full_name\">\n                        <div class=\"input-wrap\">\n                            <?= \\yii\\helpers\\Html::activeInput('email', $model, 'email', [\n                                'placeholder' => Yii::t('frontend', 'Email'),\n                                'required' => 'required'\n                            ]) ?>\n                        </div>\n                    </div>\n                </div>\n                <?= \\yii\\helpers\\Html::activeRadioList($model, 'payment_system', \\common\\models\\OrderProject::paymentSystems(), [\n                    'item' => function ($index, $label, $name, $checked, $value) {\n                        $return = '<div class=\"input-radio-wrap\">';\n                        $return .= '<input value=\"' . $value . '\" id=\"' . $value . '\" type=\"radio\" name=\"' . $name . '\" ' . ($checked ? 'checked' : '') . '>';\n                        $return .= '<label for=\"' . $value . '\">' . ucwords($label) . '</label>';\n                        $return .= '</div>';\n                        return $return;\n                    },\n                    'class' => 'donation-page__method'\n                ]) ?>\n                <div class=\"donation-page__comments\">\n                    <?= \\yii\\helpers\\Html::activeTextarea($model, 'comment', ['placeholder' => Yii::t('frontend', 'Your comment:')]) ?>\n                </div>\n                <button class=\"donation-page__btn\"><?= Yii::t('frontend', 'donate') ?></button>\n                <?php \\yii\\widgets\\ActiveForm::end(); ?>\n            </div>\n        </div>\n    </div>\n</section>",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::site\\donate.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:c6c70b9e90da8e2fc174f85b4308dfaa",
+      "default:extract:6f9d5cb848212f1214e5c59fede2ca47"
+    ],
+    "create_time": 1780539552,
+    "update_time": 1780540472,
+    "_id": "file::site\\donate.php-chunk-000"
+  },
+  "file::site\\donate_10_2020.php-chunk-000": {
+    "tokens": 1200,
+    "content": "<?php\n\nuse common\\widgets\\DbText;\nuse yii\\web\\View;\n\n//use \\yii\\helpers\\Url;\n\n/* @var $this \\yii\\web\\View */\n\n//$this->registerJsFile(\"@web/js/libs.min.js\");\n//$this->registerCssFile(\"@web/css/style.min.css\",\n//    ['rel' => 'stylesheet',\n//        'noscript' => true,\n//        'condition' => 'lt IE 9']);\n$this->registerJs(\n    <<<JS\n  $(document).on(\"click\", \".js-tabs-payment div\", function (event) {\n    event.preventDefault();\n    let nametab = $(this).data(\"link\");\n    $(\".js-content-payment\").find(\".js-active\").removeClass(\"js-active\");\n    $(\".\" + nametab).addClass(\"js-active\");\n    $(this).siblings(\".js-active\").removeClass(\"js-active\");\n  });\nJS\n    , View::POS_READY);\n\n?>\n<div class=\"donate\">\n    <div class=\"payment\">\n        <div class=\"payment__wrapper\">\n            <div class=\"payment__tabs js-tabs-payment\">\n                <div class=\"payment__tab tab-payment tab1 js-active\" data-link=\"tab1\">\n                    <span>$</span>\n                    <div class=\"tab-payment__title\"><?= Yii::t('frontend', 'dollar') ?></div>\n                </div>\n                <div class=\"payment__tab tab-payment tab2\" data-link=\"tab2\">\n                    <span>€</span>\n                    <div class=\"tab-payment__title\"><?= Yii::t('frontend', 'euro') ?></div>\n                </div>\n                <div class=\"payment__tab tab-payment tab3\" data-link=\"tab3\">\n                    <span>₴</span>\n                    <div class=\"tab-payment__title\"><?= Yii::t('frontend', 'hryvnia') ?></div>\n                </div>\n<?php /*\n                <div class=\"payment__tab tab-payment tab4\" data-link=\"tab4\">\n                    <div class=\"tab-payment__icon\"><svg xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:cc=\"http://creativecommons.org/ns#\" xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"5.4027801in\" height=\"5.9583in\" viewBox=\"0 0 7357 9500\" id=\"svg2\" xml:space=\"preserve\" style=\"fill-rule: evenodd\">\n<g id=\"__x0023_Layer_x0020_1\">\n    <path d=\"m 5477,2477 c -81,-209 -199,-333 -324,-450 -125,-117 -347,-230 -531,-269 -133,-34 -328,-49 -578,-49 l -1944,0 0,2320 -318,0 0,520 318,0 0,211 -318,0 0,520 318,0 0,1437 557,0 0,-1437 1996,0 0,-520 -1996,0 0,-211 35,0 1396,0 c 537,0 922,-150 1162,-442 229,-279 369,-523 369,-951 0,-248 -69,-476 -143,-680 z m -732,1314 0,0 c -140,160 -325,238 -649,238 l -1403,0 0,0 -35,0 0,-1787 1427,0 c 228,0 386,15 467,44 134,85 239,151 317,296 81,151 121,330 121,534 0,291 -113,520 -246,675 z\" id=\"path26\" style=\"fill-rule: nonzero\"/>\n</g>\n</svg>\n                    </div>\n                    <div class=\"tab-payment__title\"><?= Yii::t('frontend', 'Rouble') ?></div>\n                </div>\n*/ ?>\n            </div>\n            <div class=\"payment__content content-payment js-content-payment\">\n                <div class=\"payment__content-tab js-tab-content tab1 js-active\">\n                    <?= DbText::widget(['key' => 'donate_account_dol_'. Yii::$app->language ]); ?>\n                    <div class=\"paypal-section\">\n\n                        <form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\" target=\"_top\">\n                            <input type=\"hidden\" name=\"cmd\" value=\"_donations\" />\n                            <input type=\"hidden\" name=\"business\" value=\"7Q4KPTAXLUREY\" />\n                            <input type=\"hidden\" name=\"item_name\" value=\"Donate for New life - International mission\" />\n                            <input type=\"hidden\" name=\"currency_code\" value=\"USD\" />\n                            <input type=\"image\" src=\"https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif\" border=\"0\" name=\"submit\" title=\"PayPal - The safer, easier way to pay online!\" alt=\"Donate with PayPal button\" onClick=\"ga('send', 'event', 'knopka', 'donate');\" />\n                            <img alt=\"\" border=\"0\" src=\"https://www.paypal.com/en_US/i/scr/pixel.gif\" width=\"1\" height=\"1\" />\n                        </form>\n                    </div>\n                </div>\n                <div class=\"payment__content-tab",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::site\\donate_10_2020.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:7cf062ded3015814df796c9c0ef6484b",
+      "default:extract:28e33d8ca71817860b353ee55ac16611"
+    ],
+    "create_time": 1780540903,
+    "update_time": 1780541697,
+    "_id": "file::site\\donate_10_2020.php-chunk-000"
+  },
+  "file::site\\donate_10_2020.php-chunk-001": {
+    "tokens": 241,
+    "content": "\" title=\"PayPal - The safer, easier way to pay online!\" alt=\"Donate with PayPal button\" onClick=\"ga('send', 'event', 'knopka', 'donate');\" />\n                            <img alt=\"\" border=\"0\" src=\"https://www.paypal.com/en_US/i/scr/pixel.gif\" width=\"1\" height=\"1\" />\n                        </form>\n                    </div>\n                </div>\n                <div class=\"payment__content-tab js-tab-content tab2\">\n                    <?= DbText::widget(['key' => 'donate_account_evr_'. Yii::$app->language ]); ?>\n                </div>\n                <div class=\"payment__content-tab js-tab-content tab3\">\n                    <?= DbText::widget(['key' => 'donate_account_hrn_'. Yii::$app->language ]); ?>\n                </div>\n                <div class=\"payment__content-tab js-tab-content tab4\">\n                    <?= DbText::widget(['key' => 'donate_account_rub_'. Yii::$app->language ]); ?>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>",
+    "chunk_order_index": 1,
+    "full_doc_id": "file::site\\donate_10_2020.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:ce6f11328ca9b99008d0c490060d4664",
+      "default:extract:c70657fd9b3e0d7f95062901e4d652c8"
+    ],
+    "create_time": 1780540903,
+    "update_time": 1780541805,
+    "_id": "file::site\\donate_10_2020.php-chunk-001"
+  },
+  "file::article\\view-user.php-chunk-000": {
+    "tokens": 1200,
+    "content": "<?php\n/* @var $this yii\\web\\View */\n/* @var $currentLanguage string */\n/* @var $user common\\models\\User */\n\nuse common\\models\\UserSocialNetwork;\nuse yii\\helpers\\Html;\n\n$this->title = $user->getFullName($currentLanguage) ?: 'Пользователи';\n$this->params['breadcrumbs'][] = ['label' => Yii::t('frontend', 'Users'), 'url' => ['index']];\n$this->params['breadcrumbs'][] = $this->title;\n\n// Use Glide for the main photo\n$photoSrc = Yii::$app->glide->createSignedUrl([\n    'glide/index',\n    'path' => $user->photo_path,\n    'w' => 500, // Example width, adjust as needed\n    'h' => 700, // Example height, adjust as needed\n    'fit' => 'crop'\n], true);\n\n\n// --- CSS from _ua_team_head.php ---\n$this->registerCss(<<<'CSS'\n.de-grid37 {\n    position: relative;\n    max-width: 1320px;\n    margin: 0 auto;\n    --pad: clamp(16px, 2vw, 24px);\n    --title-size: clamp(2rem, 2.3vw + 0.4rem, 2.7rem);\n    --pad-y: clamp(28px, 12vw, 132px);\n    --band-gap: clamp(22px, 5vw, 40px);\n    --content-x: clamp(32px, 7vw, 72px);\n    --band-pad-y: clamp(14px, 2.8vw, 24px);\n    background: #ffffff;\n    border-radius: 6px;\n    box-shadow: 0 4px 24px rgba(0,0,0,0.18);\n    display: grid;\n    grid-template-columns: repeat(10, 1fr);\n    grid-template-rows: repeat(3, clamp(120px, 11vw, 220px));\n    gap: 0;\n    padding: var(--pad);\n    overflow: hidden;\n}\n.de-grid37::after {\n    content: '';\n    position: absolute;\n    left: 0;\n    right: 0;\n    top: calc(var(--pad) + ((100% - 2 * var(--pad)) / 3) * 0.8);\n    height: calc(((100% - 2 * var(--pad)) / 3) * 1.4);\n    background: #173750;\n    z-index: 1;\n}\n.de-grid37__cell {\n    position: relative;\n    z-index: 0;\n    pointer-events: none;\n}\n.de-grid37__cell--row1,\n.de-grid37__cell--row2,\n.de-grid37__cell--row3 { background: transparent; }\n\n.de-grid37__photo {\n    grid-column: 1 / span 3;\n    grid-row: 1 / span 3;\n    z-index: 2;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    padding: clamp(12px, 1.4vw, 18px);\n}\n.de-grid37__photo img {\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    border-radius: 6px;\n    box-shadow: 0 14px 32px rgba(23,55,80,0.18);\n}\n\n.de-grid37__title {\n    grid-column: 4 / -1;\n    grid-row: 1;\n    align-self: end;\n    padding: var(--band-pad-y) var(--content-x) calc(var(--pad-y) * 0.2);\n    text-align: left;\n    z-index: 2;\n}\n.de-grid37__title h3 {\n    margin: 0;\n    font-family: 'Inter', sans-serif;\n    font-weight: 400;\n    font-size: var(--title-size);\n    letter-spacing: 0.08em;\n    text-transform: uppercase;\n    color: #173750;\n}\n\n.de-grid37__band {\n    grid-column: 4 / -1;\n    grid-row: 2;\n    z-index: 2;\n    display: grid;\n    grid-auto-rows: min-content;\n    gap: var(--band-gap);\n    align-content: center;\n    justify-items: start;\n    padding: var(--band-pad-y) var(--content-x);\n    color: #ffffff;\n}\n.de-grid37__band-inner { padding-block: clamp(6px, 1.1vw, 12px); width: 100%; }\n.de-grid37__footer {\n    grid-column: 4 / -1;\n    grid-row: 3;\n    z-index: 2;\n    display: grid;\n    grid-auto-flow: column;\n    justify-content: start;\n    align-items: center;\n    gap: clamp(12px, 2.2vw, 24px);\n    padding: var(--band-pad-y) var(--content-x) clamp(4px, 1vw, 10px);\n}\n.de-grid37__position {\n    margin: 0;\n    font-family: 'Inter', sans-serif;\n    font-size: clamp(1.05rem, 1.1vw, 1.22rem);\n    line-height: 1.6;\n}\n.de-grid37__certificate {\n    margin: 0;\n    font-family: 'Inter', sans-serif;\n    font-weight: 700;\n    font-size: clamp(1.1rem, 1.4vw, 1.4rem);\n    letter-spacing: 0.08em;\n    color: #f8ef",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::article\\view-user.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:fac91643cfe7972af64e8d55edacefae",
+      "default:extract:2ae97c349667617e2591a4392a66381d"
+    ],
+    "create_time": 1780542802,
+    "update_time": 1780542802,
+    "_id": "file::article\\view-user.php-chunk-000"
+  },
+  "file::article\\view-user.php-chunk-001": {
+    "tokens": 1200,
+    "content": "-size: clamp(1.05rem, 1.1vw, 1.22rem);\n    line-height: 1.6;\n}\n.de-grid37__certificate {\n    margin: 0;\n    font-family: 'Inter', sans-serif;\n    font-weight: 700;\n    font-size: clamp(1.1rem, 1.4vw, 1.4rem);\n    letter-spacing: 0.08em;\n    color: #f8ef67;\n}\n.de-grid37__icons { display: inline-flex; gap: 16px; align-items: center; }\n.de-grid37__icon {\n    width: 44px;\n    height: 44px;\n    border-radius: 50%;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    border: 2px solid #173750;\n    color: #173750;\n    background: transparent;\n    transition: transform .2s ease, background .2s ease, color .2s ease;\n}\n.de-grid37__icon:hover {\n    transform: translateY(-2px);\n    background: #173750;\n    color: #ffffff;\n}\n.de-grid37__icon svg { width: 22px; height: 22px; fill: currentColor; }\n\n.de-grid37__mobile-band { display: none; }\n\n.nl-sr-only {\n    position: absolute;\n    width: 1px;\n    height: 1px;\n    padding: 0;\n    margin: -1px;\n    overflow: hidden;\n    clip: rect(0, 0, 0, 0);\n    white-space: nowrap;\n    border: 0;\n}\n\n@media (max-width: 768px) {\n    .de-grid37 {\n        --mobile-pad: clamp(14px, 9vw, 32px);\n        --mobile-gap: clamp(16px, 5vw, 26px);\n        padding: var(--mobile-pad);\n        display: grid;\n        grid-template-columns: repeat(6, minmax(0, 1fr));\n        grid-template-rows: repeat(9, minmax(0, auto));\n        grid-auto-rows: minmax(0, auto);\n        min-height: calc((100vw - 2 * var(--mobile-pad)) * 2.4);\n        border-radius: 0;\n        box-shadow: none;\n        overflow: hidden;\n        background:\n            linear-gradient(\n                to right,\n                rgba(23,55,80,0) 6%,\n                #173750 6%,\n                #173750 94%,\n                rgba(23,55,80,0) 94%\n            ),\n            #ffffff;\n    }\n    .de-grid37::after { display: none; }\n    .de-grid37__mobile-band {\n        display: block;\n        grid-column: 1 / span 6;\n        grid-row: 5 / span 5;\n        background:\n            linear-gradient(\n                to right,\n                rgba(23,55,80,0) 6%,\n                #173750 6%,\n                #173750 94%,\n                rgba(23,55,80,0) 94%\n            );\n        border-radius: 28px 28px 0 0;\n        z-index: 1;\n    }\n    .de-grid37__photo {\n        grid-column: 1 / span 6;\n        grid-row: 1 / span 5;\n        padding: 0;\n        z-index: 3;\n        display: flex;\n        align-items: stretch;\n        justify-content: center;\n        margin: 0 calc(-1 * var(--mobile-pad));\n        width: calc(100% + 2 * var(--mobile-pad));\n        background: transparent;\n        border-radius: 0;\n    }\n    .de-grid37__photo img {\n        border-radius: 14px;\n        box-shadow: none;\n        width: 100%;\n        height: 100%;\n        object-fit: cover;\n    }\n    .de-grid37__title {\n        grid-column: 1 / span 6;\n        grid-row: 6;\n        padding: clamp(12px, 4vw, 18px) clamp(10px, 5vw, 18px) clamp(6px, 3vw, 10px);\n        align-self: start;\n        text-align: center;\n        color: #ffffff;\n        z-index: 3;\n    }\n    .de-grid37__title h3 {\n        color: #ffffff;\n        letter-spacing: 0.1em;\n        font-size: clamp(2rem, 10vw, 2.6rem);\n    }\n    .de-grid37__band {\n        grid-column: 1 / span 6;\n        grid-row: 7 / span 2;\n        padding: clamp(8px, 3vw, 16px) clamp(10px, 5vw, 18px);\n        width: 100%;\n        justify-items: center;\n        align-content: start;\n        gap: clamp(12px, 4vw, 20px);\n        color: #ffffff;\n        text-align: center;\n        z-index: 3;\n    }\n    .de-grid37__band-inner {\n        width: 100%;\n        padding: 0;\n        display: grid;\n        gap: clamp(10px, 4vw, 18px);\n        justify-items: center;\n    }\n    .de-grid37__position,\n    .de-grid37__certificate {\n        color: #ffffff;\n    }\n    .de-grid37__certificate {\n        letter-spacing: 0.18em;\n        color",
+    "chunk_order_index": 1,
+    "full_doc_id": "file::article\\view-user.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:2c9c5b57970a927e1ad728106902819a",
+      "default:extract:9f9e72789ed8b8677155144f91b509fc"
+    ],
+    "create_time": 1780542802,
+    "update_time": 1780542802,
+    "_id": "file::article\\view-user.php-chunk-001"
+  },
+  "file::article\\view-user.php-chunk-002": {
+    "tokens": 1200,
+    "content": ": 3;\n    }\n    .de-grid37__band-inner {\n        width: 100%;\n        padding: 0;\n        display: grid;\n        gap: clamp(10px, 4vw, 18px);\n        justify-items: center;\n    }\n    .de-grid37__position,\n    .de-grid37__certificate {\n        color: #ffffff;\n    }\n    .de-grid37__certificate {\n        letter-spacing: 0.18em;\n        color: #f5d84c;\n    }\n    .de-grid37__footer {\n        grid-column: 1 / span 6;\n        grid-row: 9;\n        padding: clamp(12px, 4vw, 18px) clamp(10px, 5vw, 18px) clamp(6px, 3vw, 10px);\n        justify-content: center;\n        gap: clamp(12px, 4vw, 20px);\n        align-self: end;\n        z-index: 3;\n    }\n    .de-grid37__icon {\n        border-color: rgba(255,255,255,0.85);\n        color: rgba(255,255,255,0.95);\n        background: transparent;\n    }\n    .de-grid37__icon:hover {\n        background: rgba(255,255,255,0.2);\n        color: #ffffff;\n    }\n}\nCSS);\n\n// --- Data processing from _ua_team_head.php ---\n$metaPath = Yii::getAlias('@app/../config/team.meta.php');\n$teamMeta = is_file($metaPath) ? (array)require $metaPath : [];\n\n$language = $currentLanguage ?: \\Yii::$app->language;\n$languagePrefix = strtolower(substr($language, 0, 2));\nif (!in_array($languagePrefix, ['en', 'de'], true)) {\n    $languagePrefix = null;\n}\n\n$name = trim((string)$user->getFullName($languagePrefix))\n    ?: trim((string)$user->getFullName(null))\n    ?: trim((string)$user->getPublicIdentity())\n    ?: Yii::t('frontend', 'Team member');\n\n$slugKey = isset($user->slug) ? (string)$user->slug : '';\nif ($slugKey !== '' && isset($teamMeta[$slugKey]['ua_name']) && $teamMeta[$slugKey]['ua_name']) {\n    $name = trim((string)$teamMeta[$slugKey]['ua_name']);\n}\n$nameUpper = mb_strtoupper($name, 'UTF-8');\n\n$position = trim((string)$user->getPosition($languagePrefix)) ?: trim((string)$user->position);\nif ($position !== '') {\n    $posNorm = preg_replace('/\\s+/u', ' ', $position);\n    if (preg_match('/^Leiter und Gründer der christlichen Mission/i', $posNorm)) {\n        $position = \"Керівник і засновник християнської місії «Нове Життя», пастор церкви «Пробудження»\";\n    }\n}\n\n$certificateRaw = trim((string)$user->certificate);\nif ($certificateRaw === '' && $user->userProfile && $user->userProfile->certificate) {\n    $certificateRaw = trim((string)$user->userProfile->certificate);\n}\n$certificateLabel = $certificateRaw !== '' ? $certificateRaw : null;\nif ($certificateLabel !== null) {\n    if (preg_match('/(?:Zertifikat|Certificate|Сертифікат)\\s*(?:Nr\\.?|№|No\\.?|N°)?\\s*(\\d+)/iu', $certificateLabel, $m)) {\n        $certificateLabel = \"Посвідчення № \" . $m[1];\n    } elseif (!preg_match('/Посвідчення|№/u', $certificateLabel)) {\n        $certificateLabel = Yii::t('frontend', 'Посвідчення № {number}', ['number' => $certificateLabel]);\n    }\n}\n\n$bio = $user->getInfo($currentLanguage, 'full');\n\n// --- Social networks ---\n$networkMeta = [\n    UserSocialNetwork::SOCIAL_NETWORK_FB => ['slug' => 'facebook', 'label' => 'Facebook'],\n    UserSocialNetwork::SOCIAL_NETWORK_IG => ['slug' => 'instagram', 'label' => 'Instagram'],\n    UserSocialNetwork::SOCIAL_NETWORK_YT => ['slug' => 'youtube', 'label' => 'YouTube'],\n    UserSocialNetwork::SOCIAL_NETWORK_VK => ['slug' => 'vk', 'label' => 'VKontakte'],\n    UserSocialNetwork::SOCIAL_NETWORK_OK => ['slug' => 'ok', 'label' => 'OK'],\n    UserSocialNetwork::SOCIAL_NETWORK_PT => ['slug' => 'pinterest', 'label' => 'Pinterest'],\n];\n$contacts = [];\nif (!empty($user->userSocialNetworks)) {\n    foreach ($user->userSocialNetworks as $network) {\n        if (isset($networkMeta[$network->social_network_id])) {\n            $meta = $networkMeta[$network->social_network_id];\n            $contacts[] = [\n                'slug' => $meta['slug'],\n                'label' => $meta['label'],\n                'url' => $network->link,\n            ];\n        }\n    }\n}\n\n// --- SVG icon helper ---\n$iconSvg = static function (string $slug): string {\n    switch ($slug) {\n        case 'instagram':\n            return '<svg viewBox=\"0 0 24 24\"><path d=\"M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5",
+    "chunk_order_index": 2,
+    "full_doc_id": "file::article\\view-user.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:a5b4ef7e8638dffffacc992173f12bc3",
+      "default:extract:6cc1d8dab86137d7cf984ba79d867890"
+    ],
+    "create_time": 1780542802,
+    "update_time": 1780542802,
+    "_id": "file::article\\view-user.php-chunk-002"
+  },
+  "file::article\\view-user.php-chunk-003": {
+    "tokens": 1200,
+    "content": "=> $network->link,\n            ];\n        }\n    }\n}\n\n// --- SVG icon helper ---\n$iconSvg = static function (string $slug): string {\n    switch ($slug) {\n        case 'instagram':\n            return '<svg viewBox=\"0 0 24 24\"><path d=\"M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm5 3.3A4.7 4.7 0 1 1 7.3 12 4.7 4.7 0 0 1 12 7.3zm0 2a2.7 2.7 0 1 0 2.7 2.7A2.7 2.7 0 0 0 12 9.3zm6.4-3.2a1.1 1.1 0 1 1-1.1-1.1 1.1 1.1 0 0 1 1.1 1.1z\"/></svg>';\n        case 'facebook':\n            return '<svg viewBox=\"0 0 24 24\"><path d=\"M13.5 22.5v-8h2.4l.4-3h-2.8V9.1c0-.9.3-1.5 1.6-1.5H16V5.1A19.5 19.5 0 0 0 13.7 5c-2.3 0-3.9 1.4-3.9 3.9V11H7.5v3h2.3v8z\"/></svg>';\n        case 'telegram':\n            return '<svg viewBox=\"0 0 24 24\"><path d=\"M22 4.01L2.01 10.73c-.68.22-.67 1.18-.02 1.43l4.7 1.49 1.99 6.19c.18.54.85.73 1.27.36l2.81-2.42 4.06 3.12c.51.39 1.25.10 1.38-.54l3.03-14.39c.15-.68-.48-1.26-1.23-1.06z\"/></svg>';\n        case 'youtube':\n            return '<svg viewBox=\"0 0 24 24\"><path d=\"M21.6 7.2a2.7 2.7 0 0 0-1.9-1.9A53.4 53.4 0 0 0 12 5a53.4 53.4 0 0 0-7.7.3 2.7 2.7 0 0 0-1.9 1.9A28.2 28.2 0 0 0 2 12a28.2 28.2 0 0 0 .4 4.8 2.7 2.7 0 0 0 1.9 1.9 53.4 53.4 0 0 0 7.7.3 53.4 53.4 0 0 0 7.7-.3 2.7 2.7 0 0 0 1.9-1.9A28.2 28.2 0 0 0 22 12a28.2 28.2 0 0 0-.4-4.8zM10 15.4V8.6L15.3 12z\"/></svg>';\n        default:\n            return '<svg viewBox=\"0 0 24 24\"><circle cx=\"12\" cy=\"12\" r=\"10\" opacity=\".25\"/><path d=\"M12 8a1.5 1.5 0 1 1-1.5 1.5A1.5 1.5 0 0 1 12 8zm0 4a1 1 0 0 1 1 1v4.5a1 1 0 0 1-2 0V13a1 1 0 0 1 1-1z\"/></svg>';\n    }\n};\n?>\n\n<div class=\"container\" style=\"margin-top: 32px; margin-bottom: 32px;\">\n    <?php if ($user): ?>\n        <section class=\"de-grid37\" aria-labelledby=\"team-member-name\">\n            <?php for ($row = 1; $row <= 3; $row++): ?>\n                <?php for ($col = 1; $col <= 10; $col++): ?>\n                    <span class=\"de-grid37__cell de-grid37__cell--row<?= $row ?>\" aria-hidden=\"true\"></span>\n                <?php endfor; ?>\n            <?php endfor; ?>\n\n            <div class=\"de",
+    "chunk_order_index": 3,
+    "full_doc_id": "file::article\\view-user.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:a7e86518ce7ec9294338edfac9f49ae6",
+      "default:extract:254970aba357464809886d32378e27ff"
+    ],
+    "create_time": 1780542802,
+    "update_time": 1780542802,
+    "_id": "file::article\\view-user.php-chunk-003"
+  },
+  "file::article\\view-user.php-chunk-004": {
+    "tokens": 560,
+    "content": "-grid37\" aria-labelledby=\"team-member-name\">\n            <?php for ($row = 1; $row <= 3; $row++): ?>\n                <?php for ($col = 1; $col <= 10; $col++): ?>\n                    <span class=\"de-grid37__cell de-grid37__cell--row<?= $row ?>\" aria-hidden=\"true\"></span>\n                <?php endfor; ?>\n            <?php endfor; ?>\n\n            <div class=\"de-grid37__mobile-band\" aria-hidden=\"true\"></div>\n\n            <div class=\"de-grid37__photo\">\n                <img src=\"<?= Html::encode($photoSrc) ?>\" alt=\"<?= Html::encode($name) ?>\">\n            </div>\n\n            <div class=\"de-grid37__title\">\n                <h3 id=\"team-member-name\"><?= Html::encode($nameUpper) ?></h3>\n            </div>\n\n            <div class=\"de-grid37__band\">\n                <div class=\"de-grid37__band-inner\">\n                    <?php if ($position): ?>\n                        <p class=\"de-grid37__position\"><?= Html::encode($position) ?></p>\n                    <?php endif; ?>\n                    <?php if ($certificateLabel): ?>\n                        <p class=\"de-grid37__certificate\"><?= Html::encode($certificateLabel) ?></p>\n                    <?php endif; ?>\n\n                    <?php if ($bio): ?>\n                        <div class=\"user-bio\" style=\"font-size: clamp(0.9rem, 1vw, 1.1rem); line-height: 1.6; color: white;\">\n                            <?= nl2br(Html::encode($bio)) ?>\n                        </div>\n                    <?php endif; ?>\n                </div>\n            </div>\n\n            <?php if (!empty($contacts)): ?>\n                <div class=\"de-grid37__footer\" aria-label=\"<?= Yii::t('frontend', 'Social networks') ?>\">\n                    <div class=\"de-grid37__icons\">\n                        <?php foreach ($contacts as $contact): ?>\n                            <a class=\"de-grid37__icon <?= Html::encode($contact['slug']) ?>\" href=\"<?= Html::encode($contact['url']) ?>\" target=\"_blank\" rel=\"noopener noreferrer nofollow\">\n                                <?= $iconSvg($contact['slug']) ?>\n                                <span class=\"nl-sr-only\"><?= Html::encode($contact['label']) ?></span>\n                            </a>\n                        <?php endforeach; ?>\n                    </div>\n                </div>\n            <?php endif; ?>\n        </section>\n    <?php else: ?>\n        <p class=\"team-preview__empty\"><?= Yii::t('frontend', 'User profile is currently unavailable.') ?></p>\n    <?php endif; ?>\n</div>",
+    "chunk_order_index": 4,
+    "full_doc_id": "file::article\\view-user.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:51eb40b2828152cfd85425b554adb74f",
+      "default:extract:44eca15064dc9fb21f7636dcf70b886b"
+    ],
+    "create_time": 1780542802,
+    "update_time": 1780543488,
+    "_id": "file::article\\view-user.php-chunk-004"
+  },
+  "file::backend\\assets\\AidCampaignAsset.php-chunk-000": {
+    "tokens": 122,
+    "content": "<?php\n\nnamespace backend\\assets;\n\nuse yii\\web\\AssetBundle;\n\nclass AidCampaignAsset extends AssetBundle\n{\n    public $sourcePath = null;\n    public $baseUrl = '@web';\n\n    public $css = [\n        'hyper/vendor/ion-rangeslider/ion.rangeSlider.min.css',\n        'css/aid-campaign.css',\n    ];\n\n    public $js = [\n        'hyper/vendor/ion-rangeslider/ion.rangeSlider.min.js',\n        'js/aid-campaign.js',\n    ];\n\n    public $depends = [\n        HyperAsset::class,\n    ];\n}",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::backend\\assets\\AidCampaignAsset.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:0ede24ead8e6acb53916a97e43d6b30d",
+      "default:extract:fc49840b39a8770929161bf9201745b9"
+    ],
+    "create_time": 1780542802,
+    "update_time": 1780543111,
+    "_id": "file::backend\\assets\\AidCampaignAsset.php-chunk-000"
+  },
+  "file::site\\exp_popup.php-chunk-000": {
+    "tokens": 1095,
+    "content": "<?php\n\n/** @var yii\\web\\View $this */\n/** @var \\common\\models\\User[] $users */\n/** @var string $currentLanguage */\n\nuse yii\\helpers\\Html;\n\n$this->title = Yii::t('frontend', 'Our Team');\n$this->registerCssFile('@web/css/team-cards.css');\n\n// --- Helper function to render a user card ---\nif (!function_exists('renderCard')) {\n    function renderCard($user, $currentLanguage) {\n        $html = '<article class=\"team-card\">';\n        $html .= '<div class=\"team-card__background-shape\"></div>';\n        $html .= '<div class=\"team-card__image\">';\n        if ($user->photo_base_url && $user->photo_path) {\n            $html .= '<img src=\"' . ($user->photo_base_url . '/' . $user->photo_path) . '\" alt=\"' . Html::encode($user->getFullName($currentLanguage)) . '\" loading=\"lazy\">';\n        }\n        $html .= '</div>';\n        $html .= '<div class=\"team-card__content\">';\n        $html .= '<h2 class=\"team-card__name\">' . Html::encode($user->getFullName($currentLanguage)) . '</h2>';\n        if ($user->getPosition($currentLanguage)) {\n            $html .= '<p class=\"team-card__position\">' . Html::encode($user->getPosition($currentLanguage)) . '</p>';\n        }\n        $html .= Html::a(Yii::t('frontend', 'Mehr erfahren'), '/' . Yii::$app->language . '/user/' . $user->slug, ['class' => 'team-card__more-link']);\n        $html .= '</div>';\n        $html .= '</article>';\n        return $html;\n    }\n}\n\n$headUser = null;\nforeach ($users as $user) {\n    if ($user->id == 13) {\n        $headUser = $user;\n        break;\n    }\n}\n\n?>\n\n<main>\n    <div class=\"team-preview\">\n        <div class=\"team-preview__container\">\n\n            <?php if ($headUser): ?>\n                <div style=\"margin-bottom: 40px; padding: 20px; background: #f0f5fa; border-radius: 10px; text-align: center;\">\n                    <h2 style=\"font-size: 24px; color: #17374f;\">Голова Місії</h2>\n                    <p>Інформація про голову місії доступна у спливаючому вікні.</p>\n                    <button id=\"show-popup-btn\" style=\"display: inline-block; margin-top: 10px; padding: 10px 20px; background: #009fe3; color: white; border: 0; border-radius: 8px; cursor: pointer;\">Показати профіль</button>\n                </div>\n\n                <div id=\"user-popup\" style=\"display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; padding: 5%; align-items: center; justify-content: center;\">\n                    <div style=\"background: white; border-radius: 15px; max-width: 500px; margin: auto; position: relative;\" id=\"popup-inner\">\n                        <button id=\"close-popup-btn\" style=\"position: absolute; top: 10px; right: 10px; background: transparent; border: 0; font-size: 24px; cursor: pointer;\">×</button>\n                        <div style=\"padding: 20px;\">\n                             <?= renderCard($headUser, $currentLanguage) ?>\n                        </div>\n                    </div>\n                </div>\n            <?php endif; ?>\n\n            <?php if (!empty($users)): ?>\n                <div class=\"team-cards\">\n                    <?php foreach ($users as $user): ?>\n                        <?php if ($user->id == 13) continue; // Skip the head user in the main grid ?>\n                        <?= renderCard($user, $currentLanguage) ?>\n                    <?php endforeach; ?>\n                </div>\n            <?php else: ?>\n                <p class=\"team-preview__empty\"><?= Yii::t('frontend', 'Team profiles will be displayed here soon') ?></p>\n            <?php endif; ?>\n        </div>\n    </div>\n</main>\n\n<?php\n$this->registerJs(<<<'JS'\n    const showBtn = document.getElementById('show-popup-btn');\n    const closeBtn = document.getElementById('close-popup-btn');\n    const popup = document.getElementById('user-popup');\n    const popupInner = document.getElementById('popup-inner');\n\n    if (showBtn && closeBtn && popup && popupInner) {\n        showBtn.addEventListener('click', () => { popup.style.display = 'flex'; });\n        closeBtn.addEventListener('click', () => { popup.style.display = 'none'; });\n        popup.addEventListener('click', (e) => {\n            if (!popupInner.contains(e.target)) {\n                popup.style.display = 'none';\n            }\n        });\n    }\nJS\n);\n?>",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::site\\exp_popup.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:e38b8a93521d4cbfd39bbe491c3e327e",
+      "default:extract:67bd39f68e90e8c826f155e89ca1e93c"
+    ],
+    "create_time": 1780543494,
+    "update_time": 1780544063,
+    "_id": "file::site\\exp_popup.php-chunk-000"
+  },
+  "file::site\\contact.php-chunk-000": {
+    "tokens": 1200,
+    "content": "<?php\n\n/**\n * Created by Rex IT\n * @author Konstantin Kharalampidi <kharalampidi@rexit.info>\n */\n\n/* @var $this \\yii\\web\\View */\n/* @var $contactForm  \\frontend\\models\\ContactForm */\n/* @var $models array|\\common\\models\\HelpCenter[]|\\common\\models\\Partner[]|\\yii\\db\\ActiveRecord[] */\n$json = \\common\\models\\HelpCenter::createJson($models);\n$servicesString = Yii::t('frontend', 'Services:');\n$contactsString = Yii::t('frontend', 'Contacts:');\n$detailsString = Yii::t('frontend', 'details');\n?>\n    <section class=\"contact-page\">\n        <div class=\"news-page__filter\">\n            <div class=\"news-page__filter-top\">\n                <div class=\"news-page__filter-item\">\n                    <div class=\"input-wrap input-wrap-select\">\n                        <?php  $city = \\common\\models\\HelpCenter::getPlaceNames(); ?>\n                        <select class=\"select-country--js\">\n                            <option value=\"All\"><?= Yii::t('frontend', 'All') ?></option>\n                        <?php   foreach ($city as $key => $item){ ?>\n                            <option value=\"<?= $key ?>\"><?= $item ?></option>\n                        <?php } ?>\n                        </select>\n                    </div>\n                </div>\n<!--                <div class=\"news-page__filter-item\">-->\n<!--                    <div class=\"input-wrap\">-->\n<!--                        <input data-filter=\"clothes\" class=\"checkbox-service--js\" name=\"contact-filter\"-->\n<!--                               id=\"clothes-contacts\" type=\"checkbox\" checked>-->\n<!--                        <label for=\"clothes-contacts\">Clothes</label>-->\n<!--                    </div>-->\n<!--                </div>-->\n                <div class=\"news-page__filter-item\">\n                    <div class=\"input-wrap\">\n                        <input data-filter=\"medicine\" class=\"checkbox-service--js\" name=\"contact-filter\"\n                               id=\"medicine-contacts\" type=\"checkbox\" checked>\n                        <label for=\"medicine-contacts\"><?= Yii::t('common', 'Medicine') ?></label>\n                    </div>\n                </div>\n                <div class=\"news-page__filter-item\">\n                    <div class=\"input-wrap\">\n                        <input data-filter=\"shelter\" class=\"checkbox-service--js\" name=\"contact-filter\"\n                               id=\"shelter-contacts\" type=\"checkbox\" checked>\n                        <label for=\"shelter-contacts\"><?= Yii::t('common', 'Shelter') ?></label>\n                    </div>\n                </div>\n                <div class=\"news-page__filter-item\">\n                    <div class=\"input-wrap\">\n                        <input data-filter=\"food\" class=\"checkbox-service--js\" name=\"contact-filter\" id=\"food-contacts\"\n                               type=\"checkbox\" checked>\n                        <label for=\"food-contacts\"><?= Yii::t('common', 'Food') ?></label>\n                    </div>\n                </div>\n            </div>\n        </div>\n        <div class=\"contact-page__slider-wrap\">\n            <div class=\"contact-page__slider\">\n            </div>\n        </div>\n        <div class=\"contact-page__map-wrap\">\n            <div class=\"contact-page__map\">\n                <img src=\"/img/general/contact-map-2.png\">\n            </div>\n            <div class=\"contact-page__map-mark\" data-country=\"kyiv\" data-country-name=\"<?= Yii::t('common', 'Kyiv') ?>\" data-top=\"430\" data-left=\"627\"></div>\n            <div class=\"contact-page__map-mark\" data-country=\"dnipro\" data-country-name=\"<?= Yii::t('common', 'Dnipro') ?>\" data-top=\"890\" data-left=\"950\"></div>\n            <div class=\"contact-page__map-mark\" data-country=\"izmail\" data-country-name=\"<?= Yii::t('common', 'Izmail') ?>\" data-top=\"1590\" data-left=\"500\"></div>\n            <div class=\"contact-page__map-mark\" data-country=\"tarutino\" data-country-name=\"<?= Yii::t('common', 'Tarutino') ?>\" data-top=\"1400\" data-left=\"530\"></div>\n            <div class=\"contact-page__map-mark contact-page__map-mark--bottom\" data-country=\"artsyz\" data-country-name=\"<?= Yii::t('common', 'Artsyz') ?>\" data-top=\"1440\" data-left=\"550\"></div>\n            <div class=\"contact-page__map-mark contact-page__map-mark--bottom\" data-country=\"berezino\" data-country-name=\"<?= Yii::t('common', 'Berezino') ?>\" data-top=\"1380\" data-left=\"540\"></div>\n            <div class=\"contact-page__map-mark\" data-country=\"zaporizhzhia\" data-country-name=\"<?= Yii::t('common', 'Zaporizhzhia') ?>\" data-top=\"1010\" data-left=\"964\"></div>\n            <div class=\"contact-page__map-mark\" data-country=\"cherkasy-zagorodyshshe\" data-country-name=\"<?= Yii::t('common', 'Cherkasy (Zagorodyshshe)') ?>\" data-top=\"654\" data-left=\"767\"></div>\n            <div class=\"contact-page__map-mark contact-page__map-mark--left\" data-country=\"cherkasy\" data-country-name=\"<?= Yii::t('common', 'Cherkasy') ?>\" data-top=\"686\" data-left=\"742\"></div>\n            <div class=\"contact-page__map-mark\" data-country=\"poltava\" data-country-name=\"<?= Yii::t('common', 'Poltava') ?>\" data-top=\"620\" data-left=\"920\"></div>\n            <div class=\"contact-page__map",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::site\\contact.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:2bcf72a657173ca96b0680425cffdf9e",
+      "default:extract:04747b5811d129d2e9b2f734fbca3e8d"
+    ],
+    "create_time": 1780544992,
+    "update_time": 1780544992,
+    "_id": "file::site\\contact.php-chunk-000"
+  },
+  "file::site\\contact.php-chunk-001": {
+    "tokens": 1200,
+    "content": "map-mark contact-page__map-mark--left\" data-country=\"cherkasy\" data-country-name=\"<?= Yii::t('common', 'Cherkasy') ?>\" data-top=\"686\" data-left=\"742\"></div>\n            <div class=\"contact-page__map-mark\" data-country=\"poltava\" data-country-name=\"<?= Yii::t('common', 'Poltava') ?>\" data-top=\"620\" data-left=\"920\"></div>\n            <div class=\"contact-page__map-mark\" data-country=\"vinnytsia\" data-country-name=\"<?= Yii::t('common', 'Vinnytsia') ?>\" data-top=\"620\" data-left=\"480\"></div>\n            <div class=\"contact-page__map-mark contact-page__map-mark--bottom\" data-country=\"cherkasy-staryi-kovrai\"  data-country-name=\"<?= Yii::t('common', 'Cherkasy (Staryi Kovrai)') ?>\" data-top=\"650\" data-left=\"778\"></div>\n            <div class=\"contact-page__map-mark contact-page__map-mark--bottom\" data-country=\"tatarbunary\"  data-country-name=\"<?= Yii::t('common', 'Tatarbunary') ?>\" data-top=\"1500\" data-left=\"566\"></div>\n            <div class=\"contact-page__map-mark contact-page__map-mark--bottom\" data-country=\"ordesa-velykyi-dalnyk\"  data-country-name=\"<?= Yii::t('common', 'Odessa (Velykyi Dal\\'nyk)') ?>\" data-top=\"1358\" data-left=\"620\"></div>\n            <div class=\"contact-page__map-mark\" data-country=\"odessa-krasnosilka\"  data-country-name=\"<?= Yii::t('common', 'Odessa (Krasnosilka)') ?>\" data-top=\"1300\" data-left=\"640\"></div>\n            <div class=\"contact-page__map-mark\" data-country=\"odesa\" data-country-name=\"<?= Yii::t('common', 'Odesa') ?>\" data-top=\"1350\" data-left=\"640\"></div>\n            <div class=\"contact-page__map-mark\" data-country=\"pavlograd\" data-country-name=\"<?= Yii::t('common', 'Pavlograd') ?>\" data-top=\"855\" data-left=\"1000\"></div>\n            <div class=\"contact-page__map-mark contact-page__map-mark--bottom\" data-country=\"ochakov\" data-country-name=\"<?= Yii::t('common', 'Ochakov') ?>\" data-top=\"1310\" data-left=\"710\"></div>\n        </div>\n    </section>\n    <div class=\"contact-popup-details-overlay\">\n        <div class=\"contact-popup-details\">\n            <button class=\"contact-popup-details__close\" type=\"button\"></button>\n            <div class=\"contact-popup-details__img\"></div>\n            <h3 class=\"contact-popup-details__title\">Glory center</h3>\n            <h3 class=\"contact-popup-details__subtitle\">Paris</h3>\n            <div class=\"contact-popup-details__info\">\n                <div class=\"contact-popup-details__services\">\n                    <h4>Services:</h4>\n                    <div class=\"contact-popup-details__services-list\">\n                        <span>Clothes,</span>\n                    </div>\n                </div>\n                <div class=\"contact-popup-details__contacts\">\n                    <h4>Contacts:</h4>\n                    <div class=\"contact-popup-details__contacts-list\">\n                        <p></p>\n                    </div>\n                </div>\n            </div>\n            <div class=\"contact-popup-details__desc\" style=\"display: none\">\n                <p></p>\n            </div>\n            <div class=\"contact-popup-details__links\" style=\"display: none\">\n                <div class=\"contact-popup-details__projects\">\n                    <h4>Projects:</h4>\n                    <ul class=\"contact-popup-details__projects-list\">\n                    </ul>\n                </div>\n                <div class=\"contact-popup-details__news\">\n                    <h4>Related news:</h4>\n                    <ul class=\"contact-popup-details__news-list\">\n                    </ul>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"contact-popup-details-overlay contact-popup-details-overlay--js\">\n        <div class=\"contact-popup-details\">\n            <button class=\"contact-popup-details__close contact-popup-details__close--js\" type=\"button\"></button>\n            <button class=\"contact-popup-details__prev\"></button>\n            <button class=\"contact-popup-details__next\"></button>\n            <div class=\"contact-popup-details__img\"></div>\n            <h3 class=\"contact-popup-details__title\">Glory center</h3>\n            <h3 class=\"contact-popup-details__subtitle\">Paris</h3>\n            <div class=\"contact-popup-details__info\">\n                <div class=\"contact-popup-details__services\">\n                    <h4><?= $servicesString ?></h4>\n                    <div class=\"contact-popup-details__services-list\">\n                        <span>Clothes,</span>\n                    </div>\n                </div>\n                <div class=\"contact-popup-details__contacts\">\n                    <h4><?= $contactsString ?></h4>\n                    <div class=\"contact-popup-details__contacts-list\">\n                        <p></p>\n                    </div>\n                </div>\n            </div>\n            <div class=\"contact-popup-details__desc\" style=\"display: none;\">\n                <p></p>\n            </div>\n            <div class=\"contact-popup-details__links\" style=\"display: none;\">\n                <div class=\"contact-popup-details__projects\">\n                    <h4>Projects:</h4>\n                    <ul class=\"contact-popup-details__projects-list",
+    "chunk_order_index": 1,
+    "full_doc_id": "file::site\\contact.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:cb64105c0768d3fb95ab8aa95652544a",
+      "default:extract:9d847795669c1d58e8d228234dbbb774"
+    ],
+    "create_time": 1780544992,
+    "update_time": 1780544992,
+    "_id": "file::site\\contact.php-chunk-001"
+  },
+  "file::site\\contact.php-chunk-002": {
+    "tokens": 1200,
+    "content": "-popup-details__contacts-list\">\n                        <p></p>\n                    </div>\n                </div>\n            </div>\n            <div class=\"contact-popup-details__desc\" style=\"display: none;\">\n                <p></p>\n            </div>\n            <div class=\"contact-popup-details__links\" style=\"display: none;\">\n                <div class=\"contact-popup-details__projects\">\n                    <h4>Projects:</h4>\n                    <ul class=\"contact-popup-details__projects-list\">\n                    </ul>\n                </div>\n                <div class=\"contact-popup-details__news\">\n                    <h4>Related news:</h4>\n                    <ul class=\"contact-popup-details__news-list\">\n                    </ul>\n                </div>\n            </div>\n            <div>\n                <button class=\"contact-page__item-contact-btn\"><?= Yii::t('frontend', 'contact us') ?></button>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"contact-popup-details-overlay contact-popup-contact-overlay--js\">\n        <?php \\yii\\widgets\\ActiveForm::begin(); ?>\n        <?= \\yii\\helpers\\Html::activeHiddenInput($contactForm, 'help_center_id', [\n            'class' => 'hidden-id'\n        ]) ?>\n        <div class=\"contact-popup-details contact-popup-contact\">\n            <button class=\"contact-popup-details__close contact-popup-contact__close--js\" type=\"button\"></button>\n            <h3><?= Yii::t('frontend', 'Thank You for Your interest') ?></h3>\n            <h4><?= Yii::t('frontend', 'To contact us please fill in the form below') ?></h4>\n            <div class=\"contact-popup-contact__top\">\n                <div class=\"input-wrap\">\n                    <?= \\yii\\helpers\\Html::activeTextInput($contactForm, 'full_name', [\n                        'required' => 'required',\n                        'placeholder' => $contactForm->getAttributeLabel('full_name')\n                    ]) ?>\n                </div>\n                <div class=\"input-wrap\">\n                    <?= \\yii\\helpers\\Html::activeTextInput($contactForm, 'phone', [\n                        'placeholder' => $contactForm->getAttributeLabel('phone')\n                    ]) ?>\n                </div>\n            </div>\n            <div class=\"input-wrap\">\n                <?= \\yii\\helpers\\Html::activeInput('email', $contactForm, 'email', [\n                    'required' => 'required',\n                    'placeholder' => $contactForm->getAttributeLabel('email')\n                ]) ?>\n            </div>\n            <div class=\"input-wrap\">\n                <?= \\yii\\helpers\\Html::activeTextarea($contactForm, 'body', [\n                    'placeholder' => $contactForm->getAttributeLabel('body')\n                ]) ?>\n            </div>\n            <div class=\"contact-popup-contact__top contact-popup-contact__top--captcha\">\n                <?= \\yii\\captcha\\Captcha::widget([\n                    'model' => $contactForm,\n                    'attribute' => 'verifyCode',\n                    'template' => '\n                        <div class=\"input-wrap\">\n                            {input}\n                        </div>\n                        <div class=\"input-wrap\">\n                            {image}\n                        </div>\n                    ',\n                    'options' => [\n                        'placeholder' => $contactForm->getAttributeLabel('verifyCode'),\n                        'id' => 'contacts-captcha',\n                        'required' => 'required',\n                        'autocomplete' => 'off'\n                    ]\n                ]) ?>\n            </div>\n            <button class=\"contact-popup-details__btn\"><?= Yii::t('frontend', 'Send') ?></button>\n        </div>\n        <?php \\yii\\widgets\\ActiveForm::end(); ?>\n    </div>\n<?php\n\n\\common\\widgets\\Script::begin(); ?>\n    <script>\n\n        var contactSlider = $('.contact-page__slider');\n        //contact page slider\n        contactSlider.slick({\n            dots: false,\n            autoplay: true,\n            autoplaySpeed: 8000,\n            slidesToShow: 7,\n            slidesToScroll: 1,\n            responsive: [\n                {\n                    breakpoint: 1920,\n                    settings: {\n                        slidesToShow: 6\n                    }\n                },\n                {\n                    breakpoint: 1600,\n                    settings: {\n                        slidesToShow: 5\n                    }\n                },\n                {\n                    breakpoint: 1200,\n                    settings: {\n                        slidesToShow: 4\n                    }\n                },\n                {\n                    breakpoint: 768,\n                    settings: {\n                        slidesToShow: 1,\n                        infinite: false,\n                        autoplaySpeed: 800000\n                    }\n                }\n            ]\n        });\n\n        var json = <?= $json ?>;\n        for(var i=0; i<json.length; i++) {\n            $('.select-country--js').find('option[value=\"'+ json[i].city_key +'\"]').removeAttr('hidden');\n        }\n\n        function renderContactSlider(arrSlides) {\n            for (var i = 0; i < arrSlides.length; i++) {\n                contactSlider.slick('slickAdd', '<div class=\"All contact-page__item ' + arrSlides[i].city_key + ' ' + arrSlides[i].services.join(' ') + '\">' +\n                    '<div class=\"contact-page__img ' + arrSlides[i].city + '\" style=\"background-image: url(' + arrSlides[i].thumbnail + ')\"></div>' +\n                    '<h2>' + arrSlides[i].name + '</h2>' +\n                    '<h3>' + arrSlides[i].city + '</h3>' +\n                    '<button class=\"contact-page__item-expand\"></button>' +\n                    '<div class=\"contact-page__item-details\">' +\n                    '<div class=\"contact-page__item-details-services\">' +\n                    '<div class=\"contact-page__item-details-services-left\">' +\n                    '<h4><?= $servicesString ?></h4>'",
+    "chunk_order_index": 2,
+    "full_doc_id": "file::site\\contact.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [],
+    "create_time": 1780544992,
+    "update_time": 1780544992,
+    "_id": "file::site\\contact.php-chunk-002"
+  },
+  "file::site\\contact.php-chunk-003": {
+    "tokens": 1200,
+    "content": "+\n                    '<h2>' + arrSlides[i].name + '</h2>' +\n                    '<h3>' + arrSlides[i].city + '</h3>' +\n                    '<button class=\"contact-page__item-expand\"></button>' +\n                    '<div class=\"contact-page__item-details\">' +\n                    '<div class=\"contact-page__item-details-services\">' +\n                    '<div class=\"contact-page__item-details-services-left\">' +\n                    '<h4><?= $servicesString ?></h4>' +\n                    '</div>' +\n                    '<div class=\"contact-page__item-details-services-right\">' +\n                    '<span>' + arrSlides[i].servicesName.join(', <br>') + '</span>' +\n                    '</div>' +\n                    '</div>' +\n                    '<div class=\"contact-page__item-details-contacts\">' +\n                    '<div class=\"contact-page__item-details-contacts-left\">' +\n                    '<h4><?= $contactsString ?></h4>' +\n                    '</div>' +\n                    '<div class=\"contact-page__item-details-contacts-right\">' +\n                    '<p>' + arrSlides[i].contacts + '</p>' +\n                    '</div>' +\n                    '</div>' +\n                    '<button data-id=\"' + arrSlides[i].id + '\" class=\"contact-page__item-details-btn\"><?= $detailsString ?></button>' +\n                    '</div>' +\n                    '</div>');\n            }\n        }\n        renderContactSlider(json);\n\n        var btnOpenPopupContactDetails = $('.contact-page__item-details-btn');\n        var btnClosePopupContactDetails = $('.contact-popup-details__close--js');\n        var popupContactDetails = $('.contact-popup-details-overlay--js');\n\n        var btnNextPopupContactDetails = $('.contact-popup-details__next');\n        var btnPrevPopupContactDetails = $('.contact-popup-details__prev');\n\n        //btn show next contact popup details\n        var slickIndex;\n        btnNextPopupContactDetails.on('click', function() {\n            btnPrevPopupContactDetails.css({\"visibility\": \"visible\"});\n            $('.contact-popup-details__prev').css({\"visibility\": \"visible\"});\n            var parentItem = $(\".contact-page__item[data-slick-index='\" + slickIndex +\"']\");\n            parentItem.next().find('.contact-page__item-details-btn').click();\n            if(parentItem.next().next().length === 0) {\n                btnNextPopupContactDetails.css({\"visibility\": \"hidden\"});\n            }\n        });\n\n        //btn show prev contact popup details\n        btnPrevPopupContactDetails.on('click', function() {\n            btnNextPopupContactDetails.css({\"visibility\": \"visible\"});\n            var parentItem = $(\".contact-page__item[data-slick-index='\" + slickIndex +\"']\");\n            parentItem.prev().find('.contact-page__item-details-btn').click();\n            if(parentItem.prev().prev().length === 0) {\n                btnPrevPopupContactDetails.css({\"visibility\": \"hidden\"});\n            }\n        });\n\n        //btn close contact popup details\n        btnClosePopupContactDetails.click(function (e) {\n            e.stopPropagation();\n            popupContactDetails.removeClass('show');\n            $('body').removeClass('no-scroll');\n        });\n\n        var btnExpand = $('.contact-page__item-expand');\n        $('.contact-page').on('click', '.contact-page__item-expand', function () {\n            $(this).next().slideToggle();\n            $(this).toggleClass('active');\n        });\n\n        var popupContactImg = $('.contact-popup-details__img');\n        var popupTitle = $('.contact-popup-details__title');\n        var popupSubtitle = $('.contact-popup-details__subtitle');\n        var popupDesc = $('.contact-popup-details__desc p');\n        var popupContacts = $('.contact-popup-details__info p');\n        var popupServices = $('.contact-popup-details__services-list span');\n        var popupNews = $('.contact-popup-details__news-list');\n        var popupProjects = $('.contact-popup-details__projects-list');\n        //btn open contact popup details\n        $('.contact-page').on('click', '.contact-page__item-details-btn', function (e) {\n            e.stopPropagation();\n            $('body').addClass('no-scroll');\n            popupContactDetails.addClass('show');\n            var id = $(this).attr('data-id');\n            $('.hidden-id').val(id);\n            var item = json.find(function (x) {\n                return x.id === +id;\n            });\n            popupContactImg.css(\"background-image\", \"url(\" + item.thumbnail + \")\");\n            popupTitle.html(item.name);\n            popupSubtitle.html(item.city);\n            popupDesc.html(item.description);\n            popupContacts.html(item.contacts);\n            popupServices.html($.grep(item.servicesName, Boolean).join(', <br>'));\n            for (var i = 0; i < item.news.length; i++) {\n                var itemNew = '<li><a href=\"' + item.news[i].url + '\" title=\"' + item.news[i].title + '\" target=\"_blank\">' + item.news[i].title + '</a></li>';\n                popupNews.append(itemNew);\n            }\n            for (var j = 0; j < item.projects.length; j++) {\n                var itemProject = '<li><a href=\"' + item.projects[j].url + '\" title=\"' + item.projects[j].title + '\" target=\"_blank\">' + item.projects[j].title + '</a></li>';\n                popupProjects.append(itemProject);\n            }\n\n            slickIndex = $(this).closest('.contact-page__item').attr('data-slick-index');\n\n            var parentItem = $(\".contact-page__item[data-slick-index='\" + slickIndex +\"']\");\n            if(parentItem.next().length === 0) {\n                btnNextPopupContactDetails.css({\"visibility\": \"hidden\"});\n            } else {\n                btnNextPopupContactDetails.css({\"visibility\": \"visible\"});\n            }\n\n            if(parentItem.prev().length === 0) {\n                btnPrevPopupContactDetails.css({\"visibility\": \"hidden",
+    "chunk_order_index": 3,
+    "full_doc_id": "file::site\\contact.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [],
+    "create_time": 1780544992,
+    "update_time": 1780544992,
+    "_id": "file::site\\contact.php-chunk-003"
+  },
+  "file::site\\contact.php-chunk-004": {
+    "tokens": 599,
+    "content": "contact-page__item').attr('data-slick-index');\n\n            var parentItem = $(\".contact-page__item[data-slick-index='\" + slickIndex +\"']\");\n            if(parentItem.next().length === 0) {\n                btnNextPopupContactDetails.css({\"visibility\": \"hidden\"});\n            } else {\n                btnNextPopupContactDetails.css({\"visibility\": \"visible\"});\n            }\n\n            if(parentItem.prev().length === 0) {\n                btnPrevPopupContactDetails.css({\"visibility\": \"hidden\"});\n            } else {\n                btnPrevPopupContactDetails.css({\"visibility\": \"visible\"});\n            }\n        });\n\n        var contactCheckboxes = $('.checkbox-service--js');\n        var selectCountry = $('.select-country--js');\n        var filtered = false;\n        var markMap = $('.contact-page__map-mark');\n\n        var serviceFilter;\n        var countryFilter;\n        var filter;\n\n        function filterSlider(filter) {\n            var fCountry = countryFilter ? '.' + countryFilter : '.All';\n            var filt;\n            if (!filter || filter.length === 0) {\n                filt = fCountry;\n            } else {\n                filt = filter.map(function (item) {\n                    return fCountry + '.' + item;\n                }).join(', ');\n            }\n            contactSlider.slick('slickUnfilter');\n            contactSlider.slick('slickFilter', filt);\n        }\n\n        markMap.on('click', function () {\n            countryFilter = $(this).attr('data-country').replace(/\\s/g, '').replace(/[{()}]/g, '');\n            selectCountry.find('option:selected').removeProp(\"selected\");\n            selectCountry.find('option[value=\"'+ countryFilter +'\"]').prop('selected', true);\n            filterSlider(filter);\n\n            var sliders = $('.contact-page__item');\n            if(sliders.length !== 0) {\n                sliders.eq(0).find('.contact-page__item-details-btn').click();\n            }\n        });\n\n        selectCountry.on('change', function () {\n            countryFilter = $(this).val().replace(/\\s/g, '').replace(/[{()}]/g, '');\n            filterSlider(filter);\n        });\n\n        contactCheckboxes.on('click', function () {\n            filter = [];\n            for (var i = 0; i < contactCheckboxes.length; i++) {\n                if (contactCheckboxes.eq(i).prop('checked')) {\n                    filter.push(contactCheckboxes.eq(i).attr('data-filter'));\n                }\n            }\n            filterSlider(filter);\n        });\n\n        var contactUsBtn = $('.contact-page__item-contact-btn');\n        var contactUsPopup = $('.contact-popup-contact-overlay--js');\n        var contactUsClosePopup = $('.contact-popup-contact__close--js');\n        contactUsBtn.click(function () {\n            contactUsPopup.addClass('show');\n        });\n\n        contactUsClosePopup.click(function () {\n            contactUsPopup.removeClass('show');\n        })\n    </script>\n<?php \\common\\widgets\\Script::end(); ?>",
+    "chunk_order_index": 4,
+    "full_doc_id": "file::site\\contact.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [],
+    "create_time": 1780544992,
+    "update_time": 1780544992,
+    "_id": "file::site\\contact.php-chunk-004"
+  },
+  "file::site\\donate_new.php-chunk-000": {
+    "tokens": 515,
+    "content": "<?php\n\n/**\n * Created by Rex IT\n * @author Konstantin Kharalampidi <kharalampidi@rexit.info>\n */\nuse common\\widgets\\DbText;\nuse rexit\\liqpay\\LiqPayWidget;\n//use Yii;\n\n//use \\yii\\helpers\\Url;\n\n/* @var $this \\yii\\web\\View */\n/* @var $project array|\\common\\models\\Project|null */\n/* @var $model \\common\\models\\OrderProject */\n\n?>\n<section class=\"donation-page\">\n    <div class=\"container\">\n        <div class=\"donation-page__wrap\">\n            <div class=\"donation-page__left\">\n                <?= DbText::widget(['key' => 'banks_account' ]);  //. Yii::$app->language?>\n            </div>\n            <div class=\"donation-page__right\">\n                <h2><?= Yii::t('frontend', 'Thank You for willing to help') ?></h2>\n\n                <?php // if (\\Yii::$app->language == 'en') :?>\n                <div class=\"paypal-section\">\n\n                    <form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\" target=\"_top\"  onClick=\"ga('send', 'event', 'knopka', 'donate');\">\n                        <input type=\"hidden\" name=\"cmd\" value=\"_donations\" />\n                        <input type=\"hidden\" name=\"business\" value=\"7Q4KPTAXLUREY\" />\n                        <input type=\"hidden\" name=\"item_name\" value=\"Donate for New life - International mission\" />\n                        <input type=\"hidden\" name=\"currency_code\" value=\"USD\" />\n                        <input type=\"image\" src=\"https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif\" border=\"0\" name=\"submit\" title=\"PayPal - The safer, easier way to pay online!\" alt=\"Donate with PayPal button\" />\n                        <img alt=\"\" border=\"0\" src=\"https://www.paypal.com/en_US/i/scr/pixel.gif\" width=\"1\" height=\"1\" />\n                    </form>\n\n\n                </div>\n                <?php /* else :?>\n                <div class=\"liqpay-section\">\n                    <?php  echo LiqPayWidget::widget([\n                        'model' => $liqpay\n                    ]);\n                       ?>\n                </div>\n                <?php endif; */?>\n\n            </div>\n        </div>\n    </div>\n</section>",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::site\\donate_new.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [],
+    "create_time": 1780544992,
+    "update_time": 1780544992,
+    "_id": "file::site\\donate_new.php-chunk-000"
+  },
+  "file::site\\error.php-chunk-000": {
+    "tokens": 101,
+    "content": "<?php\n\nuse yii\\helpers\\Html;\n\n/* @var $this yii\\web\\View */\n/* @var $name string */\n/* @var $message string */\n/* @var $exception Exception */\n\n$this->title = $name;\n?>\n<div class=\"site-error\">\n\n    <h1><?php echo Html::encode($this->title) ?></h1>\n\n    <div class=\"alert alert-danger\">\n        <?php echo nl2br(Html::encode($message)) ?>\n    </div>\n</div>",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::site\\error.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [],
+    "create_time": 1780544992,
+    "update_time": 1780544992,
+    "_id": "file::site\\error.php-chunk-000"
+  },
+  "file::site\\index.php-chunk-000": {
+    "tokens": 1200,
+    "content": "<?php\n/* @var $this yii\\web\\View */\n/* @var $threePosts \\common\\models\\Article[] */\n/* @var $twoPostsAboutUs \\common\\models\\Article[] */\n/* @var $smi \\common\\models\\Smi[] */\n/* @var $projects \\common\\models\\Project[] */\n/* @var $partners \\common\\models\\Partner[] */\n/* @var $testimonials \\common\\models\\Testimonial[] */\n/* @var $videos \\common\\models\\Video[] */\n/* @var $sliders \\common\\models\\Slider[] */\n$this->title = Yii::t('frontend', 'Main page');\n$this->params['custom_header'] = [\n    'class' => 'hero',\n    'content' => Yii::$app->controller->renderLangPartial('_header_slider_'.Yii::$app->language, [\n        'sliders' => $sliders,\n    ])\n];\n?>\n<?php echo $this->render('_index_our_become_'.Yii::$app->language) ?>\n\n<section class=\"awards\">\n    <?= \\common\\widgets\\SliderSertificatWidget::widget();?>\n</section>\n\n<?php echo $this->render('_index_actions') ?>\n\n<?php echo $this->render('_index_news_section', [\n    'threePosts' => $threePosts,\n//    'twoPostsAboutUs' => $twoPostsAboutUs,\n    'smi' => $smi,\n    'videos' => $videos\n]) ?>\n<?php if (!empty($projects)) {\n    echo $this->render('_index_projects', [\n        'projects' => $projects\n    ]);\n}?>\n<?php if (!empty($testimonials)) :?>\n<section class=\"testimonials\">\n    <div class=\"testimonials__wrap\">\n        <div class=\"testimonials__items-wrap\">\n            <?php foreach ($testimonials as $testimonial) : ?>\n                <div class=\"testimonials__item\">\n                    <div class=\"testimonials__img\">\n                        <img src=\"<?= Yii::$app->glide->createSignedUrl(['glide/index', 'path' => $testimonial->thumbnail_path], true) ?>\" width=\"540\" height=\"460\" alt=\"CaroLena Headey\">\n                    </div>\n                    <div class=\"testimonials__main\">\n                        <h3><?= $testimonial->title ?></h3>\n                        <p>\n                            <?php\n                                $arrayText = explode('.', $testimonial->text);\n                                echo $arrayText[0] . '.';\n                            ?>\n                        </p>\n                        <a href=\"<?= \\yii\\helpers\\Url::to(['/site/testimonials']) ?>\" class=\"testimonials__details\"><?=Yii::t('frontend', 'Read testimonial')?></a>\n                    </div>\n                </div>\n            <?php endforeach; ?>\n            <div class=\"testimonials__all\">\n                <a href=\"<?= \\yii\\helpers\\Url::to(['/site/testimonials']) ?>\" title=\"<?=Yii::t('frontend', 'All testimonials')?>\">\n                    <span><?=Yii::t('frontend', 'All testimonials')?></span>\n                </a>\n            </div>\n        </div>\n    </div>\n</section>\n<?php endif ?>\n<?php if (!empty($partners)) : ?>\n<section class=\"partners\">\n    <div class=\"partners__wrap\">\n        <div class=\"partners__slider partners__slider--js\">\n            <?php foreach ($partners as $partner) : ?>\n                <a class=\"partners__item\" href=\"<?= \\yii\\helpers\\Url::to(['/site/partners']) ?>\">\n                    <img src=\"<?= Yii::$app->glide->createSignedUrl([\n                        'glide/index',\n                        'path' => $partner->thumbnail_path\n                    ], true) ?>\">\n                </a>\n            <?php endforeach; ?>\n        </div>\n    </div>\n</section>\n<?php endif; ?>\n<?php /*\n<section class=\"help\" id=\"help\">\n    <div class=\"container\">\n        <div class=\"help__wrap\">\n            <div class=\"help__left\"></div>\n            <div class=\"help__right\">\n                <h2>Thank You for willing to help</h2>\n                <ul class=\"help__list\">\n                    <li class=\"help__item\">\n                        <div class=\"help__item-left\">Phone:</div>\n                        <div class=\"help__item-right help__item-right--phone\">\n                            <a href=\"tel: +38 048 796 10 99\">+38 048 796 10 99</a>\n                            <a href=\"tel: +38 063-577-80-80\">+38 063-577-80-80</a>\n                        </div>\n                    </li>\n                    <li class=\"help__item\">\n                        <div class=\"help__item-left\">E-mail::</div>\n                        <div class=\"help__item-right help__item-right--email\">\n                            <a href=\"mailto:nlifeod@gmail.com\">nlifeod@gmail.com</a>\n                        </div>\n                    </li>\n                    <li class=\"help__item\">\n                        <div class=\"help__item-left\">Address:</div>\n                        <div class=\"help__item-right\">Odessa, st. Stolbovaya 19A</div>\n                    </li>\n                    <li class=\"help__item\">\n                        <div class=\"help__item-left\">Requisites:</div>\n                        <div class=\"help__item-right help__item-right--requisites\">\n                            <div class=\"help__item-right-requisites--left\">PayPal:\n                                <br>Newlifeintermission@gmail.com\n                            </div>\n                            <div class=\"help__item-right-requisites--right\">Bank of America\n                                <br>Account# 4660 0471 4321\n                                <",
+    "chunk_order_index": 0,
+    "full_doc_id": "file::site\\index.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [],
+    "create_time": 1780545352,
+    "update_time": 1780545352,
+    "_id": "file::site\\index.php-chunk-000"
+  },
+  "file::site\\index.php-chunk-001": {
+    "tokens": 141,
+    "content": "<div class=\"help__item-left\">Requisites:</div>\n                        <div class=\"help__item-right help__item-right--requisites\">\n                            <div class=\"help__item-right-requisites--left\">PayPal:\n                                <br>Newlifeintermission@gmail.com\n                            </div>\n                            <div class=\"help__item-right-requisites--right\">Bank of America\n                                <br>Account# 4660 0471 4321\n                                <br>ACH Routing# 011000138\n                            </div>\n                        </div>\n                    </li>\n                </ul>\n            </div>\n        </div>\n    </div>\n</section>\n*/ ?>",
+    "chunk_order_index": 1,
+    "full_doc_id": "file::site\\index.php",
+    "file_path": "unknown_source",
+    "llm_cache_list": [],
+    "create_time": 1780545352,
+    "update_time": 1780545352,
+    "_id": "file::site\\index.php-chunk-001"
+  }
+}

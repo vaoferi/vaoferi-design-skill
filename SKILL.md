@@ -668,6 +668,22 @@ Use this checklist to verify the result concretely.
 If any item fails, stop. Fix the structure first.
 Only after checklist is clean the design can be considered Done.
 
+### Visual QA Form
+
+Use this exact form to report the result of every visual QA check:
+
+```text
+[Результат QA] Pass / Fail / Partial
+Де перевірено: ... (browser / preview / outro)
+Що саме перевірено: ...
+Які недоліки знайдено: ... / None
+Що виправлено: ... / None
+Ризики: ...
+```
+
+QA is visual evidence, not hope.
+Do not replace this block with generic status text.
+
 ## 13. Accessibility & Resilience QA
 
 Accessibility must not be an afterthought.
@@ -733,23 +749,13 @@ Use this blueprint as a concrete starting point for a standard editorial/service
   width: 100%;
   max-width: 1200px;
   margin-inline: auto;
-  padding-inline: var(--space-canon-s, 5px);
+  padding-inline: var(--space-canon-s, 8px);
 }
 
 .golden-grid {
   display: grid;
-  gap: var(--space-canon-s, 5px);
+  gap: var(--space-canon-s, 16px);
   align-items: start;
-}
-
-@media (min-width: 701px) {
-  .golden-grid {
-    grid-template-columns: 1.618fr 1fr;
-  }
-  .header,
-  .footer {
-    grid-column: 1 / -1;
-  }
 }
 
 @media (min-width: 701px) {
@@ -817,7 +823,7 @@ CSS Grid architecture:
 - Modal overflow: `max-height: 100%` with `overflow-y: auto` on inner container
 
 Naming / tokens:
-- `--space-canon-s: 5rem` for small gaps and internal padding
+- `--space-canon-s: 16px` for small gaps and internal padding
 - `--space-canon-l: 15rem` for section vertical rhythm
 - `--grid-main-cols: 1.618fr 1fr` for desktop canon layout
 

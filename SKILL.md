@@ -1,6 +1,6 @@
 ---
 name: vaoferi-design-skill
-description: Responsive design skill using Golden Canon-inspired grids, reusable components, design tokens, approval gates, and strict visual QA.
+description: Responsive design skill for operational UI, admin forms, dashboards, and existing product screens that must match the current interface. Use when Codex needs Golden Canon-inspired grids, reusable components, design tokens, strict CSS guardrails, and visual QA without one-off styling drift.
 version: 0.1.0
 ---
 
@@ -27,6 +27,12 @@ Use this skill when the task involves:
 Do not design from decoration.
 
 Design from structure.
+
+On operational screens, match the existing UI first. Do not invent a new visual language when the current product already has one.
+
+Trace existing CSS before writing new CSS.
+
+Treat `!important` as an emergency escape hatch, not a normal fix.
 
 Correct order:
 
@@ -181,15 +187,22 @@ NotebookLM ask: "<текст запиту>" -> [used / pending]
 ```
 
 Treat output as draft reference only.
+Use it to pressure-test candidate rules and examples, not as the source of truth.
 Human review and approval required before committing NotebookLM-derived rules.
 
 If NotebookLM access fails: do not retry in a loop. Mark the status once, switch to other sources/docs/web search, and continue. Mark current session access as unavailable until auth is restored.
+
+## Examples
+
+Read `examples/good-answer.md` when you need the shape of a correct response on an operational UI task.
+
+Read `examples/bad-answer.md` when you need the anti-patterns in front of you: new CSS first, `!important`, overflow hacks, and fixed heights.
 
 ## Working Process
 
 ### 1. Approval Flow
 
-Before implementing a new component, token, layout pattern, or non-trivial change, present a concrete proposal.
+Before implementing a new component, token, layout pattern, CSS escape hatch, or non-trivial change, present a concrete proposal.
 
 Use exactly this form for every blocking approval:
 
@@ -519,33 +532,29 @@ Rule:
 
 No design task should start with creating a new button, card, or badge just because one version exists.
 
-## 10. CSS Rules
+## 10. CSS Guardrails
 
-CSS must support the design system.
+CSS must support the design system and must not fight it.
 
-Prefer:
+Before changing a UI element:
 
-- reusable classes;
-- tokens;
-- variables;
-- components;
-- responsive rules;
-- clear layout logic.
+- trace the existing selector, component, token, utility, or inherited rule that already owns it;
+- inspect the current page styles before writing new CSS;
+- prefer extending the existing source of truth over stacking a new rule on top.
 
-Avoid:
+Hard rules:
 
-- random magic numbers;
-- one-off styles;
-- duplicate button styles;
-- hardcoded colors;
-- layout hacks;
-- hiding overflow as a fake fix.
+- Do not write new CSS if an existing selector, token, variant, or component can solve the change cleanly.
+- `!important` is forbidden by default. Use it only for one explicitly justified emergency escape hatch for the whole site.
+- Do not use one-off margin hacks, fixed heights for core layout, `overflow-x: hidden` as a fix, random z-index escalation, duplicate selectors, dead CSS, or hardcoded spacing/color values when tokens already exist.
 
-Do not use `overflow-x: hidden` as a blanket solution for bad layout.
+Code hygiene:
 
-First find the element causing the problem.
-
-Then fix the real cause.
+- Keep specificity low.
+- Give each class or rule one job.
+- Prefer composition, variants, and tokens over duplicated styles.
+- If the source of a style is unclear, trace it before patching visually.
+- Fix the real cause, not the symptom.
 
 ## 11. Use Design Tokens
 
@@ -874,9 +883,15 @@ Rules:
 
 Track only verified sources:
 
+- Project log: record notable rule changes and decisions in `docs/history/project_log.md`.
 - Golden Canon-inspired references: retain official or canonical sources only when applicable; otherwise mark `goldenCanon-inspired`.
 - CSS Grid and component libraries: add only advice that already aligns with current repository rules.
 - Web research and GitHub references: quote link, issue, commit, or demo; do not rely on generic wording.
 - NotebookLM output: log when it was used; do not treat it as a primary source for rules.
 - Modern layout guidance: prefer CSS Grid for macro layout, Flexbox for component internals, and `repeat(auto-fit, minmax(...))` for flexible content collections.
 - Component naming guidance: name variants by role or meaning, not by visual detail or color, so reuse stays stable when one variant changes.
+
+## Changelog
+
+- 2026-01-28 — initial curation pass completed. Added visual QA threshold rule, visual QA form, visual QA checklist.
+- 2026-06-04 — tightened CSS guardrails for operational UI. Added selector tracing, `!important` emergency-only rule, and clean-code constraints for style changes.

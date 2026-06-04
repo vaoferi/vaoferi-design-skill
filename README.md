@@ -1,13 +1,16 @@
 # Vaoferi Design Skill
 
 Design with structure, not decoration.
-Use grids before colors, alignment before effects, components before custom code.
+Use grids before colors, alignment before effects, components before custom code, and trace existing CSS before writing new CSS.
 
 ## Main rules
 
 - Start from goal and hierarchy.
 - Build the grid first using Golden Canon-inspired structure.
 - Reuse components before creating new ones.
+- Match the existing UI first on operational screens and admin forms.
+- Trace existing CSS before adding a new selector or override.
+- Treat `!important` as an emergency escape hatch, not a normal fix.
 - Use design tokens before ad-hoc values.
 - Ask before introducing new components, colors, or spacing scales.
 - Validate responsive behavior across breakpoints.
@@ -18,7 +21,7 @@ Use grids before colors, alignment before effects, components before custom code
 
 This skill turns `1: 618`, `1fr 1fr`, and Fibonacci spacing into a workflow that produces layouts which:
 - behave the same on mobile and desktop;
-- reuse existing UI instead of inventing fresh styles;
+- reuse existing UI and existing CSS instead of inventing fresh styles;
 - keep spacing and typography consistent through tokens.
 
 ## Quick start (recommended flow)
@@ -44,11 +47,12 @@ If a new component, token, or layout pattern is required, use the Approval Flow 
 2. Build the grid before placing elements.
 3. Draw alignment lines.
 4. Resolve components before creating new ones.
-5. Ask approval before adding new styles.
-6. Check responsive behavior.
-7. Protect photos and logos.
-8. Use design tokens only.
-9. Verify in browser or preview before marking Done.
+5. Trace existing CSS before adding new styles.
+6. Ask approval before adding new styles or CSS escape hatches.
+7. Check responsive behavior.
+8. Protect photos and logos.
+9. Use design tokens only.
+10. Verify in browser or preview before marking Done.
 
 ## What this skill emphasizes
 
@@ -56,6 +60,7 @@ If a new component, token, or layout pattern is required, use the Approval Flow 
 - `grid`, `subgrid`, `fr`, `minmax()`, `auto-fit`, and `clamp()` are the main primitives.
 - `grid` handles page structure; `flex` handles the interior of components.
 - `gap` is preferred over margin hacks.
+- CSS guardrails: trace before patching, low specificity, no `!important` by default.
 - Accessibility and responsive scaling are first-class requirements.
 - The browser should do the math whenever possible.
 
@@ -65,5 +70,6 @@ If a new component, token, or layout pattern is required, use the Approval Flow 
 - `AGENTS.md` — rules for working in this repository
 - `README.md` — project overview
 - `rubric.md` — Done checklist for design work
+- `docs/history/project_log.md` — log of notable skill changes and decisions
 - `examples/good-answer.md` — приклад правильної відповіді за скілом
 - `examples/bad-answer.md` — приклад типових помилок

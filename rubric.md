@@ -5,7 +5,7 @@ Use this rubric to evaluate whether a design task is Done.
 ## 1. Goal and Hierarchy
 - [ ] The goal is clearly defined.
 - [ ] User action and content priority are known.
-- [ ] Visual hierarchy is established before colors Effects.
+- [ ] Visual hierarchy is established before colors/effects.
 
 ## 2. Grid
 - [ ] A layout grid is defined first.
@@ -41,12 +41,15 @@ Use this rubric to evaluate whether a design task is Done.
 - [ ] Logos are not stretched or cropped.
 - [ ] No distorted media; layout adapts to content.
 
-## 8. CSS Quality
-- [ ] Reusable classes and tokens preferred over one-off styles.
+## 8. CSS Guardrails
+- [ ] Existing selectors, components, tokens, or inherited rules were traced before adding new CSS.
+- [ ] Reusable classes and tokens are preferred over one-off styles.
 - [ ] No random magic numbers.
-- [ ] No duplicate button styles.
-- [ ] No hardcoded colors.
+- [ ] No duplicate selectors or duplicate button styles.
+- [ ] No hardcoded colors or spacing when tokens already exist.
 - [ ] No `overflow-x: hidden` used as a layout fix.
+- [ ] `!important` is not used except for one explicit emergency escape hatch that is documented.
+- [ ] Specificity stays low and each rule or class has one job.
 
 ## 9. Visual QA
 - [ ] Result visually checked.
@@ -61,4 +64,5 @@ Use this rubric to evaluate whether a design task is Done.
 ## 10. Documentation Sync
 - [ ] `SKILL.md` reflects rules used.
 - [ ] `README.md` remains accurate.
-- [ ] `project_log.md` updated if an architectural decision or notable issue was found.
+- [ ] `docs/history/project_log.md` updated if an architectural decision or notable issue was found.
+- [ ] `examples/good-answer.md` and `examples/bad-answer.md` match the current guardrails.

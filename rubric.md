@@ -7,6 +7,20 @@ Use this rubric to evaluate whether a design task is Done.
 - [ ] User action and content priority are known.
 - [ ] Visual hierarchy is established before colors/effects.
 
+## 1.1 Design System Contract
+- [ ] `DESIGN.md` exists or the reason for not creating it is stated.
+- [ ] `DESIGN.md` has YAML tokens plus Markdown rationale.
+- [ ] Canonical sections are present when relevant: Overview, Colors, Typography, Layout, Elevation & Depth, Shapes, Components, Do's and Don'ts.
+- [ ] Token names are semantic, not visual guesses.
+- [ ] Component token references use `{path.to.token}` where supported.
+- [ ] `npx @google/design.md lint DESIGN.md` was run when Node/npm access is available, or the limitation is stated.
+
+## 1.2 Primitive Library
+- [ ] Primitive library was checked before page-specific UI was created.
+- [ ] Missing primitives were added only with purpose, states, token dependencies, accessibility notes, and first-use location.
+- [ ] Button, Card, TextField/Input, Text, Heading, Stack/Grid/Container, Empty/Loading/Error states are covered when relevant.
+- [ ] New primitives are minimal and reusable, not one-off page fragments.
+
 ## 2. Grid
 - [ ] A layout grid is defined first.
 - [ ] Golden Canon / Golden Ratio informs desktop ratios where appropriate.
@@ -20,6 +34,7 @@ Use this rubric to evaluate whether a design task is Done.
 
 ## 4. Component Reuse
 - [ ] Agent checked project component library / design system.
+- [ ] Agent checked `DESIGN.md`, `tokens.css`, `tokens.json`, `components/`, and `primitives/` when present.
 - [ ] Agent checked existing project components.
 - [ ] Agent checked skill built-in references.
 - [ ] Agent checked project dependencies before generating new components.

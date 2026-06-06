@@ -15,6 +15,8 @@ Bad response:
 - "Коли компонент стане вузьким, просто додам ще один viewport `@media` замість локального `@container`."
 - "На мобільному просто зменшу все, а якщо буде тісно, нехай користувач скролить по горизонталі."
 - "Кнопки можна залишити дрібними, бо це ж тільки телефон."
+- "У проєкті вже є spacing tokens, але я зверху додам і `4x`, і `Fibonacci`, щоб було більше варіантів."
+- "Контраст, навігацію, performance і різні пристрої не перевірятиму, бо layout уже виглядає нормально."
 
 Why this is bad:
 
@@ -28,3 +30,5 @@ Why this is bad:
 - it turns each element into an isolated island.
 - it ignores mobile-first defaults and usable touch targets;
 - it treats cramped mobile layout as acceptable instead of intentionally simplifying it.
+- it silently mixes spacing systems and ignores existing project settings;
+- it skips required principles instead of recording evidence.

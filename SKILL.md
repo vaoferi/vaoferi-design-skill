@@ -1,7 +1,8 @@
 ---
 name: vaoferi-design-skill
 description: Responsive design skill for operational UI, admin forms, dashboards, and existing product screens that must match the current interface. Use when Codex needs Golden Canon-inspired grids, reusable components, design tokens, strict CSS guardrails, and visual QA without one-off styling drift.
-version: 0.1.0
+metadata:
+  version: 0.2.0
 ---
 
 # Vaoferi Design Skill
@@ -143,6 +144,7 @@ Hard rules:
 
 - Tokens are normative. Prose explains intent.
 - Do not create page designs before primary colors, typography, spacing, radius, and base components are named.
+- Name the spacing mode: `existing project scale`, `4x`, or `Fibonacci`.
 - Do not use purely aesthetic names like `blue1` or `nice-card`; use semantic names like `primary`, `surface`, `button-primary`, `card-default`.
 - Unknown sections may be preserved, but duplicate canonical sections are a defect.
 - Component variants are separate named entries when the format expects that, for example `button-primary-hover`.
@@ -159,7 +161,7 @@ On Windows package scripts, prefer the `designmd` binary alias if `.md` command 
 
 Before making the first screen, start a primitive library. It prevents every page from inventing a new button, card, input, badge, or spacing value.
 
-Minimum primitives:
+Primitive registry coverage to consider:
 
 ```text
 Button
@@ -206,6 +208,8 @@ Each primitive must have:
 
 Do not build a large component family upfront. Start with the smallest primitives needed for the current flow, then extend only when reuse is real.
 
+For a new product with no design system, one bootstrap proposal may request approval for the initial `DESIGN.md`, spacing mode, core tokens, and the smallest primitive set together. Do not force one approval message per foundational token.
+
 ### Generator Compatibility Prompt
 
 When asking Stitch, Open Design, Codex, Claude Code, Cursor, or another agent to generate UI, include:
@@ -234,21 +238,73 @@ A design system is not ready for a coder until it includes:
 
 If any item is missing, report it as a gap instead of pretending the system is complete.
 
+## Spacing Mode: `4x` or `Fibonacci`
+
+`4x` і `Fibonacci` — альтернативні режими, а не дві одночасно обов'язкові шкали.
+
+### Decision flow
+
+1. **Існуючий продукт:** спочатку перевір `DESIGN.md`, spacing tokens і реальні стилі. Збережи чинну шкалу. Не мігруй її без окремого approval.
+2. **Робота з нуля:** покажи користувачу обидва режими, дай коротку рекомендацію і зафіксуй вибір у `DESIGN.md`.
+3. Якщо користувач не має уподобання:
+   - рекомендуй `4x` для operational UI, admin, forms, dashboards і щільних систем;
+   - рекомендуй `Fibonacci` для editorial, landing і marketing layouts із виразнішою композиційною ритмікою.
+4. Один продукт або flow має одну default spacing scale. Не змішуй режими мовчки.
+5. Інший локальний режим допустимий лише для існуючого subsystem або окремо approved винятку. Причину і межі зафіксуй у `DESIGN.md`.
+
+### `4x` mode
+
+Використовуй tokens, кратні `4`: наприклад `4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80`.
+
+- `4–12px`: micro spacing усередині компонента;
+- `16–32px`: пов'язані елементи, cards, controls;
+- `40–80px+`: великі групи та секції;
+- простір між групами зазвичай має бути щонайменше на один token-step більший за простір усередині групи.
+
+### `Fibonacci` mode
+
+Використовуй прогресивні tokens: наприклад `5, 8, 13, 21, 34, 55, 89`.
+
+- менші steps — для близьких зв'язків;
+- більші steps — для груп, секцій і focal separation;
+- не вставляй проміжні числа лише тому, що вони "майже підходять".
+
+### Винятки для обох режимів
+
+Не змушуй математичну spacing scale керувати всім:
+
+- borders/hairlines можуть бути `1–2px`;
+- optical correction для icons або складних форм може бути `1–2px`, якщо це задокументовано;
+- font size, line-height і letter-spacing обираються за readability та typography tokens, а не сліпо за spacing scale;
+- `clamp()`, `minmax()`, `fr`, percentages і intrinsic sizing допустимі для responsive layout;
+- touch target може мати більшу невидиму hit area, ніж видимий icon;
+- випадкові magic numbers без token або пояснення заборонені.
+
+### Spacing QA
+
+- Обраний режим названо в `DESIGN.md`.
+- Усі `padding`, `margin`, `gap` і section spacing належать до tokens обраного режиму або мають пояснений виняток.
+- Existing product не отримав непогоджену нову scale.
+- Відступи показують зв'язок: близьке ближче, різні групи далі.
+- Browser/DevTools підтверджує фактичні computed values без випадкових дробових зсувів.
+
 ## Golden Canon Grid
 
-All layout structures MUST follow the Golden Canon Grid unless the user explicitly overrides it.
+Use Golden Canon-inspired structure as the default macro-layout planning tool when it fits the content.
+
+Existing project layout, approved user preference, accessibility, and content behavior take priority over a literal ratio.
 
 **Golden Canon Grid** — це структура, а не декорація. Вона задає порядок у розміченні: де головне, де другорядне, де рамка, де ритм. Без цієї структури кожен елемент буде “плавати” і вирівнюватись на sight, а не за правилом.
 
-**Required rules:**
-- Desktop ratio: `grid-template-columns: 1.618fr 1fr` for Main Content / Sidebar.
-- Responsive: start mobile-first with `1fr`, then activate golden ratio at `min-width: 701px`.
-- Spacing: use Fibonacci steps (`5, 8, 13, 21px`) for `gap`, `padding`, and section separation.
+**Starting rules:**
+- Desktop composition: try `grid-template-columns: minmax(0, 1.618fr) minmax(16rem, 1fr)` for Main Content / Sidebar only when the content supports it. Simpler `3fr 2fr`, `5fr 3fr`, or another approved ratio is valid.
+- Responsive: start mobile-first with `1fr`, then activate multiple columns at the content-needed breakpoint. This is often in the `700–1024px` range, but the rendered content decides.
+- Spacing: use the approved `4x` or `Fibonacci` mode. Golden Canon does not override the selected spacing scale.
 - Typography: prefer modular scale; `1.618` may be used for one-step size jumps, but do not force every header/body pair through a strict `1.618` cascade.
 - Antipatterns:
   - NEVER use fixed `height` for layout containers.
   - Use `min-height: 100vh` for full sections only when it makes sense.
-  - Use `minmax(300px, 1fr)` for flexible columns instead of forcing exact widths.
+  - Use `minmax(min(18rem, 100%), 1fr)` or a content-tested equivalent for flexible columns instead of forcing exact widths.
   - NEVER rely on `float` for layout.
   - Avoid absolute positioning for core layout.
   - Don't use random margin hacks on children to compensate for a broken grid.
@@ -264,7 +320,7 @@ Use this as a starting reference for desktop composition.
 - Primary content occupies the larger golden track.
 - Sidebar or secondary content occupies the smaller track.
 - Page content stays inside one centered global container.
-- Use token-based padding and Fibonacci spacing to preserve rhythm.
+- Use token-based padding from the approved spacing mode to preserve rhythm.
 - Keep key visual focal points inside golden columns, not edge-aligned.
 
 ## Golden Canon Anti-patterns
@@ -481,7 +537,7 @@ When running SkillOpt:
 
 ```text
 pip install skillopt
-python scripts/train.py ...
+Use the reviewed SkillOpt runner/config prepared for the current benchmark.
 ```
 
 Use project-specific design tasks as the benchmark split. Include both good and bad examples.
@@ -604,9 +660,9 @@ When a new UI element is needed, resolve it in this exact order.
 - Why: reusing existing code keeps consistency and reduces technical debt.
 - Exception: skip this step only for a **full redesign**, where all old components are intentionally replaced.
 
-**3. This skill's built-in library**
-- Where to look: `references/components/` inside this skill.
-- Why: these patterns are already aligned with this skill's rules.
+**3. This skill's optional built-in references**
+- Where to look: `references/components/` only if that directory exists.
+- Why: reviewed local patterns may already align with this skill's rules. Do not assume missing resources exist.
 
 **4. Libraries already used in the project**
 - Where to look: UI frameworks, kits, and dependencies already in `package.json` or imports.
@@ -665,7 +721,7 @@ desktop
 wide desktop
 ```
 
-For serious web layouts, also check specific widths when possible:
+For web/app layouts, check these widths or a documented project-specific matrix. If the environment cannot render one of them, record the exact limitation instead of silently skipping it:
 
 ```text
 320px
@@ -865,6 +921,54 @@ Checklist before adding one:
 
 If a component is created for one case only, it is probably not a component. Use a helper, a variant, or a token instead.
 
+### 11.3 Mandatory 20 Principles Gate
+
+Жоден принцип не можна пропустити.
+
+Для кожного visual/UI deliverable перед `Done` дай статус `Pass / Fail / N/A`. Це включає web UI, app screens, dashboards, forms, landing pages, banners і thumbnails. `N/A` дозволено лише з конкретною причиною; web-only або interaction-only checks для static artifacts позначай `N/A` з доказом. Загальне "не релевантно" без пояснення не приймається.
+
+| # | Принцип | Правило та допустимий діапазон | Доказ |
+|---|---|---|---|
+| 1 | Відступи (`padding`, `margin`, `gap`) | Існуючий продукт використовує existing approved scale; новий — approved `4x` або `Fibonacci`. Простір між групами зазвичай на один або більше steps більший, ніж усередині групи. Значення поза scale дозволені лише як documented border, optical, typography або responsive exception. | Audit computed styles і tokens; випадкових значень немає. |
+| 2 | Сітка (`grid system`) | Спочатку global grid, потім local grids. Golden Canon-inspired ratio використовуй для macro composition, коли він допомагає контенту; не форсуй `1.618` на кожен блок. | Grid overlay/DevTools показує tracks, gutters і прив'язку ключових елементів. |
+| 3 | Візуальна ієрархія | Визнач primary task, primary content, secondary content і support content до styling. На одному viewport не повинно бути кількох рівнозначних primary CTA без причини. | Squint/grayscale scan: головна дія і головний контент знаходяться першими. |
+| 4 | Типографіка | Використовуй project fonts і named type tokens. Для body зазвичай `0.875–1.125rem`; body line-height зазвичай `1.4–1.7`; heading line-height зазвичай `1.1–1.3`. Відхилення залежить від шрифту, мови й щільності. | Browser перевірка при default font, збільшеному base font і zoom; текст не обрізається. |
+| 5 | Контраст | Normal text не нижче `4.5:1`; large text не нижче `3:1`; meaningful controls, focus і graphics не нижче `3:1`. Колір не є єдиним носієм значення. | Contrast checker + перевірка light/dark та interactive states. |
+| 6 | Баланс елементів | Розподіляй visual weight навмисно. Асиметрія дозволена, якщо focal point і reading flow залишаються зрозумілими. | Перевірка на desktop/mobile та grayscale: жодна зона не виглядає випадково перевантаженою або покинутою. |
+| 7 | Масштабованість (`responsive`) | Mobile-first для web за замовчуванням. Breakpoints обирай за поведінкою контенту. Non-exempt content має reflow до `320 CSS px`; zoom до `200%`, а для reflow-check — до `400%`. | Browser/DevTools на narrow, tablet, desktop, wide та zoom; немає втрати функцій або випадкового page-level horizontal scroll. |
+| 8 | Акценти | Акцент має вести до primary task, status або важливої зміни. Обмежуй одночасні акценти; якщо все акцентне, акценту немає. | Grayscale/blur scan і перегляд states підтверджують одну зрозумілу точку першої уваги. |
+| 9 | Вирівнювання (`alignment`) | Вирівнюй ключові edges, baselines і controls до grid/alignment lines. Optical correction `1–2px` дозволена лише для складних форм та icons. | Grid overlay або координати показують спільні лінії; винятки задокументовані. |
+| 10 | Цілісність кольорової палітри | Використовуй semantic color tokens і existing brand palette. Новий колір — тільки через approval. Кількість кольорів визначає контекст, але ролі `surface/text/border/action/status` не повинні дублюватись випадково. | Token audit, light/dark/state review; немає unapproved hex/rgb значень. |
+| 11 | Читаємість тексту | Для довгого body text орієнтир `45–75` символів у рядку; не центруй довгі абзаци; labels, units і error text мають бути однозначними. | Реальний контент: короткий, типовий і довгий; перевірка mobile, zoom і language expansion. |
+| 12 | Послідовність стилів (`consistency`) | Одна роль використовує той самий component, token і interaction pattern. Свідомий виняток має означати іншу функцію або state. | Component/token audit; однакові дії не мають різних стилів без причини. |
+| 13 | Вільний простір (`white space`) | Whitespace — активний інструмент grouping і hierarchy. Щільні admin UI можуть бути компактними, але related/unrelated groups мають чітко відрізнятися. | Перевірка grouping: близькість відповідає смисловому зв'язку; немає випадкових "дір" або злипання. |
+| 14 | Зрозуміла навігація | Повторювана navigation зберігає той самий relative order. Current location, back/close behavior і destination links зрозумілі. Для web URL відображає shareable state, коли це доречно. | Пройти основні маршрути keyboard/pointer; для web refresh/deep-link не губить важливий state. |
+| 15 | Швидкість завантаження / вага сторінки | Existing product: не погіршуй agreed performance budget без approval. New product: зафіксуй budget у project docs. Для web орієнтир good Core Web Vitals: `LCP ≤ 2.5s`, `INP ≤ 200ms`, `CLS ≤ 0.1` на 75th percentile. Для static assets перевіряй розмір і формат export. | Web: Lighthouse/WebPageTest/field data та baseline. Static: фактичний export size, dimensions і compression. |
+| 16 | Фокус на користувачі | Кожен screen має primary user, primary task і success outcome. Бізнес-акцент не може приховувати основну користувацьку дію. | Основний flow проходиться без зайвих кроків; user goal і success state явно названі. |
+| 17 | Інтуїтивність взаємодії | Використовуй semantic controls і звичні patterns. Кожна дія має релевантні visible states: завжди focus/active, hover для pointer, loading/success/error коли дія має async result. Target aim — близько `44px` для primary touch controls; WCAG minimum `24×24 CSS px` або допустимий spacing exception. | Keyboard, pointer і touch flow; feedback не запізнюється, focus не губиться. |
+| 18 | Контекст у деталях | Labels, units, status, permissions, consequences, timestamps і error next step показуй там, де вони потрібні для рішення. Не додавай декор без контекстної функції. | Перевірка з реальними даними й error/empty/loading states; користувач розуміє "що сталося і що далі". |
+| 19 | Візуальна ритміка | Повторюй approved spacing, type, component і section patterns. Порушуй rhythm лише для навмисного focal point. | Перегляд усієї сторінки й сусідніх screens: повтори впізнавані, винятки пояснюють важливість. |
+| 20 | Тестування на різних пристроях | Web/app UI: mobile, tablet, desktop, wide desktop; перевіряй `320, 375, 414, 768, 1024, 1366, 1440, 1920px` або documented project matrix. Static artifacts: перевір кожен intended export size/crop. Реальний пристрій використовуй, коли він доступний. | Screenshots/DevTools/E2E або rendered exports з результатом `Pass / Fail / Partial`; console/network без критичних помилок для web/app. |
+
+### Gate output
+
+Перед фінальним звітом додай окремий рядок для кожного принципу:
+
+```text
+[20 Principles Gate] Pass / Fail / Partial
+Spacing mode: 4x / Fibonacci / existing project scale
+1. Spacing — Pass / Fail / N/A — evidence or concrete N/A reason
+2. Grid — Pass / Fail / N/A — evidence or concrete N/A reason
+...
+20. Device testing — Pass / Fail / N/A — evidence or concrete N/A reason
+```
+
+Заборонено згортати перевірку до `Pass: 1–20` або іншого загального твердження.
+
+`N/A` допустимо тільки коли artifact справді не має відповідної поверхні, наприклад static banner не має navigation чи interaction states. Доказ має назвати перевірений artifact і чому принцип до нього не застосовується.
+
+Якщо хоча б один релевантний принцип не перевірено, задача не `Done`.
+
 ## 12. Visual QA
 
 A design task is not Done until visually checked.
@@ -986,7 +1090,7 @@ For serious layouts verify that:
 - keyboard focus remains visible and logical;
 - interactive controls are reachable and operable;
 - text remains readable when base font size increases;
-- layout does not break at browser zoom up to 150%;
+- layout does not break at browser zoom up to `200%`, and web content that must reflow remains usable at the `400%` reflow check;
 - meaningful media do not lose context when scaled.
 
 If visual or browser inspection is not possible, state the limitation explicitly.
@@ -1041,34 +1145,28 @@ Use this blueprint as a concrete starting point for a standard editorial/service
 
 .container {
   width: 100%;
-  max-width: 1200px;
+  max-width: var(--container-max);
   margin-inline: auto;
-  padding-inline: var(--space-canon-s, 8px);
+  padding-inline: var(--space-container);
 }
 
 .golden-grid {
   display: grid;
-  gap: var(--space-canon-s, 16px);
+  gap: var(--space-grid);
   align-items: start;
 }
 
-@media (min-width: 701px) {
-  .golden-grid {
-    grid-template-columns: 1.618fr 1fr;
-  }
-  .header,
-  .footer {
-    grid-column: 1 / -1;
-  }
-}
 ```
 
 Blueprint rules:
+- define `--container-max`, `--space-container`, and `--space-grid` in `DESIGN.md`; do not copy placeholder values blindly
+- add the multi-column media/container query only after a content test finds the breakpoint; do not copy a universal breakpoint
+- at that breakpoint, the grid may switch to `minmax(0, 1.618fr) minmax(16rem, 1fr)` or another approved ratio
 - larger track = primary content
 - smaller track = secondary content
 - header and footer span the full grid explicitly, not with margin hacks or `width: 100%` overrides
 - `gap` and container padding are the source of rhythm, not child margins
-- if the screen is narrower than `701px`, collapse to a single column unless there is a concrete usability reason
+- before the content supports two columns, keep a single column unless there is a concrete usability reason
 
 If the task fits this structure, start from this blueprint first and only diverge for a concrete content or accessibility reason.
 
@@ -1079,6 +1177,7 @@ Before the final answer, verify:
 Did I understand the goal?
 Did I create or respect DESIGN.md for a design-system or multi-screen task?
 Did I start or update the primitive library before inventing page-specific elements?
+Did I preserve or explicitly choose the spacing mode?
 Did I define hierarchy?
 Did I build a grid?
 Did I align elements?
@@ -1098,10 +1197,10 @@ Treat the Golden Ratio as a structural rule, not a decoration.
 
 Core numbers:
 - phi ≈ 1.618
-- Fibonacci steps for spacing: 5, 8, 13, 21
+- approved spacing mode: existing project scale, `4x`, or `Fibonacci`
 
 Golden Canon rules:
-- Desktop layout ratio: `1.618fr 1fr`
+- Desktop layout ratio: `1.618fr 1fr` is a starting option, not a universal requirement
 - Typography scale: prefer a modular scale; `1.618` can be used for major jumps, but avoid forcing every heading/body pair through a strict cascade
 - Grid columns may use Fibonacci coefficients: `2fr 3fr 5fr`
 - Grid gap is track spacing, not element margin
@@ -1110,7 +1209,7 @@ Golden Canon rules:
 Responsiveness:
 - Mobile first with `1fr` base; restore canon proportions only when content and width allow it
 - Use `minmax(min, max)` and breakpoints, not fixed `fr` on narrow screens
-- At `min-width: 701px` enable a wider canon grid; below that keep fewer columns or single column layout
+- Enable a wider canon grid at the content-needed breakpoint; below that keep fewer columns or a single-column layout
 
 CSS Grid architecture:
 - Grid for macro layout
@@ -1119,8 +1218,7 @@ CSS Grid architecture:
 - Modal overflow: `max-height: 100%` with `overflow-y: auto` on inner container
 
 Naming / tokens:
-- `--space-canon-s: 16px` for small gaps and internal padding
-- `--space-canon-l: 15rem` for section vertical rhythm
+- `--space-component`, `--space-group`, and `--space-section` map to the approved spacing mode
 - `--grid-main-cols: 1.618fr 1fr` for desktop canon layout
 
 Health check:
@@ -1132,24 +1230,48 @@ Health check:
 
 ## Minimal Token Contract (No-Token Project Fallback)
 
-If the project has no token system yet, use this minimal shared contract before creating one-off values.
+If the project has no token system yet, choose one minimal shared contract before creating one-off values.
 
 Record it in `DESIGN.md` first, then mirror it to CSS variables.
+
+`4x` fallback:
 
 ```text
 --space-xs: 4px
 --space-sm: 8px
+--space-md: 12px
+--space-lg: 16px
+--space-xl: 24px
+--space-2xl: 32px
+--space-3xl: 48px
+```
+
+`Fibonacci` fallback:
+
+```text
+--space-xs: 5px
+--space-sm: 8px
 --space-md: 13px
 --space-lg: 21px
 --space-xl: 34px
+--space-2xl: 55px
+--space-3xl: 89px
+```
+
+Shared radius candidate, only after bootstrap approval:
+
+```text
 --radius-sm: 6px
 --radius-md: 8px
 --radius-lg: 12px
 ```
 
 Rules:
-- Map every project spacing decision to one of these eight values.
-- Map every radius decision to `--radius-sm | --radius-md | --radius-lg`.
+- Choose the mode with the user for new work; preserve existing tokens for existing work.
+- Map every project spacing decision to the chosen scale or document a valid exception.
+- Do not silently combine the two fallback scales.
+- Preserve existing radius tokens. If the project has none, propose the candidate radius set or another context-appropriate set before use.
+- After approval, map every radius decision to the approved project radius tokens.
 - Use this contract as a temporary primitive registry until a full token system is approved.
 - Create the first primitives against this contract before styling full pages.
 
@@ -1162,6 +1284,9 @@ Track only verified sources:
 - CSS Grid and component libraries: add only advice that already aligns with current repository rules.
 - Web research and GitHub references: quote link, issue, commit, or demo; do not rely on generic wording.
 - NotebookLM output: log when it was used; do not treat it as a primary source for rules.
+- Numeric accessibility thresholds: verify against current [WCAG 2.2 Understanding documents](https://www.w3.org/WAI/WCAG22/Understanding/).
+- Web performance thresholds: verify against current [web.dev Web Vitals guidance](https://web.dev/articles/vitals).
+- Web UI review: fetch the latest [Vercel Web Interface Guidelines](https://raw.githubusercontent.com/vercel-labs/web-interface-guidelines/main/command.md) before a formal audit.
 - Modern layout guidance: prefer CSS Grid for macro layout, Flexbox for component internals, and `repeat(auto-fit, minmax(...))` for flexible content collections.
 - Component naming guidance: name variants by role or meaning, not by visual detail or color, so reuse stays stable when one variant changes.
 - SkillOpt guidance: use `microsoft/SkillOpt` only with recorded rollouts, train/val/test splits, validation gates, and reviewed `best_skill.md`.
@@ -1169,6 +1294,7 @@ Track only verified sources:
 ## Changelog
 
 - 2026-01-28 — initial curation pass completed. Added visual QA threshold rule, visual QA form, visual QA checklist.
+- 2026-06-06 — added optional `4x` / `Fibonacci` spacing modes, preserved existing-project scales, and added the mandatory 20 Principles Gate with ranges, exceptions, and evidence.
 - 2026-06-04 — added mobile-first guardrails and visual-polish checks: mobile as the default, `box-sizing`, `rem`, 44px touch targets, one primary action per small screen, and calm composition on narrow widths.
 - 2026-06-04 — tightened CSS guardrails for operational UI. Added selector tracing, `!important` emergency-only rule, and clean-code constraints for style changes.
 - 2026-06-04 — added Design System First workflow for `DESIGN.md`, Stitch/Open Design compatibility, primitive library bootstrap, and generator handoff rules.

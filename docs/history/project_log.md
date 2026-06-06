@@ -1,5 +1,14 @@
 # Project Log
 
+## 2026-06-06
+- Завдання: додати опціональне правило `4x` і не пропустити жоден із 20 принципів дизайну.
+- Знайдено: чинний skill жорстко вимагав Fibonacci spacing у частині правил, не мав явного `4x` mode, а performance, navigation, intuitive interaction, contextual details і cohesive palette не мали повного правила + доказу. `quick_validate.py` також виявив невалідне top-level поле `version` у frontmatter.
+- Рішення: `4x` і `Fibonacci` визначено як альтернативні режими. Existing product зберігає поточні tokens; для роботи з нуля користувач обирає режим, а вибір фіксується в `DESIGN.md`. Golden Canon-inspired grid лишається macro guide і не перевизначає spacing mode.
+- Змінено: створено `SPEC.md`; у `SKILL.md` додано spacing decision flow, ranges, exceptions, spacing QA і Mandatory 20 Principles Gate; оновлено `README.md`, `rubric.md`, good/bad examples; `version` перенесено в дозволений `metadata`.
+- Джерела: NotebookLM notebook `e0d206d4-3820-44b1-95b3-4f9fd7bbcd22`; актуальні Vercel Web Interface Guidelines; W3C WCAG 2.2 contrast, non-text contrast, reflow, target size і consistent navigation; web.dev Core Web Vitals і performance budgets.
+- Перевірка: `quick_validate.py` повернув `Skill is valid!`; `git diff --check` без помилок; автоматичний audit знайшов рівно `20/20` numbered rules у `SKILL.md` і `20/20` checks у `rubric.md`; baseline pressure-test пропустив `4x`, palette, performance, intuitive interaction і contextual details, після чого ці прогалини закрито; повторний pressure-test змусив заборонити агреговане `Pass: 1–20`; фінальний незалежний review підтвердив `Pass` для static/device scope, content-tested breakpoint і approved radius candidate; UTF-8/BOM та mojibake перевірено.
+- Ризики: діапазони є guardrails, а не універсальними pixel laws; existing design system і реальний контекст мають пріоритет, але кожен виняток повинен бути названий і перевірений.
+
 ## 2026-06-04
 - Завдання: додати в `vaoferi-design-skill` mobile-first і visual-polish правила, щоб скіл не тільки тримав структуру, а й виглядав спокійно на вузьких екранах.
 - Знайдено: NotebookLM підтвердив mobile-first базу, `box-sizing: border-box`, `rem`, 44px touch targets, одну головну дію на мобільному екрані, shrinkable flex rows, responsive media з `max-width: 100%` / `height: auto` / `object-fit: cover`, локальний `overflow-x: auto` лише для інтенційно скролабельного контенту, а також важливість ритму, whitespace і стриманої motion-естетики.

@@ -14,18 +14,19 @@
 
 Не переставляй цей порядок без причини.
 
-## NLM Snippets Source
+## Local Component Library Catalog
 
 Local source:
 
 ```text
-\\NAS\homes\vaoferi\Work\nlm\public_html\config\config\mcp-snippets.config.json
+config/component-libraries.json
 ```
 
 Validate before relying on it:
 
 ```bash
 python scripts/validate_snippets_source.py
+python scripts/get_component_snippet.py button --label "Далі"
 ```
 
 Expected enabled libraries today:
@@ -42,7 +43,7 @@ Rules:
 - do not add a new snippets library without approval;
 - if the config is missing or invalid, report the blocker and continue with project-local sources.
 
-Known implementation detail: the NLM snippets server reads `config/mcp-snippets.config.json` relative to its own script/CWD, so client-side environment variables alone may not update the server catalog.
+Known cleanup: the old NLM path `\\NAS\homes\vaoferi\Work\nlm\public_html\config\config\mcp-snippets.config.json` was only a catalog source. It was not a working MCP endpoint. The active `snippets-nlm` route on `127.0.0.1:9090` returned `404`, because the proxy config pointed to the missing `C:\work\nlm\public_html\.openclaw\mcp\snippets\server.js`.
 
 ## External Patterns Borrowed
 

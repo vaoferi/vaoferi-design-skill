@@ -8,7 +8,7 @@
 - жорсткий порядок дій від skeleton до visual QA;
 - опціональний вибір spacing mode: existing scale, `4x` або `Fibonacci`;
 - усі 20 принципів дизайну як перевірюваний gate;
-- NLM snippets config як валідоване джерело елементів;
+- local component library catalog як валідоване джерело елементів;
 - SkillOpt як вимірювана петля покращення, не автопереписувач.
 
 ## Діагноз
@@ -29,10 +29,12 @@
 
 - `SKILL.md` — короткий entrypoint із mandatory order.
 - `references/action-contract.md` — повний порядок design execution.
-- `references/component-sources.md` — source order і NLM snippets config.
+- `references/component-sources.md` — source order і local component library catalog.
 - `references/quality-gates.md` — 20 principles gate і visual QA form.
 - `references/skillopt-and-architecture.md` — діагноз, plugin/agent decision, SkillOpt workflow.
-- `scripts/validate_snippets_source.py` — перевірка `mcp-snippets.config.json`.
+- `config/component-libraries.json` — catalog бібліотек компонентів.
+- `scripts/validate_snippets_source.py` — перевірка catalog.
+- `scripts/get_component_snippet.py` — отримання конкретних snippets, наприклад кнопки `Далі`.
 - `scripts/check_skill_structure.py` — структурна перевірка skill.
 - `README.md`, `rubric.md`, `docs/history/project_log.md` — синхронізація.
 
@@ -49,7 +51,7 @@
 Валідоване джерело:
 
 ```text
-\\NAS\homes\vaoferi\Work\nlm\public_html\config\config\mcp-snippets.config.json
+config/component-libraries.json
 ```
 
 Очікувані enabled libraries:
@@ -63,6 +65,7 @@
 
 ```bash
 python scripts/validate_snippets_source.py --json
+python scripts/get_component_snippet.py button --label "Далі" --json
 ```
 
 ## SkillOpt

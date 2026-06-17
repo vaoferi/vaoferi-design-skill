@@ -99,6 +99,16 @@ def check_snippets_config() -> None:
     )
     if result.returncode != 0:
         raise AssertionError(result.stderr.strip() or result.stdout.strip())
+    generator = ROOT / "scripts" / "get_component_snippet.py"
+    result = subprocess.run(
+        [sys.executable, str(generator), "button", "--label", "Далі", "--json"],
+        cwd=ROOT,
+        check=False,
+        text=True,
+        capture_output=True,
+    )
+    if result.returncode != 0:
+        raise AssertionError(result.stderr.strip() or result.stdout.strip())
 
 
 def check_skillopt_scaffold() -> None:

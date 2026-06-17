@@ -75,7 +75,7 @@ If a new component, token, or layout pattern is required, use the approval rule 
 - prevents random one-off CSS and component sprawl in operational/admin UI;
 - creates a portable `DESIGN.md` contract that Stitch, Open Design, Codex, Claude Code, and Cursor can all read;
 - keeps `SKILL.md` as a short entrypoint and moves detailed execution rules into `references/`;
-- uses `scripts/validate_snippets_source.py` to verify the NLM snippets config before relying on it;
+- uses `config/component-libraries.json` plus scripts to verify libraries and return concrete snippets before relying on them;
 - enforces token discipline so colors, spacing, radius, and typography stay consistent;
 - provides two explicit spacing modes without forcing a migration on existing products;
 - applies Golden Canon-inspired structure so layouts have predictable rhythm;
@@ -115,10 +115,12 @@ If a new component, token, or layout pattern is required, use the approval rule 
 
 - `SKILL.md` — main skill entrypoint
 - `references/action-contract.md` — mandatory design execution order
-- `references/component-sources.md` — component source order and NLM snippets config
+- `references/component-sources.md` — component source order and local component library catalog
 - `references/quality-gates.md` — 20 principles and visual QA gate
 - `references/skillopt-and-architecture.md` — diagnosis, plugin/agent decision, SkillOpt workflow
-- `scripts/validate_snippets_source.py` — validates the local NLM snippets config
+- `config/component-libraries.json` — local catalog for Bootstrap, Bulma, and Shoelace
+- `scripts/validate_snippets_source.py` — validates the local component catalog
+- `scripts/get_component_snippet.py` — returns concrete snippets such as a `Далі` button
 - `scripts/check_skill_structure.py` — validates skill structure, references, snippets and SkillOpt scaffold
 - `.skillopt/` — small reviewed SkillOpt scaffold; outputs are ignored
 - `.gitignore` — excludes SkillOpt outputs, caches, and local logs

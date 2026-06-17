@@ -1,0 +1,26 @@
+{
+  "libraries": {
+    "bootstrap": {
+      "enabled": true,
+      "npm": "bootstrap",
+      "iconsNpm": "bootstrap-icons",
+      "version": "latest",
+      "preferCdn": "jsdelivr"
+    },
+    "bulma": {
+      "enabled": true,
+      "npm": "bulma",
+      "version": "latest",
+      "preferCdn": "jsdelivr"
+    },
+    "shoelace": {
+      "enabled": true,
+      "npm": "@shoelace-style/shoelace",
+      "version": "latest",
+      "preferCdn": "jsdelivr"
+    }
+  },
+  "timeouts": {
+    "httpMs": 5000
+  }
+}

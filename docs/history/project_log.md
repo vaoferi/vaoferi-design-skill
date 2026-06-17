@@ -22,6 +22,21 @@
   - Reference split покладається на те, що агент реально читає linked files. Це пом'якшено явним `Required References` у `SKILL.md` і structural check.
   - Реальний upstream SkillOpt training ще не запускався, бо для нього потрібен benchmark/backend config і credentials. У поточному середовищі `OPENAI_API_KEY`, `AZURE_OPENAI_API_KEY`, `ANTHROPIC_API_KEY` і `QWEN_CHAT_BASE_URL` не задані; scaffold готовий для контрольованого запуску.
 
+## 2026-06-17 — Replace dead NLM snippets config with local component catalog
+- Завдання: перевірити, чи `\\NAS\homes\vaoferi\Work\nlm\public_html\config\config\mcp-snippets.config.json` реально віддає компоненти, і чи можна прибрати його з NLM config.
+- Знайдено:
+  1. `public_html\config` не можна видаляти: там є runtime/config файли `common\di.php`, `hyper.php`, `team.groups.php`, `team.meta.php`.
+  2. Підпапка `public_html\config\config` містила лише `mcp-snippets.config.json`.
+  3. Active MCP proxy на `127.0.0.1:9090` працює для `memory`, `node_repl`, `playwright`, `shadcn-ui`, але `snippets-nlm` повертає `404`.
+  4. `C:\Users\vaoferi\.hermes\mcp-proxy.json` мав `snippets-nlm`, який дивився на відсутній `C:\work\nlm\public_html\.openclaw\mcp\snippets\server.js`.
+- Змінено:
+  - Додано `config/component-libraries.json` у skill repo.
+  - Додано `scripts/get_component_snippet.py`, який повертає concrete snippets, зокрема кнопку `Далі` для Bootstrap, Bulma і Shoelace.
+  - `scripts/validate_snippets_source.py` переведено на локальний catalog.
+  - `snippets-nlm` вимкнено в Codex/Hermes config як dead route.
+  - Старий NLM `config\config\mcp-snippets.config.json` можна видалити після перевірки, бо функціональне джерело тепер у skill repo.
+- Перевірка: `python scripts/validate_snippets_source.py --json` показав `bootstrap`, `bulma`, `shoelace`; `python scripts/get_component_snippet.py button --label "Далі" --json` повернув 3 snippets; `python scripts/check_skill_structure.py` і `quick_validate.py` пройшли.
+
 ## 2026-06-17 — Clarify optional spacing mode selection
 - Завдання: уточнити, що `4x` і `Fibonacci` є опціональними режимами на вибір, а не паралельними обов'язковими шкалами.
 - Знайдено: правило вже було додане, але головний порядок дій не змушував агента фіксувати spacing mode до побудови grid і компонентів.

@@ -9,9 +9,8 @@ from pathlib import Path
 from typing import Any
 
 
-DEFAULT_CONFIG = Path(
-    r"\\NAS\homes\vaoferi\Work\nlm\public_html\config\config\mcp-snippets.config.json"
-)
+ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_CONFIG = ROOT / "config" / "component-libraries.json"
 
 
 def load_config(path: Path) -> dict[str, Any]:

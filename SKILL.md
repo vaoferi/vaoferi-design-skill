@@ -78,16 +78,17 @@ Existing product має пріоритет. Не мігруй spacing, colors, c
 1. Project `DESIGN.md` and existing UI.
 2. Project components/primitives/tokens.
 3. Installed dependencies.
-4. Local NLM snippets config:
+4. Local component library catalog:
 
 ```text
-\\NAS\homes\vaoferi\Work\nlm\public_html\config\config\mcp-snippets.config.json
+config/component-libraries.json
 ```
 
-Перевір snippets source командою:
+Перевір catalog і отримай snippets командами:
 
 ```bash
 python scripts/validate_snippets_source.py
+python scripts/get_component_snippet.py button --label "Далі"
 ```
 
 Після цього можна брати зовнішні references як патерни, але не як автоматичну style authority.

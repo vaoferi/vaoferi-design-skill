@@ -1,0 +1,12 @@
+[
+  {
+    "id": "design-test-001",
+    "question": "Як перевірити, що новий екран не зламав responsive behavior?",
+    "reference_text": "Перевір mobile-first, tablet, desktop, wide desktop і visual QA before done.",
+    "expected_steps": [
+      "Verify responsive behavior",
+      "Check mobile-first layout",
+      "Finish only after visual QA"
+    ]
+  }
+]

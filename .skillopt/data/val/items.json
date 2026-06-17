@@ -1,0 +1,12 @@
+[
+  {
+    "id": "design-val-001",
+    "question": "Чи можна поставити !important для швидкої правки?",
+    "reference_text": "Ні. !important лише як emergency escape hatch, а core layout має лишатися на grid/flex/token-based rules.",
+    "expected_steps": [
+      "Treat !important as an emergency escape hatch only",
+      "Prefer grid and flex for layout",
+      "Do not use absolute positioning as a layout crutch"
+    ]
+  }
+]

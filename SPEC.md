@@ -1,111 +1,110 @@
-# SPEC: Spacing Modes and 20 Principles Gate
+# SPEC: Design Skill Architecture, Snippets Source, SkillOpt
 
 ## Ціль
 
-Доповнити `vaoferi-design-skill` двома опціональними spacing-режимами:
+Зробити `vaoferi-design-skill` стабільним для агентів:
 
-- `4x`: лінійна шкала, кратна 4;
-- `Fibonacci`: прогресивна шкала для виразнішої композиційної ритміки.
+- короткий `SKILL.md` як entrypoint;
+- жорсткий порядок дій від skeleton до visual QA;
+- опціональний вибір spacing mode: existing scale, `4x` або `Fibonacci`;
+- усі 20 принципів дизайну як перевірюваний gate;
+- NLM snippets config як валідоване джерело елементів;
+- SkillOpt як вимірювана петля покращення, не автопереписувач.
 
-Також зробити всі 20 принципів із запиту користувача явними правилами з допустимими діапазонами, контекстними винятками та доказами перевірки.
+## Діагноз
 
-## Контекст
+Попередній `SKILL.md` був завеликий: понад 1000 рядків. Він змішував workflow, довідник, CSS rules, visual QA, changelog і SkillOpt. Це робить виконання нестабільним: агент може прочитати файл, але пропустити порядок дій або важливий gate.
 
-- Існуючий skill уже регламентує Golden Canon-inspired grid, компоненти, tokens, responsive і visual QA.
-- Поточне правило Fibonacci (`5, 8, 13, 21px`) конфліктує з вимогою 4x, якщо обидва трактувати як обов'язкові.
-- Користувач уточнив: `4x` і `Fibonacci` мають бути альтернативами на вибір.
-- Для існуючого продукту не можна ламати чинну token/spacing систему без окремого approval.
-- NotebookLM підтвердив, що 4x корисний для передбачуваних operational UI, а Fibonacci краще працює як прогресивна шкала для виразного ритму.
+Проблема не в тому, що skill має бути plugin. Проблема в архітектурі інструкції.
+
+## Рішення
+
+- `SKILL.md` лишається коротким маршрутизатором.
+- Деталі винесені в `references/`.
+- Перевірки винесені в `scripts/`.
+- Plugin не створюємо зараз: немає потреби пакувати MCP/tools як окремий bundle.
+- Окремий agent не створюємо зараз: спершу потрібен стабільний design contract.
 
 ## Що змінюємо
 
-- Додаємо decision flow вибору spacing-режиму.
-- Фіксуємо обраний режим у `DESIGN.md`.
-- Забороняємо випадкове змішування режимів в одному рівні композиції.
-- Додаємо контекстні винятки: borders, hairlines, optical correction, типографічні метрики, responsive formulas.
-- Додаємо обов'язковий `20 Principles Gate`.
-- Синхронізуємо `README.md`, `rubric.md`, приклади й project log.
-- Виправляємо невалідний `version` у frontmatter `SKILL.md`.
+- `SKILL.md` — короткий entrypoint із mandatory order.
+- `references/action-contract.md` — повний порядок design execution.
+- `references/component-sources.md` — source order і NLM snippets config.
+- `references/quality-gates.md` — 20 principles gate і visual QA form.
+- `references/skillopt-and-architecture.md` — діагноз, plugin/agent decision, SkillOpt workflow.
+- `scripts/validate_snippets_source.py` — перевірка `mcp-snippets.config.json`.
+- `scripts/check_skill_structure.py` — структурна перевірка skill.
+- `README.md`, `rubric.md`, `docs/history/project_log.md` — синхронізація.
 
 ## Що не змінюємо
 
-- Не робимо `4x` обов'язковим для всіх проєктів.
-- Не скасовуємо Golden Canon-inspired macro layout.
-- Не змушуємо існуючі продукти переходити на іншу spacing-систему.
-- Не додаємо нову component library або зовнішні залежності.
+- Не створюємо plugin без потреби.
+- Не додаємо нових runtime dependencies.
+- Не замінюємо `SKILL.md` output-ом SkillOpt.
+- Не мігруємо existing products на `4x` або `Fibonacci` без approval.
+- Не комітимо raw SkillOpt outputs, secrets, `.env`, cache або великі run folders.
 
-## Правило вибору spacing-режиму
+## Snippets Source
 
-1. Існуючий продукт: зберегти чинні tokens і scale.
-2. Робота з нуля: зафіксувати вибір користувача в `DESIGN.md`.
-3. Якщо користувач не має уподобання:
-   - рекомендувати `4x` для operational UI, admin, forms, dashboards;
-   - рекомендувати `Fibonacci` для editorial, landing і marketing layouts.
-4. Один продукт або flow має одну default шкалу.
-5. Інша локальна шкала допустима лише для existing subsystem або як явно approved виняток із причиною.
+Валідоване джерело:
 
-## 20 Principles Gate
+```text
+\\NAS\homes\vaoferi\Work\nlm\public_html\config\config\mcp-snippets.config.json
+```
 
-Кожен принцип повинен мати:
+Очікувані enabled libraries:
 
-- правило;
-- діапазон або контекстний виняток;
-- доказ перевірки.
+- `bootstrap`;
+- `bulma`;
+- `shoelace`;
+- `bootstrap-icons` через `iconsNpm`.
 
-Обов'язкові принципи:
+Перевірка:
 
-1. Відступи.
-2. Сітка.
-3. Візуальна ієрархія.
-4. Типографіка.
-5. Контраст.
-6. Баланс.
-7. Масштабованість.
-8. Акценти.
-9. Вирівнювання.
-10. Цілісність кольорової палітри.
-11. Читаємість тексту.
-12. Послідовність стилів.
-13. Вільний простір.
-14. Зрозуміла навігація.
-15. Швидкість завантаження.
-16. Фокус на користувачі.
-17. Інтуїтивність взаємодії.
-18. Контекст у деталях.
-19. Візуальна ритміка.
-20. Тестування на різних пристроях.
+```bash
+python scripts/validate_snippets_source.py --json
+```
 
-## Ризики
+## SkillOpt
 
-- Надто жорсткі числа можуть шкодити існуючим design systems.
-- Надто м'які формулювання дозволять агенту пропустити принцип.
-- Подвійна spacing-система може спричинити drift, якщо вибір не зафіксовано.
-- Performance і visual quality не можна підтвердити лише текстовим self-check.
+Використовуємо тільки measured loop:
 
-## План
+```text
+real traces -> scored examples -> train/val/test -> best_skill.md -> validation gate -> human review -> intentional merge
+```
 
-1. Додати spacing decision flow і замінити суперечливе обов'язкове Fibonacci-правило.
-2. Додати `20 Principles Gate` у `SKILL.md`.
-3. Додати повну checklist-перевірку в `rubric.md`.
-4. Оновити README та приклади.
-5. Зафіксувати рішення в project log.
-6. Провести pressure-test і технічну перевірку skill.
+Локальний scaffold:
+
+```text
+.skillopt/config.yaml
+.skillopt/data/train/items.json
+.skillopt/data/val/items.json
+.skillopt/data/test/items.json
+```
+
+`python -m skillopt` не є валідною CLI-командою для встановленого пакета. Upstream CLI script-based:
+
+```bash
+python scripts/train.py --config <config.yaml>
+python scripts/eval_only.py --config <config.yaml> --skill <best_skill.md>
+```
 
 ## План перевірки
 
-- `quick_validate.py .`
+- `python scripts/validate_snippets_source.py --json`
+- `python scripts/check_skill_structure.py`
+- `python C:\Users\vaoferi\.codex\skills\.system\skill-creator\scripts\quick_validate.py .`
 - `git diff --check`
-- пошук кожного з 20 принципів у `SKILL.md` і `rubric.md`
-- пошук mojibake-патернів
-- перевірка UTF-8 без BOM
-- незалежний pressure-test агента до і після змін
-- перегляд фінального diff
+- exact 20 principles in `SKILL.md`, `rubric.md`, `references/quality-gates.md`
+- UTF-8 without BOM
+- no mojibake patterns
 
 ## Критерії готовності
 
-- Вибір `4x`/`Fibonacci` є явним і не суперечливим.
-- Для existing product чинна scale має пріоритет.
-- Усі 20 принципів присутні в `SKILL.md`.
-- Усі 20 принципів мають checklist у `rubric.md`.
-- `README.md` і приклади відповідають новим правилам.
-- Skill проходить валідатор, diff і encoding-перевірки.
+- `SKILL.md` коротший за 250 рядків.
+- Усі reference файли існують і читаються.
+- Snippets config валідний і показує enabled libraries.
+- Усі 20 принципів присутні в entrypoint/rubric/quality gate.
+- SkillOpt scaffold має train/val/test приклади.
+- Перевірки проходять.
+- У project log зафіксовано діагноз, рішення і ризики.

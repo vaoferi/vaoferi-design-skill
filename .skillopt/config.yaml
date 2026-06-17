@@ -1,0 +1,5 @@
+skill_path: '\\NAS\homes\vaoferi\Work\vaoferi-design-skill\SKILL.md'
+data_dir: '\\NAS\homes\vaoferi\Work\vaoferi-design-skill\.skillopt\data'
+output_dir: '\\NAS\homes\vaoferi\Work\vaoferi-design-skill\.skillopt\outputs'
+max_iterations: 10
+validation_gate: 0.05

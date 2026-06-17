@@ -29,7 +29,7 @@ Use this rubric to evaluate whether a design task is Done.
 
 ## 2.1 Spacing Mode
 - [ ] Existing products preserve their current spacing tokens unless migration was approved.
-- [ ] New work explicitly chooses `4x` or `Fibonacci` and records the choice in `DESIGN.md`.
+- [ ] New work explicitly chooses `4x` or `Fibonacci` from user preference or context default and records the choice in `DESIGN.md`.
 - [ ] `4x` and `Fibonacci` are not silently mixed.
 - [ ] Padding, margin, gap, and section spacing use the selected tokens or a documented exception.
 - [ ] Borders/hairlines and optical corrections are the only unexplained `1–2px` candidates.
@@ -100,27 +100,30 @@ Use this rubric to evaluate whether a design task is Done.
 - [ ] 3. Візуальна ієрархія: primary task, content і CTA читаються першими.
 - [ ] 4. Типографіка: type tokens, line-height, zoom і збільшений base font перевірено.
 - [ ] 5. Контраст: text `4.5:1` / large text `3:1` / meaningful non-text `3:1` або краще.
-- [ ] 6. Баланс: visual weight навмисний на mobile і desktop.
+- [ ] 6. Баланс елементів: visual weight навмисний на mobile і desktop.
 - [ ] 7. Масштабованість: reflow до `320 CSS px`, zoom і content-driven breakpoints перевірено.
 - [ ] 8. Акценти: є зрозуміла перша точка уваги; акценти не конкурують.
 - [ ] 9. Вирівнювання: edges/baselines/controls прив'язані до alignment lines; optical exceptions пояснені.
-- [ ] 10. Цілісність палітри: semantic tokens і existing brand palette використані; unapproved colors відсутні.
-- [ ] 11. Читаємість: line length, real content, long text, labels, units і language expansion перевірено.
+- [ ] 10. Цілісність кольорової палітри: semantic tokens і existing brand palette використані; unapproved colors відсутні.
+- [ ] 11. Читаємість тексту: line length, real content, long text, labels, units і language expansion перевірено.
 - [ ] 12. Послідовність стилів: одна роль використовує ті самі components/tokens/patterns.
 - [ ] 13. Вільний простір: whitespace показує grouping і hierarchy без злипання або випадкових дір.
 - [ ] 14. Зрозуміла навігація: relative order, current location, back/close, deep links і refresh state перевірено.
-- [ ] 15. Швидкість/вага: web performance budget/baseline або static export size перевірено; web-ціль: `LCP ≤ 2.5s`, `INP ≤ 200ms`, `CLS ≤ 0.1`.
+- [ ] 15. Швидкість завантаження / вага сторінки: web performance budget/baseline або static export size перевірено; web-ціль: `LCP ≤ 2.5s`, `INP ≤ 200ms`, `CLS ≤ 0.1`.
 - [ ] 16. Фокус на користувачі: primary user/task/success outcome названі та проходяться без зайвих кроків.
-- [ ] 17. Інтуїтивність: semantic controls, feedback states, keyboard/pointer/touch і target sizes перевірено.
+- [ ] 17. Інтуїтивність взаємодії: semantic controls, feedback states, keyboard/pointer/touch і target sizes перевірено.
 - [ ] 18. Контекст у деталях: labels, units, status, permissions, consequences, errors і next steps зрозумілі.
 - [ ] 19. Візуальна ритміка: approved patterns повторюються; навмисні порушення rhythm мають причину.
-- [ ] 20. Різні пристрої: web/app перевірено на mobile/tablet/desktop/wide; static artifacts перевірено в intended export sizes/crops; real device використано, коли доступний.
+- [ ] 20. Тестування на різних пристроях: web/app перевірено на mobile/tablet/desktop/wide; static artifacts перевірено в intended export sizes/crops; real device використано, коли доступний.
 - [ ] Для кожного принципу є окремий numbered рядок `Pass / Fail / N/A` з доказом або конкретною причиною.
 - [ ] Gate не згорнуто до загального `Pass: 1–20`.
 - [ ] Кожен `N/A`, включно з web-only checks для static artifacts, називає перевірений artifact і конкретну причину.
 
 ## 10. Documentation Sync
-- [ ] `SKILL.md` reflects rules used.
+- [ ] `SKILL.md` remains a short entrypoint, not a long mixed reference.
+- [ ] `SKILL.md` routes to `references/action-contract.md`, `references/component-sources.md`, `references/quality-gates.md`, and `references/skillopt-and-architecture.md`.
+- [ ] `scripts/check_skill_structure.py` passes after skill architecture changes.
+- [ ] `scripts/validate_snippets_source.py` passes if snippets are referenced.
 - [ ] `SPEC.md` remains accurate for the active behavior change.
 - [ ] `README.md` remains accurate.
 - [ ] `docs/history/project_log.md` updated if an architectural decision or notable issue was found.

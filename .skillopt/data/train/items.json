@@ -1,0 +1,22 @@
+[
+  {
+    "id": "design-train-001",
+    "question": "Перед новим компонентом що треба перевірити спочатку?",
+    "reference_text": "Спочатку перевір DESIGN.md, primitives і існуючу систему токенів. Не invent new colors before structure.",
+    "expected_steps": [
+      "Use DESIGN.md as the source of truth",
+      "Check existing primitives before creating new ones",
+      "Do not invent new colors, spacing or shadows without approval"
+    ]
+  },
+  {
+    "id": "design-train-002",
+    "question": "Як поводитись із важливою operational UI зміною?",
+    "reference_text": "Зберегти existing project scale, grid, visual QA і approval flow перед новими елементами.",
+    "expected_steps": [
+      "Preserve existing project scale",
+      "Check grid and alignment before styling",
+      "Finish with visual QA"
+    ]
+  }
+]

@@ -1,7 +1,7 @@
 # Vaoferi Design Skill
 
 Design with structure, not decoration.
-Use grids before colors, alignment before effects, components before custom code, and trace existing CSS before writing new CSS.
+Use structure before decoration, spacing mode before grid, alignment before effects, components before custom code, and trace existing CSS before writing new CSS.
 
 Now the skill also starts design-system work with a portable `DESIGN.md` contract, so tools like Google Stitch, Open Design, Codex, Claude Code, Cursor, and similar coding agents can read the same source of truth instead of guessing the UI.
 
@@ -9,9 +9,11 @@ Now the skill also starts design-system work with a portable `DESIGN.md` contrac
 
 - Start from goal and hierarchy.
 - Create or reuse `DESIGN.md` before designing multi-screen UI.
+- Keep `SKILL.md` short; detailed rules live in `references/`.
 - Start and fill the primitive library before generating page-specific elements.
 - Build the grid first using Golden Canon-inspired structure.
 - Preserve the existing spacing scale, or choose `4x` / `Fibonacci` for new work and record it in `DESIGN.md`.
+- Validate local snippets before using them as a component source.
 - Reuse components before creating new ones.
 - Match the existing UI first on operational screens and admin forms.
 - Trace existing CSS before adding a new selector or override.
@@ -35,6 +37,7 @@ This skill turns Golden Canon-inspired structure and an explicit `4x` or `Fibona
 ```text
 goal
   -> DESIGN.md
+  -> spacing mode
   -> primitive library
   -> hierarchy
   -> Golden Canon-inspired grid
@@ -46,30 +49,33 @@ goal
   -> visual QA
 ```
 
-If sources or libraries contradict each other, stop and use the Conflict Form from `SKILL.md` before continuing.
-If a new component, token, or layout pattern is required, use the Approval Flow from `SKILL.md`.
+If sources or libraries contradict each other, stop and use the rules from `SKILL.md` and `references/action-contract.md`.
+If a new component, token, or layout pattern is required, use the approval rule from `SKILL.md`.
 
 ## Use
 
 1. Understand the goal and user action.
 2. Create or find `DESIGN.md`.
-3. Start the primitive library: Button, Card, Input, Text, Grid, Container, states.
-4. Build the grid before placing elements.
-5. Draw alignment lines.
-6. Resolve components before creating new ones.
-7. Trace existing CSS before adding new styles.
-8. Preserve the current spacing scale, or approve and record `4x` / `Fibonacci`.
-9. Ask approval before adding new styles or CSS escape hatches.
-10. Check all 20 principles.
-11. Check responsive behavior.
-12. Protect photos and logos.
-13. Use design tokens only.
-14. Verify in browser or preview before marking Done.
+3. Choose spacing mode: existing scale, `4x`, or `Fibonacci`.
+4. Build skeleton and responsive plan.
+5. Build the grid before placing elements.
+6. Draw alignment lines.
+7. Resolve components before creating new ones.
+8. Trace existing CSS before adding new styles.
+9. Validate local snippets source when project components are not enough.
+10. Ask approval before adding new styles or CSS escape hatches.
+11. Check all 20 principles.
+12. Check responsive behavior.
+13. Protect photos and logos.
+14. Use design tokens only.
+15. Verify in browser or preview before marking Done.
 
 ## What this skill does
 
 - prevents random one-off CSS and component sprawl in operational/admin UI;
 - creates a portable `DESIGN.md` contract that Stitch, Open Design, Codex, Claude Code, and Cursor can all read;
+- keeps `SKILL.md` as a short entrypoint and moves detailed execution rules into `references/`;
+- uses `scripts/validate_snippets_source.py` to verify the NLM snippets config before relying on it;
 - enforces token discipline so colors, spacing, radius, and typography stay consistent;
 - provides two explicit spacing modes without forcing a migration on existing products;
 - applies Golden Canon-inspired structure so layouts have predictable rhythm;
@@ -108,6 +114,14 @@ If a new component, token, or layout pattern is required, use the Approval Flow 
 ## Files
 
 - `SKILL.md` — main skill entrypoint
+- `references/action-contract.md` — mandatory design execution order
+- `references/component-sources.md` — component source order and NLM snippets config
+- `references/quality-gates.md` — 20 principles and visual QA gate
+- `references/skillopt-and-architecture.md` — diagnosis, plugin/agent decision, SkillOpt workflow
+- `scripts/validate_snippets_source.py` — validates the local NLM snippets config
+- `scripts/check_skill_structure.py` — validates skill structure, references, snippets and SkillOpt scaffold
+- `.skillopt/` — small reviewed SkillOpt scaffold; outputs are ignored
+- `.gitignore` — excludes SkillOpt outputs, caches, and local logs
 - `SPEC.md` — current spacing-mode and 20-principles specification
 - `AGENTS.md` — rules for working in this repository
 - `README.md` — project overview

@@ -1,0 +1,4 @@
+.skillopt/outputs/
+__pycache__/
+*.pyc
+lightrag.log

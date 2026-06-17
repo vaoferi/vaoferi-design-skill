@@ -1,5 +1,51 @@
 # Project Log
 
+## 2026-06-17 — Skill architecture split, snippets source, SkillOpt scaffold
+- Завдання: з'ясувати, чому skill давав випадковий UI, додати NLM snippets config як джерело елементів, вивчити зовнішні skill/design repos і підготувати SkillOpt-friendly покращення.
+- Знайдено:
+  1. `SKILL.md` мав 1307 рядків і змішував entrypoint, довідник, QA, CSS rules, SkillOpt і changelog. Це головна причина нестабільності: агент міг прочитати файл, але пропустити порядок дій.
+  2. Plugin зараз не вирішує проблему: не бракує runtime capability, бракувало короткого execution contract. Plugin доречний пізніше, якщо треба пакувати MCP/tools/commands.
+  3. NLM snippets config існує за `\\NAS\homes\vaoferi\Work\nlm\public_html\config\config\mcp-snippets.config.json` і містить enabled libraries `bootstrap`, `bulma`, `shoelace`.
+  4. `python -m skillopt` не є валідною CLI-командою для встановленого пакета `skillopt`; upstream SkillOpt запускається через `scripts/train.py` / `scripts/eval_only.py`.
+- Змінено:
+  - `SKILL.md` скорочено до короткого entrypoint з mandatory order: `goal -> source of truth -> spacing mode -> skeleton -> responsive plan -> grid -> alignment -> components -> tokens -> color/accent -> implementation -> visual QA`.
+  - Додано `references/action-contract.md`, `references/component-sources.md`, `references/quality-gates.md`, `references/skillopt-and-architecture.md`.
+  - Додано `scripts/validate_snippets_source.py` і `scripts/check_skill_structure.py`.
+  - Додано `.skillopt/README.md` і `.gitignore` для `.skillopt/outputs/`, cache і local logs.
+  - Оновлено `README.md`, `SPEC.md`, `rubric.md`.
+- Чому так:
+  - Anthropic/Matt Pocock-style skills показують кращий патерн: короткий `SKILL.md` + references/examples/scripts.
+  - `DESIGN.md`-орієнтовані джерела показують, що design intent має бути в plain project docs, а не вгадуватись агентом.
+  - SkillOpt корисний лише як measured loop із train/val/test і human review, не як автоматична заміна seed skill.
+- Перевірка: `python scripts/validate_snippets_source.py --json` показав `bootstrap`, `bulma`, `shoelace`; `python scripts/check_skill_structure.py` пройшов усі checks; `quick_validate.py` повернув `Skill is valid!`; `git diff --check` без whitespace-помилок; точні назви `20/20` принципів підтверджено в `SKILL.md`, `rubric.md`, `references/quality-gates.md`; UTF-8 читається, BOM немає, mojibake-патернів не знайдено; `SKILL.md` скорочено до 195 рядків.
+- Ризики:
+  - Reference split покладається на те, що агент реально читає linked files. Це пом'якшено явним `Required References` у `SKILL.md` і structural check.
+  - Реальний upstream SkillOpt training ще не запускався, бо для нього потрібен benchmark/backend config і credentials. У поточному середовищі `OPENAI_API_KEY`, `AZURE_OPENAI_API_KEY`, `ANTHROPIC_API_KEY` і `QWEN_CHAT_BASE_URL` не задані; scaffold готовий для контрольованого запуску.
+
+## 2026-06-17 — Clarify optional spacing mode selection
+- Завдання: уточнити, що `4x` і `Fibonacci` є опціональними режимами на вибір, а не паралельними обов'язковими шкалами.
+- Знайдено: правило вже було додане, але головний порядок дій не змушував агента фіксувати spacing mode до побудови grid і компонентів.
+- Змінено: у `SKILL.md` spacing mode піднято в основний порядок роботи; decision flow уточнює пріоритет existing project scale, попередніх налаштувань і вподобань користувача. `README.md` і `rubric.md` синхронізовано з цим формулюванням; у `rubric.md` назви всіх 20 принципів вирівняно до повного формулювання.
+- Перевірка: `quick_validate.py` повернув `Skill is valid!`; `git diff --check` без whitespace-помилок; у `SKILL.md` і `rubric.md` знайдено по `20/20` принципів і підтверджено точні назви всіх 20 принципів; UTF-8 читається, BOM немає, mojibake-патернів не знайдено.
+
+## 2026-06-15 — NLM admin responsive: partner/slider drag-list + document verification view
+- Завдання: завершити mobile fixes для partner/slider drag-lists та redesign document-verification view після Crit-коментарів.
+- Знайдено:
+  1. Partner drag-list на mobile мав "колхозні" іконки — actions розтягувались на повну ширину, текст не обрізався, drag handle залишався видимим.
+  2. Slider drag-list мав аналогічні проблеми: ID/дата займали забагато місця, actions переносились.
+  3. Document-verification view мав стандартну 2-колонкову структуру без акценту на avatar/FIO; documents table була на загальному рівні.
+- Змінено:
+  - `backend/web/css/style.css` — додано mobile CSS для `.partner-card` і `.slider-card`: actions в 1 ряд (flex-wrap:nowrap), avatar 40px, текст обрізається, drag handle hidden, dropdown-menu мінімальної ширини; додано стилі для `.nlm-admin-docverify-hero`, `.nlm-admin-docverify-avatar`, `.nlm-admin-docverify-docs-grid`, `.nlm-admin-docverify-doc-item` (hero card з avatar + FIO, documents в flex-column layout).
+  - `backend/views/document-verification/view.php` — перебудовано layout: hero card з avatar + FIO + status badge зверху, documents section наступними (flex-column з icon + name + date + view button), info card та verification form нижче; додано auto-resolve avatar URL з profile/user.
+- Чому так:
+  - Partner/slider drag-list мають бути компактними на mobile: avatar + name в 1 ряд, actions як іконки, drag handle ховається (користувач не може drag на touch).
+  - Document verification: пріоритет — побачити хто这个人 і які документи; інша інформація (ID, email, телефон) — вторинна.
+- Перевірка:
+  - `git diff --check` для змінених файлів без помилок.
+- Signal для SkillOpt:
+  - Для drag-list на mobile: actions = compact icons в 1 ряд, drag handle hidden, текст обрізається через text-overflow:ellipsis.
+  - Для verification/profile views: hero card з avatar + FIO + status badge має бути першим елементом.
+
 ## 2026-06-15 — NLM admin responsive review follow-up
 - Завдання: виправити `/content/article/index`, `/content/category/index`, dashboard map/header та `/content/public-team/create` після Crit-коментарів.
 - Знайдено:

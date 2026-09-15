@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the local NLM snippets config used by the design skill."""
+"""Validate the local component-library catalog used by the design skill."""
 
 from __future__ import annotations
 

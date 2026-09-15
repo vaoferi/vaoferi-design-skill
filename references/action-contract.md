@@ -78,6 +78,7 @@ Decision flow:
 - optical correction для icons/forms: `1-2px`, якщо пояснено;
 - font size, line-height, letter-spacing беруться з readability/type tokens;
 - responsive layout може використовувати `clamp()`, `minmax()`, `fr`, percentages, intrinsic sizing;
+- Vaoferi preferred touch target — `48x48 CSS px`, якщо existing product system не задає інший навмисний target; менші standards values є compliance floors/винятками, а не preferred product target;
 - touch target може мати невидиму hit area більшу за видимий icon.
 
 ## 5. Grid And Alignment
@@ -94,6 +95,24 @@ Decision flow:
 6. Alignment lines для key edges, baselines, controls, card boundaries.
 
 Golden Canon-inspired layout є macro guide, не pixel prison. Existing project layout, accessibility і content behavior мають пріоритет.
+
+### Balanced Peer Rows — STRONG_HEURISTIC_WITH_EXCEPTIONS
+
+Для груп рівноправних або функціонально пов'язаних видимих UI-елементів у wrapping grid/list уникай випадкового «висячого» одного елемента в останньому рядку, коли попередні рядки містять два або більше елементів (`2+1`, `3+1`, `4+1`, `2+2+1` тощо).
+
+Preferred resolution для рівноправних peers без окремої композиційної причини:
+
+- один елемент на рядок (`1+1+1...`), або
+- рядки з двома чи більше елементами (`2+2`, `2+3`, `2+2+3...`), або
+- інша content-driven перебудова grid/column span, яка не залишає випадкового orphan.
+
+Не вважай рішенням порожні комірки, spacer-и, псевдоелементи, дублікати, накладання, обрізання або приховування контенту.
+
+Це **сильна евристика, а не універсальна заборона**. Виняток дозволений, коли асиметрія навмисна і має змістовну/композиційну причину: featured/primary item, різні semantic roles або spans, masonry/content-driven layout, чи responsive/accessibility constraint, де «балансування» погіршує readability, touch, hierarchy або flow. Виняток має бути пояснений і перевірений в real render на relevant states/viewports.
+
+Причина такої класифікації: абсолютна заборона `2+1` конфліктує з валідними asymmetric/content-driven композиціями; strong heuristic зберігає preference проти випадкового orphan, не ламаючи навмисний design.
+
+Також перевір оточення групи: key edges зверху/знизу мають підтримувати спільні vertical alignment lines, а сусідні peer-групи зліва/справа — зрозумілі horizontal lines, якщо немає навмисної причини їх порушити.
 
 ## 6. Components And Tokens
 

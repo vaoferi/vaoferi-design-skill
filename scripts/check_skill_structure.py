@@ -76,6 +76,7 @@ def check_skill_entrypoint() -> None:
 
 def check_references() -> None:
     quality_text = ""
+    action_text = ""
     for path in REQUIRED_REFERENCES:
         if not path.exists():
             raise AssertionError(f"Missing reference: {path.relative_to(ROOT)}")
@@ -83,9 +84,15 @@ def check_references() -> None:
         assert_no_mojibake(path, text)
         if path.name == "quality-gates.md":
             quality_text = text
+        if path.name == "action-contract.md":
+            action_text = text
     missing = [principle for principle in PRINCIPLES if principle not in quality_text]
     if missing:
         raise AssertionError("Missing principles in quality-gates.md: " + ", ".join(missing))
+    if "48x48 CSS px" not in quality_text or "48x48 CSS px" not in action_text:
+        raise AssertionError("Preferred 48x48 CSS px touch target is missing from design references")
+    if "STRONG_HEURISTIC_WITH_EXCEPTIONS" not in action_text:
+        raise AssertionError("Balanced peer-row policy classification is missing from action-contract.md")
 
 
 def check_snippets_config() -> None:

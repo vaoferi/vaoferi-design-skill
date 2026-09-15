@@ -1,4 +1,4 @@
-import Ajv2020, { type ValidateFunction } from 'ajv/dist/2020';
+import Ajv, { type ValidateFunction } from 'ajv';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import contractSchema from '../../../schemas/contract.schema.json' with { type: 'json' };
@@ -20,7 +20,7 @@ export interface ContractState {
   status: Record<string, unknown>;
 }
 
-const ajv = new Ajv2020({ allErrors: true, strict: true });
+const ajv = new Ajv({ allErrors: true, strict: true });
 const validateContract = ajv.compile(contractSchema);
 const validateFrame = ajv.compile(frameSchema);
 const validateStatus = ajv.compile(statusSchema);

@@ -2,7 +2,7 @@
 name: vaoferi-design-skill
 description: Use when designing or changing UI, screens, dashboards, admin forms, landing sections, visual systems, DESIGN.md, components, tokens, responsive layouts, or when output must match an existing product instead of random styling.
 metadata:
-  version: 0.3.0
+  version: 0.3.1
 ---
 
 # Vaoferi Design Skill

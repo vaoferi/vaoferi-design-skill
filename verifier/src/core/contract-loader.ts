@@ -1,4 +1,4 @@
-import Ajv2020, { type ValidateFunction } from 'ajv/dist/2020.js';
+import Ajv2020, { type ValidateFunction } from 'ajv/dist/2020';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import contractSchema from '../../../schemas/contract.schema.json' with { type: 'json' };

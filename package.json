@@ -7,6 +7,9 @@
     "build": "tsc -p tsconfig.json",
     "test": "vitest run",
     "test:browser": "playwright test verifier/tests/browser",
+    "self-test:unit": "tsx verifier/src/self-test/run-unit.ts",
+    "self-test:browser": "tsx verifier/src/self-test/run-browser.ts",
+    "evidence:ci": "tsx verifier/src/report/run-ci-evidence.ts",
     "vd": "tsx verifier/src/cli.ts"
   },
   "devDependencies": {

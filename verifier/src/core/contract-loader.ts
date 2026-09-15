@@ -1,10 +1,11 @@
-import Ajv, { type ValidateFunction } from 'ajv';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import contractSchema from '../../../schemas/contract.schema.json' with { type: 'json' };
 import frameSchema from '../../../schemas/frame.schema.json' with { type: 'json' };
 import statusSchema from '../../../schemas/status.schema.json' with { type: 'json' };
+import { AjvSchemaValidator } from '../adapters/ajv-schema-validator.js';
 import { DesignContractError } from './errors.js';
+import type { SchemaValidator } from './schema-validator.js';
 
 interface ContractManifest {
   schemaVersion: 1;
@@ -20,10 +21,7 @@ export interface ContractState {
   status: Record<string, unknown>;
 }
 
-const ajv = new Ajv({ allErrors: true, strict: true });
-const validateContract = ajv.compile(contractSchema);
-const validateFrame = ajv.compile(frameSchema);
-const validateStatus = ajv.compile(statusSchema);
+const defaultValidator = new AjvSchemaValidator();
 
 async function readJson(path: string): Promise<unknown> {
   let source: string;
@@ -49,29 +47,39 @@ async function readJson(path: string): Promise<unknown> {
 }
 
 function assertSchema(
-  validate: ValidateFunction,
+  validator: SchemaValidator,
+  schema: Record<string, unknown>,
   value: unknown,
   filePath: string
 ): void {
-  if (validate(value)) return;
+  const result = validator.validate(schema, value);
+  if (result.valid) return;
 
-  const first = validate.errors?.[0];
+  const first = result.violations[0];
   const instancePath = first?.instancePath ?? '';
   throw new DesignContractError(
     'CONTRACT_SCHEMA_INVALID',
     `Design contract schema validation failed: ${filePath}${instancePath}`,
     {
       path: `${filePath}${instancePath}`,
-      details: validate.errors ?? []
+      details: result.violations
     }
   );
 }
 
-export async function loadContractState(projectRoot: string): Promise<ContractState> {
+export async function loadContractState(
+  projectRoot: string,
+  validator: SchemaValidator = defaultValidator
+): Promise<ContractState> {
   const stateDir = join(projectRoot, '.vaoferi-design');
   const manifestPath = join(stateDir, 'contract.json');
   const manifestValue = await readJson(manifestPath);
-  assertSchema(validateContract, manifestValue, manifestPath);
+  assertSchema(
+    validator,
+    contractSchema as Record<string, unknown>,
+    manifestValue,
+    manifestPath
+  );
 
   const manifest = manifestValue as ContractManifest;
   const framePath = join(stateDir, manifest.files.frame);
@@ -82,8 +90,18 @@ export async function loadContractState(projectRoot: string): Promise<ContractSt
     readJson(statusPath)
   ]);
 
-  assertSchema(validateFrame, frame, framePath);
-  assertSchema(validateStatus, status, statusPath);
+  assertSchema(
+    validator,
+    frameSchema as Record<string, unknown>,
+    frame,
+    framePath
+  );
+  assertSchema(
+    validator,
+    statusSchema as Record<string, unknown>,
+    status,
+    statusPath
+  );
 
   return {
     manifest,

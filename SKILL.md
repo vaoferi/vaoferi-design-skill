@@ -2,7 +2,7 @@
 name: vaoferi-design-skill
 description: Use when designing or changing UI, screens, dashboards, admin forms, landing sections, visual systems, DESIGN.md, components, tokens, responsive layouts, or when output must match an existing product instead of random styling.
 metadata:
-  version: 0.3.1
+  version: 0.3.2
 ---
 
 # Vaoferi Design Skill
@@ -20,7 +20,7 @@ structure first -> existing system first -> tokens/components first -> visual QA
 Для будь-якої UI/design задачі прочитай перед роботою:
 
 - `references/action-contract.md` — порядок дій, spacing mode, grid, alignment, responsive, CSS guardrails;
-- `references/component-sources.md` — де шукати елементи, включно з NLM snippets config;
+- `references/component-sources.md` — де шукати елементи та local component catalog;
 - `references/quality-gates.md` — 20 principles gate і visual QA form.
 
 Для зміни самого skill також прочитай:

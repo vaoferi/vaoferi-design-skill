@@ -73,20 +73,22 @@ describe('managed lifecycle ownership', () => {
     ).toThrow('MANAGED_BLOCK_DUPLICATE:agent-rules');
   });
 
-  it('models managed-file and managed-block ownership explicitly', () => {
+  it('models canonical managed-file and managed-block ownership explicitly', () => {
     const manifest: DesignManifest = {
+      skillVersion: '1.1.0',
       schemaVersion: 1,
-      contractVersion: '1.1',
-      managed: [
-        { path: '.design/contract.json', ownership: 'managed-file' },
-        {
-          path: 'AGENTS.md',
-          ownership: 'managed-block',
-          blockId: 'vaoferi-design'
-        }
-      ]
+      installMode: 'augment',
+      detectedStack: ['yii2', 'bootstrap'],
+      enabledAdapters: ['playwright'],
+      managedFiles: ['.design/contract.json'],
+      managedBlocks: [{ path: 'AGENTS.md', blockId: 'vaoferi-design' }],
+      baselineVersion: 0,
+      contractVersion: '1.1'
     };
 
-    expect(manifest.managed).toHaveLength(2);
+    expect(manifest.managedFiles).toEqual(['.design/contract.json']);
+    expect(manifest.managedBlocks).toEqual([
+      { path: 'AGENTS.md', blockId: 'vaoferi-design' }
+    ]);
   });
 });

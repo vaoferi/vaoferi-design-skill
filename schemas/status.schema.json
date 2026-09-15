@@ -1,5 +1,5 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://vaoferi.dev/schemas/design-contract/status.schema.json",
   "type": "object",
   "additionalProperties": false,
@@ -11,18 +11,18 @@
       "additionalProperties": false,
       "required": ["frame", "rhythm", "place", "align", "flow", "reference", "visual", "responsive"],
       "properties": {
-        "frame": { "$ref": "#/$defs/stageStatus" },
-        "rhythm": { "$ref": "#/$defs/stageStatus" },
-        "place": { "$ref": "#/$defs/stageStatus" },
-        "align": { "$ref": "#/$defs/stageStatus" },
-        "flow": { "$ref": "#/$defs/stageStatus" },
-        "reference": { "$ref": "#/$defs/stageStatus" },
-        "visual": { "$ref": "#/$defs/stageStatus" },
-        "responsive": { "$ref": "#/$defs/stageStatus" }
+        "frame": { "$ref": "#/definitions/stageStatus" },
+        "rhythm": { "$ref": "#/definitions/stageStatus" },
+        "place": { "$ref": "#/definitions/stageStatus" },
+        "align": { "$ref": "#/definitions/stageStatus" },
+        "flow": { "$ref": "#/definitions/stageStatus" },
+        "reference": { "$ref": "#/definitions/stageStatus" },
+        "visual": { "$ref": "#/definitions/stageStatus" },
+        "responsive": { "$ref": "#/definitions/stageStatus" }
       }
     }
   },
-  "$defs": {
+  "definitions": {
     "stageStatus": {
       "type": "string",
       "enum": ["missing", "proposed", "approved", "stale"]

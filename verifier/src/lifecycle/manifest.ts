@@ -1,20 +1,20 @@
-export type ManagedOwnership = 'managed-file' | 'managed-block';
+export type InstallMode = 'init' | 'migrate' | 'augment';
 
-export type ManagedEntry =
-  | {
-      path: string;
-      ownership: 'managed-file';
-    }
-  | {
-      path: string;
-      ownership: 'managed-block';
-      blockId: string;
-    };
+export interface ManagedBlockRef {
+  path: string;
+  blockId: string;
+}
 
 export interface DesignManifest {
+  skillVersion: string;
   schemaVersion: 1;
+  installMode: InstallMode;
+  detectedStack: string[];
+  enabledAdapters: string[];
+  managedFiles: string[];
+  managedBlocks: ManagedBlockRef[];
+  baselineVersion: number;
   contractVersion: string;
-  managed: ManagedEntry[];
 }
 
 export interface ManagedBlockUpdate {

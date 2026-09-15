@@ -1,0 +1,23 @@
+{
+  "name": "vaoferi-design-skill-verifier",
+  "version": "1.0.0-alpha.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "test:browser": "playwright test verifier/tests/browser",
+    "vd": "tsx verifier/src/cli.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "latest",
+    "@types/node": "latest",
+    "ajv": "latest",
+    "fast-check": "latest",
+    "stylelint": "latest",
+    "stylelint-test-rule-node": "latest",
+    "tsx": "latest",
+    "typescript": "latest",
+    "vitest": "latest"
+  }
+}

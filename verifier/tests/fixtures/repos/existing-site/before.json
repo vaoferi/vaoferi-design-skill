@@ -1,0 +1,11 @@
+{
+  "containers": [1200, 1201, 1200],
+  "gutters": [24, 24, 25],
+  "alignmentAnchors": ["header-left", "header-left", "body-left", "body-left"],
+  "spacing": [8, 8, 16, 16, 24, 24],
+  "colors": ["#111827", "#111827", "#ffffff", "#ffffff"],
+  "typography": ["Inter 16/24", "Inter 16/24", "Inter 32/40", "Inter 32/40"],
+  "componentPatterns": ["button-primary", "button-primary", "card", "card"],
+  "breakpoints": [768, 768, 1200, 1200],
+  "exceptionCandidates": ["header-wide", "header-wide"]
+}

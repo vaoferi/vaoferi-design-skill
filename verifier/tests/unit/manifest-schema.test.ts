@@ -2,13 +2,13 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { AjvSchemaValidator } from '../../src/adapters/ajv-schema-validator.js';
 
-function loadManifestSchema(): object {
+function loadManifestSchema(): Record<string, unknown> {
   return JSON.parse(
     readFileSync(
       new URL('../../../schemas/manifest.schema.json', import.meta.url),
       'utf8'
     )
-  ) as object;
+  ) as Record<string, unknown>;
 }
 
 function validManifest() {

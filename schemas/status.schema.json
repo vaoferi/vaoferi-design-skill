@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vaoferi.dev/schemas/design-contract/status.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "stages"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "stages": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["frame", "rhythm", "place", "align", "flow", "reference", "visual", "responsive"],
+      "properties": {
+        "frame": { "$ref": "#/$defs/stageStatus" },
+        "rhythm": { "$ref": "#/$defs/stageStatus" },
+        "place": { "$ref": "#/$defs/stageStatus" },
+        "align": { "$ref": "#/$defs/stageStatus" },
+        "flow": { "$ref": "#/$defs/stageStatus" },
+        "reference": { "$ref": "#/$defs/stageStatus" },
+        "visual": { "$ref": "#/$defs/stageStatus" },
+        "responsive": { "$ref": "#/$defs/stageStatus" }
+      }
+    }
+  },
+  "$defs": {
+    "stageStatus": {
+      "type": "string",
+      "enum": ["missing", "proposed", "approved", "stale"]
+    }
+  }
+}

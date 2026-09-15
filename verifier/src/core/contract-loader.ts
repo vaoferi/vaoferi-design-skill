@@ -1,9 +1,9 @@
 import Ajv2020, { type ValidateFunction } from 'ajv/dist/2020.js';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import contractSchema from '../../../schemas/contract.schema.json';
-import frameSchema from '../../../schemas/frame.schema.json';
-import statusSchema from '../../../schemas/status.schema.json';
+import contractSchema from '../../../schemas/contract.schema.json' with { type: 'json' };
+import frameSchema from '../../../schemas/frame.schema.json' with { type: 'json' };
+import statusSchema from '../../../schemas/status.schema.json' with { type: 'json' };
 import { DesignContractError } from './errors.js';
 
 interface ContractManifest {

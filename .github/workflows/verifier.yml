@@ -18,6 +18,8 @@ jobs:
       - run: npm install --ignore-scripts
       - run: npm run build
       - run: npm test
+      - name: Prove unit gate detects intentional violation
+        run: npm run self-test:unit
 
   browser:
     runs-on: ubuntu-latest
@@ -30,3 +32,30 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: npm run build
       - run: npm run test:browser
+      - name: Prove browser gate detects intentional overflow
+        run: npm run self-test:browser
+
+  evidence:
+    if: always()
+    needs:
+      - unit
+      - browser
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --ignore-scripts
+      - name: Write machine-readable verification evidence
+        run: npm run evidence:ci
+        env:
+          UNIT_RESULT: ${{ needs.unit.result }}
+          BROWSER_RESULT: ${{ needs.browser.result }}
+          EVIDENCE_PATH: artifacts/evidence.json
+      - name: Upload verification evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: verifier-evidence
+          path: artifacts/evidence.json
+          if-no-files-found: error

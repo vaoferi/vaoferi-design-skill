@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://vaoferi.design/schemas/scope-contract.schema.json",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["scopeId", "contractVersion", "profile", "density"],
+  "properties": {
+    "scopeId": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[a-z0-9][a-z0-9-]*$"
+    },
+    "contractVersion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "profile": {
+      "type": "string",
+      "enum": [
+        "public-content",
+        "marketing-editorial",
+        "application-standard",
+        "admin-standard",
+        "admin-dense",
+        "custom-approved"
+      ]
+    },
+    "density": {
+      "type": "string",
+      "enum": ["comfortable", "compact", "dense", "custom-approved"]
+    },
+    "tokens": {
+      "type": "object"
+    }
+  }
+}

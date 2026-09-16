@@ -1,0 +1,10 @@
+{
+  "scopeId": "frontend",
+  "contractVersion": "1.2",
+  "profile": "public-content",
+  "density": "comfortable",
+  "tokens": {
+    "space": "editorial",
+    "radius": "soft"
+  }
+}

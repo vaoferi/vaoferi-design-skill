@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://vaoferi.dev/schemas/design-contract/frame.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "sectionModes", "sections"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "sectionModes": {
+      "type": "object",
+      "maxProperties": 5,
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "gutter": { "type": "number", "minimum": 0 },
+          "gutterToken": { "type": "string", "minLength": 1 },
+          "maxWidthToken": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "sections": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["mode"],
+        "properties": {
+          "mode": { "type": "string", "minLength": 1 },
+          "height": { "type": "string", "minLength": 1 },
+          "contentOverflow": {
+            "type": "string",
+            "enum": ["reject", "truncate", "clamp-lines", "internal-scroll", "paginate", "compact"]
+          },
+          "clampLines": { "type": "integer", "minimum": 1 }
+        }
+      }
+    }
+  }
+}

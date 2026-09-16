@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://vaoferi.dev/schemas/design-contract/contract.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "files"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "files": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["frame", "status"],
+      "properties": {
+        "frame": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "minLength": 1 },
+        "rhythm": { "type": "string", "minLength": 1 },
+        "placement": { "type": "string", "minLength": 1 },
+        "alignment": { "type": "string", "minLength": 1 },
+        "flow": { "type": "string", "minLength": 1 },
+        "responsive": { "type": "string", "minLength": 1 },
+        "visual": { "type": "string", "minLength": 1 },
+        "references": { "type": "string", "minLength": 1 },
+        "exceptions": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

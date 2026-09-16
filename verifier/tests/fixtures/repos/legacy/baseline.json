@@ -1,0 +1,8 @@
+[
+  {
+    "rule": "declaration-no-important",
+    "file": "src/legacy.css",
+    "line": 1,
+    "column": 22
+  }
+]

@@ -1,0 +1,81 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://vaoferi.dev/schemas/manifest.schema.json",
+  "title": "Vaoferi Design Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "skillVersion",
+    "schemaVersion",
+    "installMode",
+    "detectedStack",
+    "enabledAdapters",
+    "managedFiles",
+    "managedBlocks",
+    "baselineVersion",
+    "contractVersion"
+  ],
+  "properties": {
+    "skillVersion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "installMode": {
+      "enum": ["init", "migrate", "augment"]
+    },
+    "detectedStack": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "enabledAdapters": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "managedFiles": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "managedBlocks": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "blockId"],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "blockId": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "baselineVersion": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "contractVersion": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

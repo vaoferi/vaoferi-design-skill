@@ -1,0 +1,13 @@
+{
+  "isWebUi": true,
+  "browserHarnesses": [
+    {
+      "name": "playwright",
+      "installed": false,
+      "browserRuntimeAvailable": false,
+      "supportsRenderedGeometry": true
+    }
+  ],
+  "packageManager": null,
+  "canInstallDependencies": false
+}

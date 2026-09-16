@@ -10,8 +10,8 @@ function loadSkill(): string {
 }
 
 describe('SKILL.md context router', () => {
-  it('pins the v1.2 contract version', () => {
-    expect(loadSkill()).toContain('version: 1.2.0');
+  it('pins the public release at 0.4.0', () => {
+    expect(loadSkill()).toContain('version: 0.4.0');
   });
 
   it('resolves scope before any staged UI decision', () => {
@@ -73,7 +73,9 @@ describe('SKILL.md context router', () => {
   it('documents fail-closed multi-scope routing in the focused scope reference', () => {
     const scopes = load('references/scopes.md');
 
-    expect(scopes).toContain('explicit scope > path mapping > route mapping > shared fallback');
+    expect(scopes).toContain('explicit scope > path mapping > route mapping');
+    expect(scopes).toContain('explicit shared scope mapping');
+    expect(scopes).not.toContain('shared fallback');
     expect(scopes).toContain('ambiguous');
     expect(scopes).toContain('BLOCKED');
     expect(scopes).toContain('multi-scope');

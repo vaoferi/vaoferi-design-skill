@@ -95,4 +95,39 @@ describe('design preflight', () => {
 
     expect(snapshot.relevantExceptions).toEqual(['A-1', 'Z-2']);
   });
+
+  it('keeps frontend and admin scope summaries isolated in one multi-scope preflight', () => {
+    const snapshot = buildPreflight({
+      contractVersion: '1.2',
+      stage: 'place',
+      browserGate: 'READY',
+      relevantExceptions: [],
+      trigger: 'task-start',
+      scopeIds: ['frontend', 'admin', 'frontend'],
+      profiles: {
+        frontend: 'public-content',
+        admin: 'admin-dense'
+      },
+      scopeContracts: {
+        frontend: 'frontend@1.2',
+        admin: 'admin@1.2'
+      },
+      complexityGate: 'REQUIRED'
+    });
+
+    expect(snapshot.scopeIds).toEqual(['admin', 'frontend']);
+    expect(snapshot.profiles).toEqual({
+      admin: 'admin-dense',
+      frontend: 'public-content'
+    });
+    expect(snapshot.scopeContracts).toEqual({
+      admin: 'admin@1.2',
+      frontend: 'frontend@1.2'
+    });
+    expect(snapshot.complexityGate).toBe('REQUIRED');
+
+    expect(formatPreflight(snapshot)).toContain(
+      'scopeIds=[admin,frontend]\nprofiles=[admin:admin-dense,frontend:public-content]\nscopeContracts=[admin:admin@1.2,frontend:frontend@1.2]\ncomplexityGate=REQUIRED'
+    );
+  });
 });

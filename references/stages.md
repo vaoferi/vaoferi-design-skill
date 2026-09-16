@@ -1,6 +1,14 @@
-# Design Stages v1.1
+# Design Stages v1.2
 
 Цей файл описує порядок design stages і ownership. Верхній `SKILL.md` містить лише короткий router; цей reference читай, коли задача входить у staged UI workflow.
+
+## Before Stages: Resolve Scope
+
+Scope resolution happens before the staged workflow. Resolve the touched surface using `references/scopes.md`, load that scope's local contract/profile, and stop with BLOCKED if ownership is ambiguous or unmapped.
+
+For a multi-scope task, each scope runs the staged workflow against its own contract. Do not average or merge frontend/admin rules into one synthetic design system.
+
+If the resolved profile is `admin-standard` or `admin-dense`, run the admin complexity gate. When it requires Interaction Topology, topology must be present and valid before structural implementation proceeds. Read `references/admin-workspace.md` only for those admin profiles.
 
 ## Canonical Order
 
@@ -34,10 +42,10 @@ Existing product is the first authority unless the user explicitly requested red
 1. inspect rendered UI and project design sources;
 2. build/use the deterministic design fingerprint;
 3. preserve dominant patterns and deliberate repeated exceptions;
-4. change only the scope required by the task;
+4. change only the resolved scope required by the task;
 5. treat new visual language, spacing systems, components or tokens as a proposal, not an automatic cleanup.
 
-A local fix must not silently become a redesign.
+A local fix must not silently become a redesign. Adoption lifecycle operations also do not authorize production UI redesign; see `references/lifecycle.md`.
 
 ## Structure Before Decoration
 

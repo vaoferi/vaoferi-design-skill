@@ -1,0 +1,10 @@
+{
+  "forms": 10,
+  "editableControls": 100,
+  "actions": 34,
+  "destructiveActions": 3,
+  "independentRegions": 9,
+  "repeatedCollections": 5,
+  "saveScopes": 5,
+  "longVerticalControlChain": 28
+}

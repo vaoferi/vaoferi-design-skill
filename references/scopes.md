@@ -7,7 +7,7 @@ Scope routing runs before staged UI work. The resolver decides which local desig
 Canonical priority:
 
 ```text
-explicit scope > path mapping > route mapping > shared fallback
+explicit scope > path mapping > route mapping
 ```
 
 Resolution is fail-closed:
@@ -17,7 +17,7 @@ Resolution is fail-closed:
 - ambiguous or overlapping matches -> BLOCKED;
 - visual appearance, file naming style, or agent intuition must never infer a scope.
 
-A shared fallback is legal only when the project contract declares it explicitly. A file that happens to be reused by multiple surfaces is not automatically shared.
+Shared UI is legal only through an **explicit shared scope mapping**: explicit scope selection, a dedicated shared path mapping, or a dedicated shared route mapping. A file that happens to be reused by multiple surfaces is not automatically shared. `sharedWith` describes compatibility/relationships after ownership is resolved; it is not a routing fallback.
 
 ## Scope-Local Contracts
 

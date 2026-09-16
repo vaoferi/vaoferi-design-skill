@@ -10,8 +10,8 @@ function loadSkill(): string {
 }
 
 describe('SKILL.md context router', () => {
-  it('pins the public release at 0.4.0', () => {
-    expect(loadSkill()).toContain('version: 0.4.0');
+  it('pins the public release at 0.4.1', () => {
+    expect(loadSkill()).toContain('version: 0.4.1');
   });
 
   it('resolves scope before any staged UI decision', () => {

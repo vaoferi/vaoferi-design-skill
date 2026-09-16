@@ -2,7 +2,7 @@
 name: vaoferi-design-skill
 description: Use when designing or changing UI, screens, dashboards, admin forms, landing sections, visual systems, DESIGN.md, components, tokens, responsive layouts, or preserving an existing product.
 metadata:
-  version: 0.4.0
+  version: 0.4.1
 ---
 
 # Vaoferi Design Skill
@@ -58,7 +58,7 @@ Read only what the resolved scope/current stage requires:
 
 - `references/scopes.md` — scope resolution, contract isolation, multi-scope aggregation.
 - `references/lifecycle.md` — lifecycle, adoption guard, manifest, managed ownership, preflight.
-- `references/stages.md` — stage ownership and existing-site preservation.
+- `references/stages.md` — stage ownership, existing-site preservation and style-owner-first changes.
 - `references/verification.md` — deterministic gates, browser sweep, policy, evidence.
 - `references/admin-workspace.md` — only for resolved `admin-standard` or `admin-dense` profiles; complexity, Interaction Topology, actions, rendered checks.
 - `references/component-sources.md` — component/snippet sources.

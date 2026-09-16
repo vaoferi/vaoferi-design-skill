@@ -56,7 +56,7 @@
 - Produces `DesignScope`, `ScopeResolutionInput`, `ScopeResolutionResult` and `resolveDesignScopes(input)`.
 - Result status is `RESOLVED | AMBIGUOUS | UNMAPPED`.
 
-- [ ] **Step 1: Write failing tests** covering explicit scope priority, exact path match, route match, multi-scope task, ambiguous overlap, unmapped UI, and explicit `shared-ui` handling.
+- [x] **Step 1: Write failing tests** covering explicit scope priority, exact path match, route match, multi-scope task, ambiguous overlap, unmapped UI, and explicit `shared-ui` handling.
 - [ ] **Step 2: Run unit suite** and confirm RED because resolver/schema do not exist.
 - [ ] **Step 3: Implement minimal schemas and resolver** with deterministic priority: explicit selection > exact path/module mapping > route mapping > declared shared scope; never guess by styling.
 - [ ] **Step 4: Run tests** and verify GREEN.

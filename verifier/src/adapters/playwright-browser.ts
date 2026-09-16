@@ -52,7 +52,10 @@ export class PlaywrightBrowserAdapter implements BrowserAdapter {
     const boxes: Record<string, GeometryBox> = {};
 
     for (const selector of selectors) {
-      const box = await this.page.locator(selector).first().boundingBox();
+      const locator = this.page.locator(selector).first();
+      if (!(await locator.isVisible())) continue;
+
+      const box = await locator.boundingBox();
       if (box !== null) {
         boxes[selector] = {
           x: box.x,

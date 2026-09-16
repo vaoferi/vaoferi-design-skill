@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dense admin good fixture</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body { font-family: sans-serif; }
+    main { width: 100%; max-width: 960px; margin: 0 auto; padding: 12px; }
+    .grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    .panel { border: 1px solid #ccc; padding: 12px; min-width: 0; }
+    [data-unstructured-form] { display: grid; gap: 8px; }
+    [data-admin-field] { min-width: 0; }
+    input, button { max-width: 100%; min-height: 36px; }
+    [data-action-region] { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="grid">
+      <section class="panel">
+        <h1>Account</h1>
+        <form data-unstructured-form>
+          <div data-admin-field><label>Name <input name="name"></label></div>
+          <div data-admin-field><label>Email <input name="email"></label></div>
+          <div data-admin-field><label>Phone <input name="phone"></label></div>
+          <div data-admin-field><label>Role <input name="role"></label></div>
+          <div data-admin-field><label>Status <input name="status"></label></div>
+          <div data-admin-field><label>Team <input name="team"></label></div>
+        </form>
+        <div data-action-region="section-actions" data-action-group="section-main">
+          <button data-action-kind="routine">Reset section</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Users</h2>
+        <div data-action-region="row-actions" data-action-group="row-main">
+          <button data-action-kind="routine">Edit row</button>
+        </div>
+        <div data-action-region="bulk-actions" data-action-group="bulk-main">
+          <button data-action-kind="routine">Export selected</button>
+        </div>
+      </section>
+
+      <section class="panel" data-action-region="danger-zone" data-action-group="danger-main">
+        <h2>Danger zone</h2>
+        <button data-action-kind="dangerous-destructive">Delete account</button>
+      </section>
+    </div>
+
+    <div data-action-region="page-actions" data-action-group="page-main">
+      <button data-critical-action="save" data-action-kind="routine">Save changes</button>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,6 +1,10 @@
 import { expect, test } from '@playwright/test';
 import { PlaywrightBrowserAdapter } from '../../src/adapters/playwright-browser.js';
-import { runRenderedAdminVerification } from '../../src/admin/rendered-admin-rules.js';
+import {
+  runRenderedAdminVerification,
+  type RenderedAdminFinding,
+  type RenderedAdminViolation
+} from '../../src/admin/rendered-admin-rules.js';
 
 const simpleUrl = new URL('../fixtures/admin/simple.html', import.meta.url).href;
 const denseGoodUrl = new URL('../fixtures/admin/dense-good.html', import.meta.url).href;
@@ -66,16 +70,11 @@ test('bad dense admin fixture reports the machine-detectable workspace failures'
   expect(result.findings).toHaveLength(11);
 
   const rules = new Set(
-    result.findings.flatMap((finding) =>
-      finding.violations.map((violation) => violation.rule)
+    result.findings.flatMap((finding: RenderedAdminFinding) =>
+      finding.violations.map((violation: RenderedAdminViolation) => violation.rule)
     )
   );
 
-  expect(rules).toEqual(
-    expect.objectContaining
-      ? rules
-      : rules
-  );
   expect(rules).toEqual(
     new Set([
       'horizontal-overflow',

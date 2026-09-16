@@ -45,6 +45,14 @@ Existing product is the first authority unless the user explicitly requested red
 4. change only the resolved scope required by the task;
 5. treat new visual language, spacing systems, components or tokens as a proposal, not an automatic cleanup.
 
+### Style Ownership Before Change
+
+Before a CSS/layout/component change, identify the existing **style owner**: theme/token, component stylesheet, utility system, view/widget or other authored source that currently owns the behavior. Trace the winning rule and its consumers before editing.
+
+- Prefer changing the actual owner or a deliberate project modifier over creating a new `override layer` whose only job is to beat unknown existing CSS.
+- Do not stack a new stylesheet, selector specificity or `!important` over an unresolved source merely because it is faster locally; first establish ownership and scope.
+- Reuse existing project/native/component capabilities before adding tooling. Do not add a **whole dependency/library** for one **trivial visual** need when the current stack can express it cleanly. If a new dependency is materially better, state the reuse/maintenance reason and verify its impact.
+
 A local fix must not silently become a redesign. Adoption lifecycle operations also do not authorize production UI redesign; see `references/lifecycle.md`.
 
 ## Structure Before Decoration

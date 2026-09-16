@@ -7,7 +7,7 @@
 1. Existing product UI and `DESIGN.md`.
 2. Existing tokens and components in the current project.
 3. Existing dependencies already installed in the project.
-4. Local snippets source from NLM config.
+4. Local component library catalog bundled with this skill.
 5. User-provided references, screenshots, brand docs.
 6. External pattern references listed below.
 7. New component/token proposal with approval.
@@ -42,8 +42,6 @@ Rules:
 - map snippets to project tokens, spacing mode, radius, color roles and accessibility rules;
 - do not add a new snippets library without approval;
 - if the config is missing or invalid, report the blocker and continue with project-local sources.
-
-Known cleanup: the old NLM path `\\NAS\homes\vaoferi\Work\nlm\public_html\config\config\mcp-snippets.config.json` was only a catalog source. It was not a working MCP endpoint. The active `snippets-nlm` route on `127.0.0.1:9090` returned `404`, because the proxy config pointed to the missing `C:\work\nlm\public_html\.openclaw\mcp\snippets\server.js`.
 
 ## External Patterns Borrowed
 

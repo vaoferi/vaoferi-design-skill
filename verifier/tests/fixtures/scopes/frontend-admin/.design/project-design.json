@@ -1,0 +1,19 @@
+{
+  "scopes": [
+    {
+      "id": "frontend",
+      "profile": "public-content",
+      "paths": ["frontend/**"],
+      "routes": ["/**"],
+      "excludeRoutes": ["/admin/**"],
+      "contractPath": ".design/scopes/frontend/contract.json"
+    },
+    {
+      "id": "admin",
+      "profile": "admin-dense",
+      "paths": ["backend/**"],
+      "routes": ["/admin/**"],
+      "contractPath": ".design/scopes/admin/contract.json"
+    }
+  ]
+}

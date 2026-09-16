@@ -26,7 +26,7 @@ export function createCiEvidenceReport(
   input: CiEvidenceInput
 ): EvidenceReport {
   return createEvidenceReport({
-    contractVersion: '1.1',
+    contractVersion: '1.2',
     stage: 'ci',
     scope: 'full',
     generatedAt: input.generatedAt,

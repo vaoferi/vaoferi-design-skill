@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simple admin fixture</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body { font-family: sans-serif; }
+    main { width: min(100%, 720px); margin: 0 auto; padding: 16px; }
+    form { display: grid; gap: 12px; }
+    input, button { width: 100%; min-height: 40px; }
+    [data-action-region="page-actions"] { margin-top: 16px; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Profile</h1>
+    <form data-unstructured-form>
+      <div data-admin-field><label>Name <input name="name"></label></div>
+      <div data-admin-field><label>Email <input name="email"></label></div>
+    </form>
+    <div data-action-region="page-actions" data-action-group="page-main">
+      <button data-critical-action="save" data-action-kind="routine">Save</button>
+    </div>
+  </main>
+</body>
+</html>

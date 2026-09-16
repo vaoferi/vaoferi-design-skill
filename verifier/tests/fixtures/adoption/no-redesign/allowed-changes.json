@@ -1,0 +1,17 @@
+[
+  {
+    "path": ".design/manifest.json",
+    "ownership": "managed-state",
+    "operation": "write"
+  },
+  {
+    "path": "AGENTS.md",
+    "ownership": "managed-doc",
+    "operation": "write"
+  },
+  {
+    "path": "package.json",
+    "ownership": "tooling",
+    "operation": "write"
+  }
+]

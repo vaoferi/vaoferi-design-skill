@@ -1,0 +1,111 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://vaoferi.design/schemas/interaction-topology.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["scopeId", "profile", "zones", "saveScopes", "actions"],
+  "properties": {
+    "scopeId": { "type": "string", "minLength": 1 },
+    "profile": {
+      "type": "string",
+      "enum": ["admin-standard", "admin-dense"]
+    },
+    "zones": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "role", "fieldGroups"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "role": {
+            "type": "string",
+            "enum": [
+              "summary",
+              "status",
+              "identity",
+              "primary-form",
+              "secondary-form",
+              "related-data",
+              "table",
+              "history",
+              "metadata",
+              "actions",
+              "danger-zone",
+              "custom"
+            ]
+          },
+          "fieldGroups": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["id", "fields"],
+              "properties": {
+                "id": { "type": "string", "minLength": 1 },
+                "fields": {
+                  "type": "array",
+                  "items": { "type": "string", "minLength": 1 },
+                  "uniqueItems": true
+                },
+                "saveScopeId": { "type": "string", "minLength": 1 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "saveScopes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "zoneIds"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "zoneIds": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 },
+            "uniqueItems": true
+          }
+        }
+      }
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "role", "region", "groupId"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "role": {
+            "type": "string",
+            "enum": [
+              "primary",
+              "secondary",
+              "contextual",
+              "row",
+              "bulk",
+              "navigation",
+              "destructive",
+              "dangerous-destructive"
+            ]
+          },
+          "region": {
+            "type": "string",
+            "enum": [
+              "page-actions",
+              "section-actions",
+              "row-actions",
+              "bulk-actions",
+              "danger-zone"
+            ]
+          },
+          "zoneId": { "type": "string", "minLength": 1 },
+          "groupId": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

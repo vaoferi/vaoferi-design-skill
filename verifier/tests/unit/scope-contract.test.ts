@@ -77,4 +77,18 @@ describe('loadScopeContract', () => {
       'SCOPE_CONTRACT_ID_MISMATCH'
     );
   });
+
+  it('rejects a malformed scope contract instead of accepting arbitrary JSON', async () => {
+    const root = await makeProject();
+    await writeScopeContract(root, 'admin', {
+      scopeId: 'admin',
+      contractVersion: '1.2',
+      profile: 'banana-layout',
+      density: 'dense'
+    });
+
+    await expect(loadScopeContract(root, 'admin')).rejects.toThrow(
+      'SCOPE_CONTRACT_SCHEMA_INVALID'
+    );
+  });
 });

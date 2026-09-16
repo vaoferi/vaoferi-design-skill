@@ -2,7 +2,7 @@
 name: vaoferi-design-skill
 description: Use when designing or changing UI, screens, dashboards, admin forms, landing sections, visual systems, DESIGN.md, components, tokens, responsive layouts, or preserving an existing product.
 metadata:
-  version: 1.1.0
+  version: 1.2.0
 ---
 
 # Vaoferi Design Skill
@@ -15,6 +15,8 @@ Run at task start, after context compaction/restart, and before every stage tran
 
 ```text
 contractVersion=<version>
+scope=<scopeId|BLOCKED>
+profile=<profile>
 stage=<stage>
 importantPolicy=ENFORCED
 changedFilesPolicy=STRICT
@@ -23,6 +25,14 @@ relevantExceptions=[...]
 ```
 
 If a required source is unavailable, stop the dependent stage and name the missing source.
+
+## Scope Resolution
+
+Resolve design scope before any staged UI decision. Read `references/scopes.md` when the project has scope mappings, multiple UI surfaces, or shared files.
+
+Resolution priority is explicit scope, then path mapping, route mapping, then an explicitly declared shared fallback. Unmapped or ambiguous ownership = BLOCKED. Do not infer scope from appearance.
+
+For multi-scope tasks, keep contract/profile state and verification independent per scope. Aggregate PASS requires every required scope to PASS.
 
 ## Stage Order
 
@@ -35,6 +45,7 @@ Previous required stage must be complete. `/frame` alone owns frame geometry.
 ## Hard Rules
 
 - Existing product first; preserve established patterns and deliberate exceptions unless redesign is explicitly requested.
+- Adoption/configuration is not permission to redesign production UI.
 - Changed/touched authored UI code is strict. New `!important` is a hard failure unless covered by an exact approved exception.
 - Missing required browser verification = BLOCKED.
 - Browser-required stages proceed only when `browserGate=READY`.
@@ -43,17 +54,19 @@ Previous required stage must be complete. `/frame` alone owns frame geometry.
 
 ## References
 
-Read only what the current work requires:
+Read only what the resolved scope/current stage requires:
 
-- `references/lifecycle.md` — lifecycle, manifest, managed ownership, preflight.
+- `references/scopes.md` — scope resolution, contract isolation, multi-scope aggregation.
+- `references/lifecycle.md` — lifecycle, adoption guard, manifest, managed ownership, preflight.
 - `references/stages.md` — stage ownership and existing-site preservation.
 - `references/verification.md` — deterministic gates, browser sweep, policy, evidence.
+- `references/admin-workspace.md` — only for resolved `admin-standard` or `admin-dense` profiles; complexity, Interaction Topology, actions, rendered checks.
 - `references/component-sources.md` — component/snippet sources.
 - `references/quality-gates.md` — visual quality after structural gates.
 - `references/skillopt-and-architecture.md` — only when changing skill architecture.
 
-`references/action-contract.md` is a compatibility pointer; v1.1 authority is split across lifecycle/stages/verification.
+`references/action-contract.md` is a compatibility pointer; v1.2 authority is split across focused lifecycle/scope/stage/verification references.
 
 ## Verify
 
-Use `design verify --changed` for touched-surface work. Use `design verify --full` for broad CI/release or broad-impact changes. Do not declare Done on FAIL or BLOCKED.
+Use `design verify --changed` for touched-surface work. Use `design verify --full` for broad CI/release or broad-impact changes. Multi-scope work verifies every resolved scope. Do not declare Done on FAIL or BLOCKED.

@@ -1,0 +1,10 @@
+{
+  "scopeId": "admin",
+  "contractVersion": "1.2",
+  "profile": "admin-dense",
+  "density": "dense",
+  "tokens": {
+    "space": "compact-operational",
+    "radius": "tight"
+  }
+}

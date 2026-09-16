@@ -2,13 +2,14 @@ import { describe, expect, it } from 'vitest';
 import { createCiEvidenceReport } from '../../src/report/ci-evidence.js';
 
 describe('CI evidence adapter', () => {
-  it('maps successful required jobs to PASS', () => {
+  it('maps successful required jobs to PASS for the active v1.2 contract', () => {
     const report = createCiEvidenceReport({
       unitResult: 'success',
       browserResult: 'success',
       generatedAt: '2026-09-15T17:30:00.000Z'
     });
 
+    expect(report.contractVersion).toBe('1.2');
     expect(report.finalStatus).toBe('PASS');
     expect(report.gates).toEqual([
       { name: 'unit+self-test', status: 'PASS', required: true },

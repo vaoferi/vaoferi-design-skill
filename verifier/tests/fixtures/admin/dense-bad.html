@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dense admin bad fixture</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body { font-family: sans-serif; overflow-x: visible; }
+    main { width: 100%; padding: 12px; }
+    .overflow-sentinel { width: calc(100vw + 1px); height: 1px; }
+    [data-unstructured-form] { display: grid; gap: 4px; }
+    [data-admin-field] { min-height: 32px; }
+    [data-action-region] { display: flex; gap: 8px; margin-top: 8px; }
+    [data-critical-action="save"] { display: none; }
+  </style>
+</head>
+<body>
+  <div class="overflow-sentinel" aria-hidden="true"></div>
+  <main>
+    <section>
+      <h1>Account</h1>
+      <form data-unstructured-form>
+        <div data-admin-field>Field 1</div>
+        <div data-admin-field>Field 2</div>
+        <div data-admin-field>Field 3</div>
+        <div data-admin-field>Field 4</div>
+        <div data-admin-field>Field 5</div>
+        <div data-admin-field>Field 6</div>
+        <div data-admin-field>Field 7</div>
+        <div data-admin-field>Field 8</div>
+        <div data-admin-field>Field 9</div>
+        <div data-admin-field>Field 10</div>
+        <div data-admin-field>Field 11</div>
+        <div data-admin-field>Field 12</div>
+        <div data-admin-field>Field 13</div>
+      </form>
+
+      <div data-action-region="section-actions" data-action-group="mixed">
+        <button data-action-kind="routine">Save section</button>
+        <button data-action-kind="destructive">Delete section</button>
+      </div>
+    </section>
+
+    <section>
+      <div data-action-region="bulk-actions" data-action-group="bulk-main">
+        <button data-action-kind="routine">Export selected</button>
+      </div>
+    </section>
+
+    <section data-action-region="danger-zone" data-action-group="danger-main">
+      <button data-action-kind="dangerous-destructive">Delete account</button>
+    </section>
+
+    <div data-action-region="page-actions" data-action-group="page-main">
+      <button data-critical-action="save" data-action-kind="routine">Save changes</button>
+    </div>
+  </main>
+</body>
+</html>

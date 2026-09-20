@@ -97,4 +97,4 @@ Before accepting an optimized skill:
    - visual QA;
    - all 20 principles.
 3. Run repo checks.
-4. Update `README.md`, `rubric.md`, examples and `docs/history/project_log.md` if behavior changed.
+4. Update `README.md`, `rubric.md`, examples and the relevant ADR/spec if durable behavior changed; execution evidence stays in Git/PR/Linear.

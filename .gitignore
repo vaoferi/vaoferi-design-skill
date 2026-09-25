@@ -5,3 +5,4 @@ lightrag.log
 node_modules/
 dist/
 test-results/
+._*

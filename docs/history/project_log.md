@@ -1,5 +1,14 @@
 # Project Log
 
+## 2026-09-25 — NLM-154: успадкування універсального DoD (0.4.3)
+- Завдання: design executor повинен явнно успадковувати Start Here 0.2.7 `DEFINITION_OF_DONE.md`, не створюючи другої конкуруючої DoD.
+- Знайдено: `references/verification.md` закінчувався на «Done And Evidence» без жодного посилання на універсальне завершення; у репо не було жодного рядка `DEFINITION_OF_DONE`; `references/action-contract.md` не міг пройти `scripts/check_skill_structure.py`, бо вимагав `48x48 CSS px`; два unit-тести перевіряли версію `0.4.1`, тоді як metadata уже була `0.4.2` (2 failed / 133).
+- Змінено: додано розділ «Universal DoD inheritance» у `references/verification.md` (hard preflight для pre-existing dirty стану, commit + push + remote sync + `WORKTREE CLEAN: PASS`, 10 canonical viewport states без мовчазного скорочення, fail-closed при відсутньому DoD); одну routing-лінію в `SKILL.md`; у `references/action-contract.md` додано preferred touch target `48x48 CSS px` і вказівку на authority універсального DoD; held-out сценарій `design-test-002` у `.skillopt/data/test/items.json` і два рядки в `examples/bad-answer.md`.
+- Чому так: skill маршрутизує, а не копіює — матриця viewport-ів навмисне НЕ продубльована сюди, це перевіряє окремий тест.
+- TDD: RED спочатку (10 failed / 141 після додавання контрактних тестів, до правок тексту), потім GREEN на повному наборі.
+- Перевірка: `npm run build`, `npm test`, `npm run self-test:unit`, `python3 scripts/check_skill_structure.py` (check_references тепер проходить; `check_skillopt_scaffold` лишається локально-середовищним, бо CI цього job не має і пакета `skillopt` у вимогах немає).
+- Ризики: re-vendor у Start Here змінює хеші двох vendored файлів, тому потрібна хвиля ре-адаптації в репо, що прийняли 0.2.7.
+
 ## 2026-06-17 — Skill architecture split, snippets source, SkillOpt scaffold
 - Завдання: з'ясувати, чому skill давав випадковий UI, додати NLM snippets config як джерело елементів, вивчити зовнішні skill/design repos і підготувати SkillOpt-friendly покращення.
 - Знайдено:

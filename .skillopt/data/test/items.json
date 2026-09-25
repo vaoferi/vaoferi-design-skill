@@ -8,5 +8,17 @@
       "Check mobile-first layout",
       "Finish only after visual QA"
     ]
+  },
+  {
+    "id": "design-test-002",
+    "question": "Дизайн-зміну зроблено, сторінка виглядає добре, але в роботі лишились незакомічені файли й не пройдено 10 canonical viewport станів. Чи можна позначати задачу Done?",
+    "reference_text": "Ні. Універсальне завершення належить Start Here DEFINITION_OF_DONE.md: commit + push + remote sync + WORKTREE CLEAN: PASS, а UI-зміни потребують кожну affected surface × 10 canonical viewport станів. Проєктні правила можуть тільки посилювати матрицю.",
+    "expected_steps": [
+      "Route completion to the repository's DEFINITION_OF_DONE.md instead of a design-local definition",
+      "Treat pre-existing dirty worktree as a hard preflight before new design work",
+      "Commit and push every intended change and confirm remote head equals local head",
+      "Re-run the clean-worktree gate and require WORKTREE CLEAN: PASS",
+      "Verify all affected surfaces across the 10 canonical viewport states without shrinking them"
+    ]
   }
 ]

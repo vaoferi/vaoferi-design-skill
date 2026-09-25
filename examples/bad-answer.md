@@ -17,6 +17,8 @@ Bad response:
 - "Кнопки можна залишити дрібними, бо це ж тільки телефон."
 - "У проєкті вже є spacing tokens, але я зверху додам і `4x`, і `Fibonacci`, щоб було більше варіантів."
 - "Контраст, навігацію, performance і різні пристрої не перевірятиму, бо layout уже виглядає нормально."
+- "Залишу два незакомічені файли й скажу, що дизайн готовий, бо превʼю ж рендериться."
+- "Зроблю свої три viewport-и замість універсальних 10 canonical станів, бо так швидше."
 
 Why this is bad:
 
@@ -32,3 +34,4 @@ Why this is bad:
 - it treats cramped mobile layout as acceptable instead of intentionally simplifying it.
 - it silently mixes spacing systems and ignores existing project settings;
 - it skips required principles instead of recording evidence.
+- it leaves work uncommitted and shrinks the universal browser matrix, so the handoff is not review-ready.

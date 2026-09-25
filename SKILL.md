@@ -2,7 +2,7 @@
 name: vaoferi-design-skill
 description: Use when designing or changing UI, screens, dashboards, admin forms, landing sections, visual systems, DESIGN.md, components, tokens, responsive layouts, or preserving an existing product.
 metadata:
-  version: 0.4.2
+  version: 0.4.3
 ---
 
 # Vaoferi Design Skill
@@ -51,6 +51,7 @@ Previous required stage must be complete. `/frame` alone owns frame geometry.
 - Browser-required stages proceed only when `browserGate=READY`.
 - Responsive verification checks every integer CSS-pixel width in the configured supported interval plus declared orientation/aspect states.
 - A task is Done only after required verifier gates PASS and evidence is produced.
+- Design handoff additionally requires commit + push + remote sync + `WORKTREE CLEAN: PASS` under the repository's Start Here `DEFINITION_OF_DONE.md`; this skill only adds design-specific checks to it.
 
 ## References
 

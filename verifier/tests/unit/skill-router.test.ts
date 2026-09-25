@@ -10,8 +10,14 @@ function loadSkill(): string {
 }
 
 describe('SKILL.md context router', () => {
-  it('pins the public release at 0.4.1', () => {
-    expect(loadSkill()).toContain('version: 0.4.1');
+  it('pins the public release at 0.4.3', () => {
+    expect(loadSkill()).toContain('version: 0.4.3');
+  });
+
+  it('routes design completion to the universal Start Here Definition of Done', () => {
+    const skill = loadSkill();
+    expect(skill).toContain('DEFINITION_OF_DONE.md');
+    expect(skill).toContain('WORKTREE CLEAN: PASS');
   });
 
   it('resolves scope before any staged UI decision', () => {

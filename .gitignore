@@ -2,3 +2,6 @@
 __pycache__/
 *.pyc
 lightrag.log
+node_modules/
+dist/
+test-results/

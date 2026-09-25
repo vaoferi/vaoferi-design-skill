@@ -78,3 +78,13 @@ UI задача не Done лише тому, що сторінка рендер�
 Evidence має містити contract/stage, executed gates, verified scope, browser states, findings/exceptions і фінальний status. Якщо будь-який required gate `FAIL` або `BLOCKED`, фінальний status не може бути `PASS`.
 
 MCP може давати додаткові tools, але не є required trusted path. Core verifier має працювати без MCP.
+
+## Universal DoD inheritance
+
+Completion authority є Start Here `DEFINITION_OF_DONE.md` у цільовому repository. Цей reference додає design-specific assertions; він не замінює ту authority і не переказує її матрицю сюди.
+
+- Перед новою design implementation pre-existing staged/modified/untracked стан — hard preflight: інвентаризувати й прив'язати до задачі, інакше статус лишається `In Progress / BLOCKED`.
+- Design handoff є review-ready лише після commit + push + remote head == local head + `WORKTREE CLEAN: PASS` від `python .vaoferi/check_worktree_clean.py`.
+- UI/layout/responsive зміни потребують кожну affected surface × 10 canonical viewport states з універсального DoD. Проєктні breakpoint-и можуть додавати стани й посилювати перевірки; вони never replace і не можуть мовчки скорочувати цю матрицю.
+- Automated browser geometry/visibility regression лишається mandatory для responsive/layout роботи, а ручна visual QA на reviewer-accessible target — поверх неї.
+- Якщо `DEFINITION_OF_DONE.md` у цільовому repository відсутній або застарілий, design робота fail-closed за baseline-правилами сесії: спершу adoption DoD, потім design зміни.

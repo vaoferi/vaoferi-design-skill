@@ -3,7 +3,7 @@
 Design with structure, not decoration.
 Use structure before decoration, spacing mode before grid, alignment before effects, components before custom code, and trace existing CSS before writing new CSS.
 
-**Current release:** `0.4.2`  
+**Current release:** `0.4.3`  
 **Contract architecture:** `1.2`
 
 The skill starts design-system work with a portable project contract so Codex, Claude Code, Cursor, OpenCode, Stitch/Open Design-style tools, and similar agents can read the same source of truth instead of guessing the UI.

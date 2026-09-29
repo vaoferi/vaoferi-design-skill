@@ -53,8 +53,9 @@ Use this rubric to evaluate whether a design task is Done.
 - [ ] Missing tokens are proposed and approved before use.
 
 ## 6. Responsive Behavior
-- [ ] Web/app breakpoints checked: mobile, tablet, desktop, wide desktop. Static artifacts use their intended export sizes/crops.
-- [ ] Web/app key widths checked: 320px, 375px, 414px, 768px, 1024px, 1366px, 1440px, 1920px, or a documented project matrix; unavailable checks have exact limitations.
+- [ ] Verification tier is explicit: changed/touched candidate by default; full health for broad/high-risk/release work.
+- [ ] Candidate UI checks cover affected surfaces, owner-reproduced state, affected breakpoint `n-1/n/n+1`, plus representative narrow/desktop states when relevant.
+- [ ] Full-health UI checks use the project/canonical broad matrix (for example 320/375/414/768/1024/1366/1440/1920) and required browser/theme/orientation states.
 - [ ] Mobile starts from the narrowest supported width and grows up with `min-width`.
 - [ ] `box-sizing: border-box` is set or clearly justified.
 - [ ] Flex rows and controls can shrink without forcing horizontal overflow.

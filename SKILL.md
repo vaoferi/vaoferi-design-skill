@@ -2,7 +2,7 @@
 name: vaoferi-design-skill
 description: Use when designing or changing UI, screens, dashboards, admin forms, landing sections, visual systems, DESIGN.md, components, tokens, responsive layouts, or preserving an existing product.
 metadata:
-  version: 0.4.3
+  version: 0.4.4
 ---
 
 # Vaoferi Design Skill
@@ -49,7 +49,7 @@ Previous required stage must be complete. `/frame` alone owns frame geometry.
 - Changed/touched authored UI code is strict. New `!important` is a hard failure unless covered by an exact approved exception.
 - Missing required browser verification = BLOCKED.
 - Browser-required stages proceed only when `browserGate=READY`.
-- Responsive verification checks every integer CSS-pixel width in the configured supported interval plus declared orientation/aspect states.
+- Verification is risk-tiered: touched UI uses focused affected-surface/browser checks by default; exhaustive width/state sweeps are reserved for broad/high-risk geometry, CI/release/nightly, or a bounded edge range with evidence that exhaustive coverage adds signal.
 - A task is Done only after required verifier gates PASS and evidence is produced.
 - Design handoff additionally requires commit + push + remote sync + `WORKTREE CLEAN: PASS` under the repository's Start Here `DEFINITION_OF_DONE.md`; this skill only adds design-specific checks to it.
 
@@ -70,4 +70,4 @@ Read only what the resolved scope/current stage requires:
 
 ## Verify
 
-Use `design verify --changed` for touched-surface work. Use `design verify --full` for broad CI/release or broad-impact changes. Multi-scope work verifies every resolved scope. Do not declare Done on FAIL or BLOCKED.
+Use `design verify --changed` for touched-surface work. Use `design verify --full` only for broad/high-risk design changes, CI/release/nightly, or when focused evidence expands the blast radius. Do not rerun a full design gate after every small correction; isolate the failing slice first. Multi-scope work verifies every resolved scope. Do not declare Done on FAIL or BLOCKED.

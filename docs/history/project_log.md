@@ -1,5 +1,13 @@
 # Project Log
 
+## 2026-09-29 — Risk-tiered verification після Miami runtime/test-loop (0.4.4)
+- Завдання: зберегти fail-closed visual/browser acceptance, але прибрати непропорційний full-suite цикл після кожної локальної UI/test правки.
+- Реальний сигнал: у Miami один full NAS gate займав близько 11–12 хвилин; послідовні timing-sensitive gallery assertions змушували повторювати весь gate, хоча production UI не змінювався. Один integrated run уже був повністю GREEN, але test-only follow-up знову запускав broad certification.
+- Рішення: verification ladder V1 Inner loop → V2 Candidate gate → V3 Stable acceptance → V4 Full health. Звичайна локальна UI зміна перевіряє affected surfaces, owner viewport та breakpoint boundaries; exhaustive width/browser/state sweep лишається для shared/global, broad/high-risk, CI/release/nightly або доведеного broader blast radius.
+- Anti-loop: ordinary task normally має не більше двох full-health runs; третій потребує письмового пояснення нового ризику. Unrelated failure ізолюється; reproducible defect переходить до owning task; timing flake без user-visible repro не дає права міняти product behavior.
+- Безпека не послаблена: browser-required acceptance лишається fail-closed, changed authored UI strict-policy лишається, exact reviewer artifact і Start Here durable preview inheritance лишаються.
+- Причина: verification scope має бути пропорційним ризику, а не однаково максимальним для зміни одного кольору й для redesign app shell.
+
 ## 2026-09-25 — NLM-154: успадкування універсального DoD (0.4.3)
 - Завдання: design executor повинен явнно успадковувати Start Here 0.2.7 `DEFINITION_OF_DONE.md`, не створюючи другої конкуруючої DoD.
 - Знайдено: `references/verification.md` закінчувався на «Done And Evidence» без жодного посилання на універсальне завершення; у репо не було жодного рядка `DEFINITION_OF_DONE`; `references/action-contract.md` не міг пройти `scripts/check_skill_structure.py`, бо вимагав `48x48 CSS px`; два unit-тести перевіряли версію `0.4.1`, тоді як metadata уже була `0.4.2` (2 failed / 133).

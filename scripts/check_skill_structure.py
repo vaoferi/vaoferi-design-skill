@@ -15,6 +15,7 @@ REQUIRED_REFERENCES = [
     ROOT / "references" / "action-contract.md",
     ROOT / "references" / "component-sources.md",
     ROOT / "references" / "quality-gates.md",
+    ROOT / "references" / "verification.md",
     ROOT / "references" / "skillopt-and-architecture.md",
 ]
 PRINCIPLES = [
@@ -93,6 +94,20 @@ def check_references() -> None:
         raise AssertionError("Preferred 48x48 CSS px touch target is missing from design references")
     if "STRONG_HEURISTIC_WITH_EXCEPTIONS" not in action_text:
         raise AssertionError("Balanced peer-row policy classification is missing from action-contract.md")
+
+    verification_path = ROOT / "references" / "verification.md"
+    verification_text = read_utf8(verification_path)
+    for required in (
+        "Risk-tiered Browser Verification",
+        "V1 — Inner loop",
+        "V2 — Candidate gate",
+        "V3 — Stable acceptance",
+        "V4 — Full health",
+        "third full-health run",
+        "Failure ownership / flaky tests",
+    ):
+        if required not in verification_text:
+            raise AssertionError(f"Risk-tiered verification contract is missing: {required}")
 
 
 def check_snippets_config() -> None:

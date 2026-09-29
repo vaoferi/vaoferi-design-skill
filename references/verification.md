@@ -1,4 +1,4 @@
-# Deterministic Verification v1.1
+# Deterministic Verification v1.2
 
 Цей reference є authority для hard design gates. Природномовні інструкції можуть пояснювати намір, але PASS/FAIL/BLOCKED визначає verifier.
 
@@ -48,28 +48,71 @@ Hard FAIL для спроб зробити gate зеленим через weaken
 
 Не виправляй policy failure послабленням policy.
 
-## Responsive Browser Sweep
+## Risk-tiered Browser Verification
 
-Для touched responsive UI focused sweep проходить every integer CSS-pixel width у configured supported interval. Sampling тільки на named device widths не є достатньою перевіркою.
+Verification strictness stays fail-closed, but **verified scope is proportional to risk and blast radius**. A local visual correction must not repeatedly certify unrelated subsystems; a broad/high-risk change must not hide behind a tiny smoke test.
 
-Якщо contract оголошує portrait/landscape або інші aspect profiles, кожна ширина перевіряється у відповідних states. Breakpoint neighborhoods `-2,-1,0,+1,+2` можуть додаватися як explicit evidence, але не замінюють exhaustive interval.
+### V1 — Inner loop
 
-Rendered browser geometry перевіряє щонайменше:
+After each small implementation step:
 
-- horizontal overflow;
-- collisions/overlap для declared critical selectors;
-- frame containment;
-- required alignment relationships;
-- orphaned/hidden critical content, якщо правило оголошене contract.
+- run the focused RED → GREEN regression for the changed behavior;
+- run the smallest useful lint/type/static check for the touched area;
+- if browser behavior is involved, exercise the exact affected interaction/state.
 
-Browser adapter вимірює DOM; geometry rules лишаються verifier-owned pure rules.
+Do not run the full project/browser matrix after every CSS/helper/timing edit.
+
+### V2 — Candidate gate
+
+When the task is ready as a candidate:
+
+- verify every **affected surface**;
+- include the owner-reproduced viewport/state;
+- for affected responsive breakpoints, check boundary neighborhoods `n-1 / n / n+1`;
+- include representative narrow and desktop states when the change can cross those classes;
+- include only relevant themes/orientations/interactions;
+- layout/responsive changes still require automated geometry/visibility assertions, but scoped to the affected surface/range.
+
+If the blast radius is unclear, widen the candidate gate instead of guessing that the change is local.
+
+### V3 — Stable acceptance
+
+For reviewer-visible UI:
+
+- use the exact pushed candidate SHA/version on the canonical reviewer-accessible target;
+- repeat the key affected visual/interaction checks there;
+- when the project has temporary → durable preview topology, inherit Start Here runtime-preview promotion/parity rules.
+
+### V4 — Full health
+
+Use exhaustive configured intervals, all relevant browser engines/states, and the broad project matrix when any of these apply:
+
+- shared/global layout or design tokens;
+- app shell/router or cross-surface primitives;
+- broad multi-surface redesign/refactor;
+- accessibility/security/privacy-sensitive UI;
+- release/production checkpoint, CI/nightly health;
+- focused evidence shows a larger blast radius than expected;
+- project contract or owner explicitly requires full certification.
+
+An ordinary localized UI task normally gets at most **two full-health runs**: one final candidate run and one repeat after a focused fix to a real failure. A third full-health run requires a written reason stating what new risk it proves and why a focused rerun is insufficient.
+
+### Failure ownership / flaky tests
+
+A red test is evidence, not automatic permission to expand scope.
+
+1. Failure inside the affected surface/contract blocks the current task and is diagnosed there.
+2. Failure outside the affected surface is isolated with the smallest owning test and a bounded repeat (typically 2–3 runs).
+3. A reproducible unrelated defect belongs to its owning task/follow-up; the current task records it and does not start repairing another subsystem.
+4. A timing-sensitive/flaky assertion without a reproduced user-visible defect is hardened as test work; do **not** change product behavior merely to satisfy the flake.
+5. After a focused fix, rerun the affected candidate gate; run another full-health gate only when the risk tier requires it.
 
 ## Changed vs Full
 
-- `design verify --changed` — fast strict gate для touched surface; це default для bare `design verify`.
-- `design verify --full` — broad verification для CI/release/nightly або коли зміна може впливати поза touched surface.
+- `design verify --changed` — fast strict gate для touched/affected surface; це default для bare `design verify` і V1/V2.
+- `design verify --full` — V4 broad verification для CI/release/nightly, shared/global UI або іншого доведеного broad/high-risk impact.
 
-Changed verification не означає weaker rules; воно означає менший verified scope.
+Changed verification не означає weaker rules; воно означає менший verified scope. Full verification не є ритуалом після кожної дрібної правки.
 
 ## Done And Evidence
 
@@ -85,6 +128,6 @@ Completion authority є Start Here `DEFINITION_OF_DONE.md` у цільовому
 
 - Перед новою design implementation pre-existing staged/modified/untracked стан — hard preflight: інвентаризувати й прив'язати до задачі, інакше статус лишається `In Progress / BLOCKED`.
 - Design handoff є review-ready лише після commit + push + remote head == local head + `WORKTREE CLEAN: PASS` від `python .vaoferi/check_worktree_clean.py`.
-- UI/layout/responsive зміни потребують кожну affected surface × 10 canonical viewport states з універсального DoD. Проєктні breakpoint-и можуть додавати стани й посилювати перевірки; вони never replace і не можуть мовчки скорочувати цю матрицю.
-- Automated browser geometry/visibility regression лишається mandatory для responsive/layout роботи, а ручна visual QA на reviewer-accessible target — поверх неї.
+- UI/layout/responsive зміни успадковують **risk-tiered** browser matrix з універсального DoD: V2 перевіряє affected surfaces + owner-reproduced states + affected breakpoint boundaries; повна canonical matrix належить V4 broad/high-risk/release health.
+- Automated browser geometry/visibility regression лишається mandatory для responsive/layout роботи, але його range має відповідати affected surface/risk tier. Exhaustive interval потрібен для V4 або для bounded edge range, де він реально доводить ризик; ручна visual QA на reviewer-accessible target лишається поверх machine evidence.
 - Якщо `DEFINITION_OF_DONE.md` у цільовому repository відсутній або застарілий, design робота fail-closed за baseline-правилами сесії: спершу adoption DoD, потім design зміни.

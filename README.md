@@ -3,7 +3,7 @@
 Design with structure, not decoration.
 Use structure before decoration, spacing mode before grid, alignment before effects, components before custom code, and trace existing CSS before writing new CSS.
 
-**Current release:** `0.4.3`  
+**Current release:** `0.4.4`  
 **Contract architecture:** `1.2`
 
 The skill starts design-system work with a portable project contract so Codex, Claude Code, Cursor, OpenCode, Stitch/Open Design-style tools, and similar agents can read the same source of truth instead of guessing the UI.
@@ -26,7 +26,7 @@ The skill starts design-system work with a portable project contract so Codex, C
 - Use design tokens before ad-hoc values.
 - Ask before introducing new components, colors, or spacing scales.
 - Required browser verification is fail-closed; missing capability is BLOCKED, not skipped.
-- Validate responsive behavior across the configured width interval and declared orientation/aspect states.
+- Validate responsive behavior by risk tier: affected surfaces/breakpoint boundaries for normal work; exhaustive intervals/states for broad, high-risk, CI/release or explicitly required checks.
 - Pass required design gates with evidence; do not silently skip one.
 - Finish only after verifier gates and visual QA pass.
 - Stop on contract/scope conflicts rather than guessing.
@@ -126,7 +126,7 @@ If a new component, token, layout pattern, or exact exception is required, make 
 - Accessibility and responsive scaling are first-class requirements.
 - Mobile/narrow-width behavior preserves workflow and information hierarchy rather than merely stacking source order.
 - Visual polish comes from rhythm, whitespace, typography, and restrained motion, not extra decoration.
-- The browser should do the math whenever possible; exhaustive changed-surface checks are machine work, not LLM work.
+- The browser should do the math whenever possible; focused changed-surface checks are the default, while exhaustive sweeps are machine work reserved for the risk tiers that need them.
 
 ## Files
 

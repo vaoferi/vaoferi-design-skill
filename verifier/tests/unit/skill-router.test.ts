@@ -10,8 +10,8 @@ function loadSkill(): string {
 }
 
 describe('SKILL.md context router', () => {
-  it('pins the public release at 0.4.3', () => {
-    expect(loadSkill()).toContain('version: 0.4.3');
+  it('pins the public release at 0.4.4', () => {
+    expect(loadSkill()).toContain('version: 0.4.4');
   });
 
   it('routes design completion to the universal Start Here Definition of Done', () => {
@@ -53,8 +53,11 @@ describe('SKILL.md context router', () => {
     expect(skill).not.toMatch(/browser[^\n]{0,120}fallback/i);
   });
 
-  it('keeps exhaustive responsive verification explicit', () => {
-    expect(loadSkill()).toContain('every integer CSS-pixel width');
+  it('keeps risk-tiered responsive verification explicit', () => {
+    const skill = loadSkill();
+    expect(skill).toContain('Verification is risk-tiered');
+    expect(skill).toContain('focused affected-surface/browser checks');
+    expect(skill).toContain('exhaustive width/state sweeps');
   });
 
   it('lazy-loads scope rules and admin workspace rules instead of embedding them', () => {

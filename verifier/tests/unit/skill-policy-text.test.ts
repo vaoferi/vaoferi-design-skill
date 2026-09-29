@@ -8,11 +8,11 @@ function read(path: string): string {
   return readFileSync(resolve(root, path), 'utf8');
 }
 
-describe('Design Skill 0.4.3 policy contract', () => {
-  it('declares the 0.4.3 release in both skill metadata and package metadata', () => {
-    expect(read('SKILL.md')).toContain('version: 0.4.3');
+describe('Design Skill 0.4.4 policy contract', () => {
+  it('declares the 0.4.4 release in both skill metadata and package metadata', () => {
+    expect(read('SKILL.md')).toContain('version: 0.4.4');
     const pkg = JSON.parse(read('package.json')) as { version: string };
-    expect(pkg.version).toBe('0.4.3');
+    expect(pkg.version).toBe('0.4.4');
   });
 
   it('requires finding the existing style owner before CSS changes', () => {
@@ -28,7 +28,7 @@ describe('Design Skill 0.4.3 policy contract', () => {
   });
 });
 
-describe('Design Skill 0.4.3 inherits the universal Definition of Done (NLM-154)', () => {
+describe('Design Skill 0.4.4 inherits the universal Definition of Done (NLM-154)', () => {
   const verification = () => read('references/verification.md');
 
   it('routes universal completion to the Start Here Definition of Done', () => {
@@ -48,10 +48,14 @@ describe('Design Skill 0.4.3 inherits the universal Definition of Done (NLM-154)
     expect(text).toMatch(/hard preflight/i);
   });
 
-  it('forbids silently shrinking the 10 canonical viewport states', () => {
+  it('keeps fail-closed verification while making scope risk-tiered', () => {
     const text = verification();
-    expect(text).toMatch(/10 canonical viewport/i);
-    expect(text).toMatch(/may add .* never replace|never replace/i);
+    expect(text).toContain('Risk-tiered Browser Verification');
+    expect(text).toContain('V2 — Candidate gate');
+    expect(text).toContain('V4 — Full health');
+    expect(text).toContain('n-1 / n / n+1');
+    expect(text).toContain('third full-health run');
+    expect(text).toContain('Failure ownership / flaky tests');
   });
 
   it('routes to the DoD instead of copying its matrix', () => {

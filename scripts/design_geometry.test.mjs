@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {evaluateGeometry,validateSpec} from './design_geometry.mjs';
+import {evaluateGeometry,validateSpec,gridlineFindings} from './design_geometry.mjs';
 const clean={documentOverflow:0,documentVerticalOverflow:50,viewportFit:false,scroll:[],anchors:[{name:'header',values:[10,11],missing:false}]};
 test('normal page scrolling and <=1px alignment pass',()=>assert.deepEqual(evaluateGeometry(clean),[]));
 test('horizontal scroll fails',()=>assert.equal(evaluateGeometry({...clean,documentOverflow:2})[0].kind,'document-overflow'));
@@ -9,3 +9,4 @@ test('nested scroll and clipping need explicit approval',()=>assert.equal(evalua
 test('missing anchor and 2px drift fail',()=>{assert.equal(evaluateGeometry({...clean,anchors:[{name:'a',missing:true,values:[2]}]})[0].kind,'missing-anchor');assert.equal(evaluateGeometry({...clean,anchors:[{name:'a',values:[2,4]}]})[0].kind,'alignment');});
 test('empty test matrix fails closed',()=>assert.throws(()=>validateSpec({states:[]})));
 test('approved local scrolling is permitted',()=>assert.deepEqual(evaluateGeometry({...clean,scroll:[{x:10,y:30,allowed:true}]}),[]));
+test('probe requires measurable coverage and exact exceptions',()=>{assert.throws(()=>gridlineFindings([]));const miss={item:'Label',edge:'leading',y:12,px:18,line:16};const rows=[{rows:[{}],outliers:[miss]}];assert.equal(gridlineFindings(rows).length,1);assert.equal(gridlineFindings(rows,[{...miss,y:13}]).length,1);assert.equal(gridlineFindings(rows,[miss]).length,0);});

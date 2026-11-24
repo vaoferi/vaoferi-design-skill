@@ -4,6 +4,13 @@ Existing approved grid and spacing win. New project choose one macro profile: co
 - columns-12: 12 tracks wide, reduce to 6/4/1 as content requires; use CSS grid repeat(n,minmax(0,1fr)), explicit gutters and spans. No Bootstrap dependency required.
 - modular: repeated content with minmax/auto-fit when appropriate; define balanced wrapping and reflow.
 - golden-canon: not a synonym for 61.8/38.2 columns. Use BONT composition construction with diagonal/ratio-based reference lines and focal intersections as visual guide; cite the actual reference/template and selected aspect ratio. The independent CSS example defines nonuniform symmetric 16 column tracks (1,1,2,1.33,1,1.58,4.83,3.167,3.167,4.83,1.58,1,1.33,2,1,1) and 9 row weights (1,3.03,1.33,2.7,2.7,1.33,1.57,1.45,1). These are one example, not a universal BONT specification. For a source-based desktop study use them as proportional tracks, map intended section edges/focal points to track intersections, provide a diagram/capture and named anchor mapping before code. Use intrinsic minimum content sizes, mobile single column/reflow, no forced fixed viewport rows or clipped content. For exact BONT template matching obtain actual source template and derive normalized coordinates; if unavailable label result golden-canon-inspired rather than exact. Never substitute a Fibonacci spiral alone. For ordinary admin UI choose simpler geometry unless approved.
+## Golden Canon source selection
+When user selects golden-canon, default to the verified starred UI-reference overlay from Oleg-Kolosov (unless project already specifies another source). It contains explicit vertical, horizontal and diagonal SVG coordinates, not just two diagonals or golden-ratio columns. Read the approved checkout index.html as data and generate overlay with:
+```bash
+node <skill-base>/scripts/design_canon_ui.mjs <approved-golden-canon-ui-checkout> <reviewed-full-sha> 1440 900 /tmp/grid-ui
+```
+The output reproduces the starred reference's line geometry at the given artboard dimensions; it does not assert that it is the original BONT commercial template. Preserve source SHA and MIT attribution, inspect overlay, and choose focal intersections and named anchors. The 16x9 CSS implementation is a separate practical layout profile. The third starred source, iivanovw7/golden-grid-boilerplate, specifies symmetric 20x20 tracks in src/styles/mixins.js; use it as an independent comparison only until license/reuse is resolved. Do not force all lines into actual CSS tracks or force mobile to match a desktop poster.
+
 ## Generate a macro guide artifact
 Use the additive guide generator before implementation:
 ```bash

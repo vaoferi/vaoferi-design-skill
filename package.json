@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "test": "vitest run && node --test scripts/design_geometry.test.mjs scripts/design_grid_plan.test.mjs",
+    "test": "vitest run && node --test scripts/design_geometry.test.mjs scripts/design_grid_plan.test.mjs scripts/design_canon_ui.test.mjs",
     "test:browser": "playwright test verifier/tests/browser",
     "self-test:unit": "tsx verifier/src/self-test/run-unit.ts",
     "self-test:browser": "tsx verifier/src/self-test/run-browser.ts",

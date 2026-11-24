@@ -1,0 +1,11 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {evaluateGeometry,validateSpec} from './design_geometry.mjs';
+const clean={documentOverflow:0,documentVerticalOverflow:50,viewportFit:false,scroll:[],anchors:[{name:'header',values:[10,11],missing:false}]};
+test('normal page scrolling and <=1px alignment pass',()=>assert.deepEqual(evaluateGeometry(clean),[]));
+test('horizontal scroll fails',()=>assert.equal(evaluateGeometry({...clean,documentOverflow:2})[0].kind,'document-overflow'));
+test('viewport fit is opt-in',()=>assert.equal(evaluateGeometry({...clean,viewportFit:true})[0].kind,'viewport-fit'));
+test('nested scroll and clipping need explicit approval',()=>assert.equal(evaluateGeometry({...clean,scroll:[{x:0,y:20,allowed:false}]})[0].kind,'nested-scroll-or-clipping'));
+test('missing anchor and 2px drift fail',()=>{assert.equal(evaluateGeometry({...clean,anchors:[{name:'a',missing:true,values:[2]}]})[0].kind,'missing-anchor');assert.equal(evaluateGeometry({...clean,anchors:[{name:'a',values:[2,4]}]})[0].kind,'alignment');});
+test('empty test matrix fails closed',()=>assert.throws(()=>validateSpec({states:[]})));
+test('approved local scrolling is permitted',()=>assert.deepEqual(evaluateGeometry({...clean,scroll:[{x:10,y:30,allowed:true}]}),[]));

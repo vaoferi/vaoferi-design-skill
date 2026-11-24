@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "dependencies": [
+    {
+      "id": "gridlines",
+      "url": "https://github.com/pritamux/gridlines.git",
+      "ref": "main",
+      "reviewCandidate": "ae393199f0adcc1e09fec3f916444b03bf721d15",
+      "entry": "skills/gridlines/SKILL.md",
+      "role": "alignment",
+      "license": "MIT"
+    },
+    {
+      "id": "impeccable",
+      "url": "https://github.com/pbakaus/impeccable.git",
+      "ref": "main",
+      "reviewCandidate": "b49177d32788f2dc585c42831d845dacf1ebed2c",
+      "entry": ".agent/skills/impeccable/SKILL.md",
+      "role": "design and review",
+      "license": "Apache-2.0"
+    },
+    {
+      "id": "modern-web-guidance",
+      "url": "https://github.com/GoogleChrome/modern-web-guidance.git",
+      "ref": "main",
+      "reviewCandidate": "2b4aa13a72dd47cd135b06ce5abfccd92e19b24f",
+      "entry": "skills/modern-web-guidance/SKILL.md",
+      "role": "web preflight"
+    },
+    {
+      "id": "emil-motion",
+      "url": "https://github.com/emilkowalski/skills.git",
+      "ref": "main",
+      "reviewCandidate": "64eb3deb9a5fbfa041faf783e0bc3fd635872e9c",
+      "entry": "skills/animate/SKILL.md",
+      "role": "motion"
+    },
+    {
+      "id": "golden-canon-reference",
+      "url": "https://github.com/niktariy/CSS-Golden-Canon-Grid.git",
+      "ref": "master",
+      "reviewCandidate": "6fec51d0f15ac11597f5c40b52575ea74a058f11",
+      "entry": "styles/all.css",
+      "role": "reference only",
+      "license": "MIT"
+    }
+  ]
+}

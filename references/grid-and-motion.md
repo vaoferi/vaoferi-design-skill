@@ -4,6 +4,15 @@ Existing approved grid and spacing win. New project choose one macro profile: co
 - columns-12: 12 tracks wide, reduce to 6/4/1 as content requires; use CSS grid repeat(n,minmax(0,1fr)), explicit gutters and spans. No Bootstrap dependency required.
 - modular: repeated content with minmax/auto-fit when appropriate; define balanced wrapping and reflow.
 - golden-canon: not a synonym for 61.8/38.2 columns. Use BONT composition construction with diagonal/ratio-based reference lines and focal intersections as visual guide; cite the actual reference/template and selected aspect ratio. The independent CSS example defines nonuniform symmetric 16 column tracks (1,1,2,1.33,1,1.58,4.83,3.167,3.167,4.83,1.58,1,1.33,2,1,1) and 9 row weights (1,3.03,1.33,2.7,2.7,1.33,1.57,1.45,1). These are one example, not a universal BONT specification. For a source-based desktop study use them as proportional tracks, map intended section edges/focal points to track intersections, provide a diagram/capture and named anchor mapping before code. Use intrinsic minimum content sizes, mobile single column/reflow, no forced fixed viewport rows or clipped content. For exact BONT template matching obtain actual source template and derive normalized coordinates; if unavailable label result golden-canon-inspired rather than exact. Never substitute a Fibonacci spiral alone. For ordinary admin UI choose simpler geometry unless approved.
+## Generate a macro guide artifact
+Use the additive guide generator before implementation:
+```bash
+node <skill-base>/scripts/design_grid_plan.mjs columns-12 1440 900 /tmp/grid-desktop '{"gutter":16,"inset":32}'
+node <skill-base>/scripts/design_grid_plan.mjs golden-canon-inspired 1440 900 /tmp/grid-canon
+node <skill-base>/scripts/design_grid_plan.mjs columns-12 390 844 /tmp/grid-mobile '{"columns":4,"gutter":8,"inset":16}'
+```
+The JSON defines measured track boundaries; SVG is a planning overlay at that exact artboard size. The source-based canon example is intentionally labeled inspired; it does not claim exact BONT reproduction. Use the actual author template for exact BONT mode, and record chosen anchor mapping. For responsive content recalculate tracks at target widths, not image-scale the desktop artifact. For existing projects preserve approved anchors; do not impose these example values. Artifacts are private evidence, not production UI.
+
 ## Build and verify anchors
 Global: header inner edges, content regions, section/CTA alignment. Local: text/box edges, icon column/label start, section headers, nested items, trailing edges/centres, toolbar row centres. Identify intended alignment group and edge explicitly; do not infer every group from the majority if project policy already defines it. Gridlines measures ink as well as boxes; confirm visual outliers, including RTL and icon optical bounds. Fix the shared container padding/token/track. Use approved exceptions with exact selector/state/reason. Aim at <=1 CSS px for declared geometric anchors; separate documented optical corrections and probe false positives. Use browser assertions for known anchors independent of upstream heuristic.
 ## Fit and scroll

@@ -26,6 +26,30 @@ Global: header inner edges, content regions, section/CTA alignment. Local: text/
 Use intrinsic sizing, min-width:0 on shrinking grid/flex items, minmax(0,1fr), responsive wrapping, sensible max-inline-size and overflow-wrap where needed. Test real long translated labels, zoom, keyboard focus, overlays, sticky regions, empty/error/loading states. Page vertical scroll is normal for long content; viewport-fit only when explicitly required for app shell or screen. Reject unintended document horizontal overflow and unintended nested scroll, clipping or hidden focus; tables/code/virtualized lists may scroll locally with explicit UX rationale. Do not hide overflow to silence failure, arbitrarily shrink text, replace essential labels by ambiguous icons, or force all content into viewport. Icons require accessible names and discoverability. 
 ## Motion plan (before implementation)
 Use existing motion tokens. Otherwise propose a small coherent palette: feedback (~100–200ms), component transition (~150–350ms), optional section entrance (~250–600ms). Durations are starting points, not hard universal rules. Direction follows actual spatial/semantic relationship; no arbitrary alternating card motion. Prefer transform/opacity where appropriate, CSS/native APIs first, existing library next; no added framework merely for motion. No delayed critical content or initial focus; layout must reserve final space. Respect prefers-reduced-motion, preserve functionality without motion, no endlessly running distracting effects. Immersive is distinct explicit scope with performance budget, accessible fallback and mobile constraints.
+## Automatic motion selection (mandatory for workflow and motion)
+Treat Motion Anything as a searchable private recipe library, not a menu the owner must learn. Do not load its whole README/catalog or export recipe skills globally. Existing project motion wins; if no system exists, choose a profile by surface:
+- Operate / admin / checkout: restrained feedback and state transitions; no decorative entrances on repeated rows or routine controls.
+- Read / documentation: stable content; subtle transitions only where they explain change.
+- Persuade / marketing / product: one entrance pattern and one feedback pattern; optional focal reveal/emphasis.
+- Experience / portfolio: same baseline; one distinctive focal effect if justified. Complex scroll narrative, shaders, WebGL and 3D require explicit immersive scope.
+Default palette: 0–3 distinct nonessential motion patterns per surface (not three per section), including existing patterns; reuse timing, easing and direction tokens. Essential functional transitions are not a decorative quota. Zero is valid when motion adds no value. Do not reanimate each row or scroll revisit. Do not choose random directions: follow reading order, actual origin/destination, and information hierarchy.
+
+| Intent | Native first choice | Library lookup only if needed |
+|---|---|---|
+| Enter / reveal | Small fade + translate; same pattern on peers | entrance, reveal |
+| Explain progression | Directional reveal or short stagger following reading order | sequence, stagger |
+| Feedback | Focus/hover/press transition, optional subtle scale | feedback-delight |
+| State change | Short opacity/transform transition; preserve focus | transition |
+| Emphasis | One intentional focal reveal; stable real values | emphasis, count-up |
+| Ambient / cinematic | No effect by default | immersive only for expensive/persistent effects |
+
+Selection algorithm:
+1. Record purpose, affected components, profile, existing tokens and performance/reduced-motion constraints before writing CSS.
+2. If native CSS/WAAPI or an existing library meets the purpose, stop searching. Do not install Motion Anything just to fade a section.
+3. If a recipe is justified, check/update only the Motion Anything upstream first. Search its approved checkout `recipes/web/**/recipe.motion.yaml` by narrow intent/category/target keywords (not slides/video). Inspect at most three relevant manifests per unmet intent; if none fits, use native or no motion instead of scanning the entire catalog.
+4. Read actual manifest `surfaces`, `category`, `intent_keywords`, `best_for`, `avoid_when`, `restraint`, `motion`, `tech`, `dependencies`, `implementations`, and `license` (some versions omit fields). Reject unsuitable target, stack, reduced-motion, performance, licensing or restraint conditions. Missing relevant metadata must be verified from the selected implementation; never infer safety from a recipe title. Select the least complex passing option, then read only its SKILL.md and implementation/preview as needed. Do not execute unreviewed code or import a framework for one effect.
+5. Record selected recipe ID/path/SHA (or native), purpose, reused pattern, target, trigger, duration/easing, fallback and reason in the task motion plan. Implement automatically within authorized UI scope; do not ask owner to choose individual recipes. Ask only for scope changes (e.g. immersive) or conflicts with approved project policy. Verify the actual affected UI using the normal/reduced-motion gates below.
+
 ## Rendered verification sequence
 1. Capture baseline clean screenshot at affected viewports and actual states; canonical V2/V4 rules apply, include 390/1440 when supported or justify relevant equivalents. Define expected anchors and scroll exceptions before measuring.
 2. Wait for app-specific ready state, document.fonts.ready and relevant finite animations after triggering each overlay/scroll/interaction. Use a bounded wait; infinite animations excluded only when identified and not affecting measured anchors. Timeout = BLOCKED/FAIL, never arbitrary sleep as sole proof.

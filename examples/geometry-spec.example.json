@@ -22,6 +22,12 @@
           "selector": "main",
           "allowScroll": false
         }
+      ],
+      "gridlines": [
+        {
+          "selector": "main",
+          "exceptions": []
+        }
       ]
     },
     {
@@ -44,6 +50,12 @@
         {
           "selector": "main",
           "allowScroll": false
+        }
+      ],
+      "gridlines": [
+        {
+          "selector": "main",
+          "exceptions": []
         }
       ]
     }

@@ -10,6 +10,10 @@ For a multi-scope task, each scope runs the staged workflow against its own cont
 
 If the resolved profile is `admin-standard` or `admin-dense`, run the admin complexity gate. When it requires Interaction Topology, topology must be present and valid before structural implementation proceeds. Read `references/admin-workspace.md` only for those admin profiles.
 
+## Workflow preparation and alignment
+
+For UI work follow `references/workflow.md` and `references/grid-and-motion.md`. Before frame, select grid/spacing and motion intent; before implementation use relevant Modern Web Guidance and Impeccable playbooks per `references/upstream-tools.md`. /frame owns macro profile and tracks; /align owns local Gridlines anchors; /flow owns reflow and scroll policy. Implement motion alongside components and verify its settled geometry plus normal/reduced-motion behavior. Upstream tools do not change stage ownership.
+
 ## Canonical Order
 
 ```text

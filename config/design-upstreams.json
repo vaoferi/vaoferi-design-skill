@@ -43,6 +43,32 @@
       "entry": "styles/all.css",
       "role": "reference only",
       "license": "MIT"
+    },
+    {
+      "id": "golden-canon-ui",
+      "url": "https://github.com/Oleg-Kolosov/Golden-Canon-Grid-for-UI-Design.git",
+      "ref": "master",
+      "reviewCandidate": "0cd07de8d409401cf3ed484cbf6270402dc0c275",
+      "entry": "index.html",
+      "role": "reference only",
+      "license": "MIT"
+    },
+    {
+      "id": "golden-canon-boilerplate",
+      "url": "https://github.com/iivanovw7/golden-grid-boilerplate.git",
+      "ref": "master",
+      "reviewCandidate": "21f665c8c8ceb844f01d7790aadacb966d51fb4a",
+      "entry": "src/styles/mixins.js",
+      "role": "reference only; inspect license before reuse"
+    },
+    {
+      "id": "motion-anything",
+      "url": "https://github.com/nexu-io/motion-anything.git",
+      "ref": "main",
+      "reviewCandidate": "2b780435564058d5bddf2f06e69122a3ac9c0a4c",
+      "entry": "README.md",
+      "role": "optional motion recipe catalog and immersive workflow",
+      "license": "Apache-2.0"
     }
   ]
 }

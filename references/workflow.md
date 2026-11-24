@@ -7,7 +7,7 @@ Only one discoverable Vaoferi design skill. These are intent arguments, not assu
 | improve | Existing-site fingerprint, critique/audit, repair affected defects; no unapproved redesign |
 | grid | Frame plan plus alignment pass; explicit grid profile required for migration |
 | motion | Interface motion only; plan then implement and verify |
-| immersive | Explicit opt-in for scroll narrative, 3D, WebGL or advanced motion; budget and fallback first |
+| immersive | Explicit opt-in for scroll narrative, 3D, WebGL or advanced motion; load references/immersive.md; budget and fallback first |
 | tokens | Inspect existing semantic tokens; propose missing tokens before editing |
 | components | Existing component source order and primitive library |
 | stitch | Optional concept adapter; only if configured and user authorizes sending context; do not invent access or quotas |

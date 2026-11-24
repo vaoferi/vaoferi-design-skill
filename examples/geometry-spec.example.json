@@ -1,0 +1,51 @@
+{
+  "url": "http://localhost:4173/",
+  "states": [
+    {
+      "id": "desktop",
+      "width": 1440,
+      "height": 900,
+      "motion": "no-preference",
+      "ready": "main",
+      "anchors": [
+        {
+          "name": "header-content-left",
+          "edge": "left",
+          "selectors": [
+            "header .container",
+            "main .container"
+          ]
+        }
+      ],
+      "containers": [
+        {
+          "selector": "main",
+          "allowScroll": false
+        }
+      ]
+    },
+    {
+      "id": "mobile-reduced",
+      "width": 390,
+      "height": 844,
+      "motion": "reduce",
+      "ready": "main",
+      "anchors": [
+        {
+          "name": "header-content-left",
+          "edge": "left",
+          "selectors": [
+            "header .container",
+            "main .container"
+          ]
+        }
+      ],
+      "containers": [
+        {
+          "selector": "main",
+          "allowScroll": false
+        }
+      ]
+    }
+  ]
+}

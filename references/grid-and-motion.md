@@ -1,0 +1,58 @@
+# Grid, alignment and motion
+## Choose grid and spacing before code
+Existing approved grid and spacing win. New project choose one macro profile: columns-12 (default functional web), golden-canon (explicit editorial/composition intent), modular (equal repeated cells). Record rationale, container width/gutters, responsive column counts, row behavior, section and component anchor roles in existing frame/scope artifacts or DESIGN.md under current ownership. Do not change strict JSON schemas or invent unknown fields. Spacing is separate: existing, 4x (8px preferred multiples with 4px fine steps), or Fibonacci (e.g. 5,8,13,21,34,55); choose once; approved optical exceptions separate.
+- columns-12: 12 tracks wide, reduce to 6/4/1 as content requires; use CSS grid repeat(n,minmax(0,1fr)), explicit gutters and spans. No Bootstrap dependency required.
+- modular: repeated content with minmax/auto-fit when appropriate; define balanced wrapping and reflow.
+- golden-canon: not a synonym for 61.8/38.2 columns. Use BONT composition construction with diagonal/ratio-based reference lines and focal intersections as visual guide; cite the actual reference/template and selected aspect ratio. The independent CSS example defines nonuniform symmetric 16 column tracks (1,1,2,1.33,1,1.58,4.83,3.167,3.167,4.83,1.58,1,1.33,2,1,1) and 9 row weights (1,3.03,1.33,2.7,2.7,1.33,1.57,1.45,1). These are one example, not a universal BONT specification. For a source-based desktop study use them as proportional tracks, map intended section edges/focal points to track intersections, provide a diagram/capture and named anchor mapping before code. Use intrinsic minimum content sizes, mobile single column/reflow, no forced fixed viewport rows or clipped content. For exact BONT template matching obtain actual source template and derive normalized coordinates; if unavailable label result golden-canon-inspired rather than exact. Never substitute a Fibonacci spiral alone. For ordinary admin UI choose simpler geometry unless approved.
+## Golden Canon source selection
+When user selects golden-canon, default to the verified starred UI-reference overlay from Oleg-Kolosov (unless project already specifies another source). It contains explicit vertical, horizontal and diagonal SVG coordinates, not just two diagonals or golden-ratio columns. Read the approved checkout index.html as data and generate overlay with:
+```bash
+node <skill-base>/scripts/design_canon_ui.mjs <approved-golden-canon-ui-checkout> <reviewed-full-sha> 1440 900 /tmp/grid-ui
+```
+The output reproduces the starred reference's line geometry at the given artboard dimensions; it does not assert that it is the original BONT commercial template. Preserve source SHA and MIT attribution, inspect overlay, and choose focal intersections and named anchors. The 16x9 CSS implementation is a separate practical layout profile. The third starred source, iivanovw7/golden-grid-boilerplate, specifies symmetric 20x20 tracks in src/styles/mixins.js; use it as an independent comparison only until license/reuse is resolved. Do not force all lines into actual CSS tracks or force mobile to match a desktop poster.
+
+## Generate a macro guide artifact
+Use the additive guide generator before implementation:
+```bash
+node <skill-base>/scripts/design_grid_plan.mjs columns-12 1440 900 /tmp/grid-desktop '{"gutter":16,"inset":32}'
+node <skill-base>/scripts/design_grid_plan.mjs golden-canon-inspired 1440 900 /tmp/grid-canon
+node <skill-base>/scripts/design_grid_plan.mjs columns-12 390 844 /tmp/grid-mobile '{"columns":4,"gutter":8,"inset":16}'
+```
+The JSON defines measured track boundaries; SVG is a planning overlay at that exact artboard size. The source-based canon example is intentionally labeled inspired; it does not claim exact BONT reproduction. Use the actual author template for exact BONT mode, and record chosen anchor mapping. For responsive content recalculate tracks at target widths, not image-scale the desktop artifact. For existing projects preserve approved anchors; do not impose these example values. Artifacts are private evidence, not production UI.
+
+## Build and verify anchors
+Global: header inner edges, content regions, section/CTA alignment. Local: text/box edges, icon column/label start, section headers, nested items, trailing edges/centres, toolbar row centres. Identify intended alignment group and edge explicitly; do not infer every group from the majority if project policy already defines it. Gridlines measures ink as well as boxes; confirm visual outliers, including RTL and icon optical bounds. Fix the shared container padding/token/track. Use approved exceptions with exact selector/state/reason. Aim at <=1 CSS px for declared geometric anchors; separate documented optical corrections and probe false positives. Use browser assertions for known anchors independent of upstream heuristic.
+## Fit and scroll
+Use intrinsic sizing, min-width:0 on shrinking grid/flex items, minmax(0,1fr), responsive wrapping, sensible max-inline-size and overflow-wrap where needed. Test real long translated labels, zoom, keyboard focus, overlays, sticky regions, empty/error/loading states. Page vertical scroll is normal for long content; viewport-fit only when explicitly required for app shell or screen. Reject unintended document horizontal overflow and unintended nested scroll, clipping or hidden focus; tables/code/virtualized lists may scroll locally with explicit UX rationale. Do not hide overflow to silence failure, arbitrarily shrink text, replace essential labels by ambiguous icons, or force all content into viewport. Icons require accessible names and discoverability. 
+## Motion plan (before implementation)
+Use existing motion tokens. Otherwise propose a small coherent palette: feedback (~100–200ms), component transition (~150–350ms), optional section entrance (~250–600ms). Durations are starting points, not hard universal rules. Direction follows actual spatial/semantic relationship; no arbitrary alternating card motion. Prefer transform/opacity where appropriate, CSS/native APIs first, existing library next; no added framework merely for motion. No delayed critical content or initial focus; layout must reserve final space. Respect prefers-reduced-motion, preserve functionality without motion, no endlessly running distracting effects. Immersive is distinct explicit scope with performance budget, accessible fallback and mobile constraints.
+## Automatic motion selection (mandatory for workflow and motion)
+Treat Motion Anything as a searchable private recipe library, not a menu the owner must learn. Do not load its whole README/catalog or export recipe skills globally. Existing project motion wins; if no system exists, choose a profile by surface:
+- Operate / admin / checkout: restrained feedback and state transitions; no decorative entrances on repeated rows or routine controls.
+- Read / documentation: stable content; subtle transitions only where they explain change.
+- Persuade / marketing / product: one entrance pattern and one feedback pattern; optional focal reveal/emphasis.
+- Experience / portfolio: same baseline; one distinctive focal effect if justified. Complex scroll narrative, shaders, WebGL and 3D require explicit immersive scope.
+Default palette: 0–3 distinct nonessential motion patterns per surface (not three per section), including existing patterns; reuse timing, easing and direction tokens. Essential functional transitions are not a decorative quota. Zero is valid when motion adds no value. Do not reanimate each row or scroll revisit. Do not choose random directions: follow reading order, actual origin/destination, and information hierarchy.
+
+| Intent | Native first choice | Library lookup only if needed |
+|---|---|---|
+| Enter / reveal | Small fade + translate; same pattern on peers | entrance, reveal |
+| Explain progression | Directional reveal or short stagger following reading order | sequence, stagger |
+| Feedback | Focus/hover/press transition, optional subtle scale | feedback-delight |
+| State change | Short opacity/transform transition; preserve focus | transition |
+| Emphasis | One intentional focal reveal; stable real values | emphasis, count-up |
+| Ambient / cinematic | No effect by default | immersive only for expensive/persistent effects |
+
+Selection algorithm:
+1. Record purpose, affected components, profile, existing tokens and performance/reduced-motion constraints before writing CSS.
+2. If native CSS/WAAPI or an existing library meets the purpose, stop searching. Do not install Motion Anything just to fade a section.
+3. If a recipe is justified, check/update only the Motion Anything upstream first. Search its approved checkout `recipes/web/**/recipe.motion.yaml` by narrow intent/category/target keywords (not slides/video). Inspect at most three relevant manifests per unmet intent; if none fits, use native or no motion instead of scanning the entire catalog.
+4. Read actual manifest `surfaces`, `category`, `intent_keywords`, `best_for`, `avoid_when`, `restraint`, `motion`, `tech`, `dependencies`, `implementations`, and `license` (some versions omit fields). Reject unsuitable target, stack, reduced-motion, performance, licensing or restraint conditions. Missing relevant metadata must be verified from the selected implementation; never infer safety from a recipe title. Select the least complex passing option, then read only its SKILL.md and implementation/preview as needed. Do not execute unreviewed code or import a framework for one effect.
+5. Record selected recipe ID/path/SHA (or native), purpose, reused pattern, target, trigger, duration/easing, fallback and reason in the task motion plan. Implement automatically within authorized UI scope; do not ask owner to choose individual recipes. Ask only for scope changes (e.g. immersive) or conflicts with approved project policy. Verify the actual affected UI using the normal/reduced-motion gates below.
+
+## Rendered verification sequence
+1. Capture baseline clean screenshot at affected viewports and actual states; canonical V2/V4 rules apply, include 390/1440 when supported or justify relevant equivalents. Define expected anchors and scroll exceptions before measuring.
+2. Wait for app-specific ready state, document.fonts.ready and relevant finite animations after triggering each overlay/scroll/interaction. Use a bounded wait; infinite animations excluded only when identified and not affecting measured anchors. Timeout = BLOCKED/FAIL, never arbitrary sleep as sole proof.
+3. Assert document width, local overflow and intended anchors on stable final DOM geometry. Save clean and Gridlines guide capture for each target, relevant component and overlay. Record actual measured positions, tolerance, misses and approved exceptions. Remove overlay or use fresh page for clean screenshots.
+4. Independently test normal motion (start/end, no unintended clipping or interaction loss, interruption when relevant) and reduced-motion behavior. A reduced-motion screenshot does not prove normal animation correctness. Test final layout in both modes when affected.
+5. Confirm visual balance manually, fix owner and rerun focused failures then candidate gate. If no browser or missing selectors/states, BLOCKED. Never certify unrelated routes.

@@ -107,6 +107,17 @@ A red test is evidence, not automatic permission to expand scope.
 4. A timing-sensitive/flaky assertion without a reproduced user-visible defect is hardened as test work; do **not** change product behavior merely to satisfy the flake.
 5. After a focused fix, rerun the affected candidate gate; run another full-health gate only when the risk tier requires it.
 
+## Alignment and motion extension (candidate)
+
+For affected web layout surfaces, execute `references/grid-and-motion.md` and the Gridlines adapter in `references/upstream-tools.md`. Run the additive deterministic geometry helper using an explicit state/anchor spec:
+
+```bash
+GRIDLINES_DIR=/path/to/approved/gridlines/skills/gridlines GRIDLINES_SHA=<reviewed-full-sha> node <skill-base>/scripts/design_geometry.mjs /path/to/geometry-spec.json /path/to/private-evidence
+node --test <skill-base>/scripts/design_geometry.test.mjs
+```
+
+Use `examples/geometry-spec.example.json` as a starting point, not coverage proof. The helper requires a local preview, explicit ready state, containers, anchors, and installed Playwright. It asserts declared box anchors and scroll policies, invokes the original approved Gridlines probe per explicit container and captures guide evidence. It does not replace manual ink alignment review, motion behavior tests, canonical verifier or breakpoint coverage. Each unreviewed probe miss blocks PASS; exact approved exceptions must include item, edge, y, px, line, reason and approval. Probe noncoverage or ambiguous selectors are BLOCKED; use measurable parent containers with explicit local geometry for smaller primitives. Prep modules are trusted local code only. Check normal and reduced motion separately; record relevant finite animation settlement, clean captures, guide captures and target SHA. No arbitrary sleep alone, empty state matrix, or undocumented scroll exception counts as PASS. Missing required coverage is BLOCKED.
+
 ## Changed vs Full
 
 - `design verify --changed` — fast strict gate для touched/affected surface; це default для bare `design verify` і V1/V2.

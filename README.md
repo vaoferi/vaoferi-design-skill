@@ -8,6 +8,12 @@ Use structure before decoration, spacing mode before grid, alignment before effe
 
 The skill starts design-system work with a portable project contract so Codex, Claude Code, Cursor, OpenCode, Stitch/Open Design-style tools, and similar agents can read the same source of truth instead of guessing the UI.
 
+## Candidate: unified design workflow
+
+In Codex use `$vaoferi-design-skill workflow` (or native skill picker). One skill, ten intent arguments: workflow, improve, grid, motion, immersive, tokens, components, stitch, verify, update. Existing lifecycle commands remain supported. See [workflow](references/workflow.md), [grid and motion](references/grid-and-motion.md), and [upstreams](references/upstream-tools.md).
+
+External dependencies stay in a private cache linked to their original Git repositories. Check freshness with `python scripts/design_upstreams.py check`; checkout only after review. Use `node --test scripts/design_geometry.test.mjs` and the explicit Playwright geometry helper in the verification reference. Candidate integration is not a published release until full tests and Start Here snapshot propagation are verified.
+
 ## Main rules
 
 - Start from goal and hierarchy.

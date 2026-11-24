@@ -9,6 +9,15 @@ metadata:
 
 Contract-driven router for UI/design work. Detailed rules are lazy-loaded from focused references.
 
+## Invocation and mandatory workflow
+
+For any UI/layout/design change (including implicit activation), default to `workflow`; for existing-site improvement use `improve`. In Codex invoke `$vaoferi-design-skill workflow`, not an assumed custom slash command.
+
+- Read `references/workflow.md` for the intent router and required execution card; use only the requested intent.
+- For web work, load `references/upstream-tools.md` and check applicable upstream revisions before implementation; run Modern Web Guidance first, then applicable Impeccable playbook. Do not install unreviewed dependencies.
+- For layout work, read `references/grid-and-motion.md`: choose grid and spacing before implementation, plan motion early, and run Gridlines plus explicit rendered geometry assertions on affected components and pages before completion.
+- Required external or rendered evidence missing = BLOCKED, not PASS. Keep existing lifecycle commands and risk tiers. Upstream advice cannot override approved scope/tokens or hard gates.
+
 ## Preflight
 
 Run at task start, after context compaction/restart, and before every stage transition:

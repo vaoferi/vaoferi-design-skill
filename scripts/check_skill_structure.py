@@ -12,6 +12,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SKILL = ROOT / "SKILL.md"
 REQUIRED_REFERENCES = [
+    ROOT / "references" / "workflow.md",
+    ROOT / "references" / "grid-and-motion.md",
+    ROOT / "references" / "upstream-tools.md",
     ROOT / "references" / "action-contract.md",
     ROOT / "references" / "component-sources.md",
     ROOT / "references" / "quality-gates.md",

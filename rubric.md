@@ -39,6 +39,14 @@ Use this rubric to evaluate whether a design task is Done.
 - [ ] Heading, text, buttons, images, cards, nav, and section edges are aligned.
 - [ ] No element relies on effects to hide weak composition.
 
+## 3.1 Gridlines and motion (candidate)
+- [ ] Relevant upstream revisions verified; no unreviewed runtime.
+- [ ] Grid profile and spacing selected independently before code; existing rules preserved.
+- [ ] Global and local declared anchors checked with stable rendered geometry and Gridlines captures.
+- [ ] No unintended document horizontal overflow, nested scroll or clipping; intentional local scroll documented.
+- [ ] Motion planned early, normal/reduced-motion and relevant interruption tested.
+- [ ] Canonical verifier and all required states pass; additive helper does not replace them.
+
 ## 4. Component Reuse
 - [ ] Agent checked project component library / design system.
 - [ ] Agent checked `DESIGN.md`, `tokens.css`, `tokens.json`, `components/`, and `primitives/` when present.
